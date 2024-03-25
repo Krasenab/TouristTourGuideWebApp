@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristTourGuideWebApp", "TouristTourGuideWebApp\TouristTourGuideWebApp.csproj", "{6D5DD22E-5983-4A9C-A410-C25E0854F485}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TouristTourGuideWeb", "TouristTourGuideWeb", "{460B83F1-C5CE-49BC-9257-7D6F4ED22FFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TouristTourGuideWeb.Common", "TouristTourGuideWeb.Common", "{D0EDB3B9-EA09-45B5-B498-F6419AEEE594}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TouristTourGuide.Data", "TouristTourGuide.Data", "{11189E51-44E7-43FD-933D-D228745CDCE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TouristTourGuide.Data.Models", "TouristTourGuide.Data.Models", "{8239C6F6-FDA8-43AF-94C0-9F235DD94A02}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TouristTourGuide.Service", "TouristTourGuide.Service", "{CDA9E5FB-1AE5-47ED-B787-21EE20789FB7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TouristTourGuide.ViewModel", "TouristTourGuide.ViewModel", "{C3FB9C2B-1899-4BFA-9001-5872BDFDA43E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristTourGuide.ViewModels", "TouristTourGuide.ViewModels\TouristTourGuide.ViewModels.csproj", "{3A634845-F6EA-45D4-AF34-38A9BF909C6F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristTourGuide.Data", "TouristTourGuide.Data\TouristTourGuide.Data.csproj", "{EA5CA0BC-CDC4-477E-8549-02DFA7297789}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristTourGuide.Data.Models", "TouristTourGuide.Data.Models\TouristTourGuide.Data.Models.csproj", "{F7B7C670-B476-4031-ACC3-E8DDD0203ABF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristTourGuide.Common", "TouristTourGuide.Common\TouristTourGuide.Common.csproj", "{5F20D199-2BD5-46E4-97D2-969480464803}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TouristTourGuide.Infrastructure", "TouristTourGuide.Infrastructure", "{3E738302-B31F-4F9F-B83D-5667428F3FEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouristTourGuide.Infrastrucutre", "TouristTourGuide.Infrastrucutre\TouristTourGuide.Infrastrucutre.csproj", "{8ADB1F4B-94AB-4DF4-937E-764CA11ED304}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6D5DD22E-5983-4A9C-A410-C25E0854F485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D5DD22E-5983-4A9C-A410-C25E0854F485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D5DD22E-5983-4A9C-A410-C25E0854F485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D5DD22E-5983-4A9C-A410-C25E0854F485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A634845-F6EA-45D4-AF34-38A9BF909C6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A634845-F6EA-45D4-AF34-38A9BF909C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A634845-F6EA-45D4-AF34-38A9BF909C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A634845-F6EA-45D4-AF34-38A9BF909C6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA5CA0BC-CDC4-477E-8549-02DFA7297789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA5CA0BC-CDC4-477E-8549-02DFA7297789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA5CA0BC-CDC4-477E-8549-02DFA7297789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA5CA0BC-CDC4-477E-8549-02DFA7297789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7B7C670-B476-4031-ACC3-E8DDD0203ABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7B7C670-B476-4031-ACC3-E8DDD0203ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7B7C670-B476-4031-ACC3-E8DDD0203ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7B7C670-B476-4031-ACC3-E8DDD0203ABF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F20D199-2BD5-46E4-97D2-969480464803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F20D199-2BD5-46E4-97D2-969480464803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F20D199-2BD5-46E4-97D2-969480464803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F20D199-2BD5-46E4-97D2-969480464803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ADB1F4B-94AB-4DF4-937E-764CA11ED304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ADB1F4B-94AB-4DF4-937E-764CA11ED304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ADB1F4B-94AB-4DF4-937E-764CA11ED304}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ADB1F4B-94AB-4DF4-937E-764CA11ED304}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6D5DD22E-5983-4A9C-A410-C25E0854F485} = {460B83F1-C5CE-49BC-9257-7D6F4ED22FFF}
+		{3A634845-F6EA-45D4-AF34-38A9BF909C6F} = {C3FB9C2B-1899-4BFA-9001-5872BDFDA43E}
+		{EA5CA0BC-CDC4-477E-8549-02DFA7297789} = {11189E51-44E7-43FD-933D-D228745CDCE2}
+		{F7B7C670-B476-4031-ACC3-E8DDD0203ABF} = {8239C6F6-FDA8-43AF-94C0-9F235DD94A02}
+		{5F20D199-2BD5-46E4-97D2-969480464803} = {D0EDB3B9-EA09-45B5-B498-F6419AEEE594}
+		{8ADB1F4B-94AB-4DF4-937E-764CA11ED304} = {3E738302-B31F-4F9F-B83D-5667428F3FEE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6FA8B2CC-7CD9-4A16-86F1-F2BF25A3A0A8}
+	EndGlobalSection
+EndGlobal

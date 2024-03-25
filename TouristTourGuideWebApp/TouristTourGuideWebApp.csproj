@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-TouristTourGuideWebApp-c837fff9-c263-4493-847e-9aa88aac2588</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0" />
+    <PackageReference Include="MongoDB.Bson" Version="2.24.0" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.24.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TouristTourGuide.Data\TouristTourGuide.Data.csproj" />
+    <ProjectReference Include="..\TouristTourGuide.ViewModels\TouristTourGuide.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
