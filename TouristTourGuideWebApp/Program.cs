@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
 
@@ -28,13 +29,14 @@ namespace TouristTourGuideWebApp
                }
             )
                 .AddEntityFrameworkStores<TouristTourGuideDbContext>();
-                       
-            builder.Services.AddControllersWithViews();
-            // MongoDB  
-            //var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDbConnection");
-            //var mongoClient = new MongoClient(mongoConnectionString);
-            //builder.Services.AddSingleton<IMongoDatabase>(mongoClient.GetDatabase("TouristTourAppMDB"));
 
+            // MongoDB  
+            var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDbConnection");
+            var mongoClient = new MongoClient(mongoConnectionString);
+            builder.Services.AddSingleton<IMongoDatabase>(mongoClient.GetDatabase("TouristTourGuideWebApp"));
+
+            builder.Services.AddControllersWithViews();
+            
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

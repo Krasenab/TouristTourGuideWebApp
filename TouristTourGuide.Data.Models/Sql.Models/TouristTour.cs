@@ -10,7 +10,8 @@ namespace TouristTourGuide.Data.Models.Sql.Models
             this.TouristTourDates = new List<TouristTourDates>();
             this.TouristTourBookings = new List<TouristTourBooking>();
             this.TouristTourDates = new List<TouristTourDates>();
-
+            this.Comments = new List<Comments>();
+            this.Votes = new List<Vote>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -63,6 +64,9 @@ namespace TouristTourGuide.Data.Models.Sql.Models
 
         public virtual List<TouristTourBooking> TouristTourBookings { get; set; }
 
+        public virtual List<Comments> Comments { get; set; }
+
+        public List<Vote> Votes { get; set; }
 
     }
 }

@@ -35,7 +35,7 @@ namespace TouristTourGuide.Common
             public const int VATNumberMaxLength = 15;
             public const int VATNumberMinLength = 4;
 
-            public const int AboutMaxLength = 5000;
+            public const int AboutMaxLength = 4500;
 
 
             public const int RegisteredAddressMaxLength = 25;
@@ -53,6 +53,18 @@ namespace TouristTourGuide.Common
         {
             public const int countOfPeopleMax = 100;
             public static int countOfPeopleMin = 1;
+        }
+
+        public static class Comments 
+        {
+            public const int contentMaxLength = 5000;
+            public const int contentMinLength = 1;
+        }
+
+        public static class VoteValueConstans 
+        {
+            public const int VoteValueMax = 5;
+            public const int VoteValueMin = 1;
         }
     }
 }
