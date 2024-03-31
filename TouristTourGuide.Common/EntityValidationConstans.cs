@@ -27,6 +27,9 @@ namespace TouristTourGuide.Common
             public const int NotSuitableForMaxLenght = 2000;
             public const int NotSuitableForMinLenght = 2;
 
+            public const int IncludesMaxLenght = 500;
+            public const int IncludesMinLenght = 2;
+
         }
 
         public static class GuideUserConstants

@@ -38,14 +38,14 @@ namespace TouristTourGuide.Data.Models.Sql.Models
 
         [Required]
         public string MeetingPoint { get; set; }
-
         public string MeetingPointMapUrl { get; set; }
 
-        [Required]
+        [MaxLength(IncludesMaxLenght)]
+        public string Includes { get; set; }
+
         [MaxLength(WhatToBringMax)]
         public string WhatToBring { get; set; }
-
-        [Required]
+       
         [MaxLength(KnowBeforeYouGoMax)]
         public string KnowBeforeYouGo { get; set; }
         public DateTime CreatedOn { get; set; }
