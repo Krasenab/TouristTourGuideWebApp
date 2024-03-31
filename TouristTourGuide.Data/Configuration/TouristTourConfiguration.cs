@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
+using Microsoft.IdentityModel.Tokens;
 using TouristTourGuide.Data.Models.Sql.Models;
 
 namespace TouristTourGuide.Data.Configuration
@@ -11,6 +11,9 @@ namespace TouristTourGuide.Data.Configuration
         {
             builder.Property(p => p.PricePerPerson).HasPrecision(18, 2);
             builder.Property(d=>d.CreatedOn).HasDefaultValue(DateTime.UtcNow);
+            
+            builder.HasData(SetTouristTours());
+
         }
 
         private List<TouristTour> SetTouristTours() 
@@ -23,12 +26,15 @@ namespace TouristTourGuide.Data.Configuration
                 TourName = "Beatles Tour incl. Abbey Road with Richard Porter",
                 Duaration = "2.5 hours",
                 PricePerPerson = 45.75m,
+                CategoryId = 1,                
                 Highlights = "Discover where The Beatles recorded, lived, and socialized in 1960s London and many others",
                 FullDescription = "Experience the London of The Beatles with Richard Porter, author of the book Guide to the Beatles London." +
-                " Discover the locations and landmarks where The Fab Four recorded, lived, and socialized in London during the Swinging Sixties.",
+                "Discover the locations and landmarks where The Fab Four recorded, lived, and socialized in London during the Swinging Sixties.",
                 GuideUserId = Guid.Parse("63c2e7f4-2481-4cc7-9233-c102108a6a17"),
                 MeetingPoint = "Meet Richard outside Exit 1 of Tottenham Court Road Station. He will be holding 'Beatles Walks' leaflets and wearing a Beatles shirt or hat."
             };
+
+            touristTours.Add(t);
 
             return touristTours;
 
