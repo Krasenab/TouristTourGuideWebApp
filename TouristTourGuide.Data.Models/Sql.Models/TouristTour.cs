@@ -30,6 +30,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         [Required]       
         public string FullDescription { get; set; }
 
+        [MaxLength(NotSuitableForMaxLenght)]
         public string NotSuitableFor { get; set; }
 
         [Required]
@@ -38,11 +39,11 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         public string MeetingPointMapUrl { get; set; }
 
         [Required]
-        [MaxLength(InformationMaxLenght)]
+        [MaxLength(WhatToBringMax)]
         public string WhatToBring { get; set; }
 
         [Required]
-        [MaxLength(InformationMaxLenght)]
+        [MaxLength(KnowBeforeYouGoMax)]
         public string KnowBeforeYouGo { get; set; }
         public DateTime CreatedOn { get; set; }
 

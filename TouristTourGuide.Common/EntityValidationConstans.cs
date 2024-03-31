@@ -1,5 +1,4 @@
-﻿
-namespace TouristTourGuide.Common
+﻿namespace TouristTourGuide.Common
 {
     public static class EntityValidationConstans
     {
@@ -11,14 +10,17 @@ namespace TouristTourGuide.Common
             public const int DuarationMaxLength = 40;
             public const int DuarationMinLength = 3;
 
-            public const int IncludesMexLenght = 5000;
+            public const int WhatToBringMax = 5000;
+            public const int WhatToBringMin = 1;
 
-            public const int InformationMaxLenght = 5000;
+            public const int KnowBeforeYouGoMax = 5000;
             
 
             public const double PricePerPersonMax = 100000000;
             public const double PricePerPersonMin = 1;
 
+            public const int NotSuitableForMaxLenght = 2000;
+            public const int NotSuitableForMinLenght = 2;
         }
 
         public static class GuideUserConstants

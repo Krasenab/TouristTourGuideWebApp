@@ -20,4 +20,8 @@
     <PackageReference Include="MongoDB.Driver.Core" Version="2.24.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TouristTourGuide.Common\TouristTourGuide.Common.csproj" />
+  </ItemGroup>
+
 </Project>
