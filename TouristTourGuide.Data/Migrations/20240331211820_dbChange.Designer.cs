@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TouristTourGuide.Data;
 
@@ -11,9 +12,11 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    partial class TouristTourGuideDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240331211820_dbChange")]
+    partial class dbChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -396,8 +399,8 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.Property<string>("RegisteredAddress")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("ValueAddedTaxIdentificationNumber")
                         .HasMaxLength(15)
@@ -449,7 +452,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 3, 31, 21, 31, 6, 603, DateTimeKind.Utc).AddTicks(1285));
+                        .HasDefaultValue(new DateTime(2024, 3, 31, 21, 18, 19, 404, DateTimeKind.Utc).AddTicks(8996));
 
                     b.Property<string>("Duaration")
                         .IsRequired()

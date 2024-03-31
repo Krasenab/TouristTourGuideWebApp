@@ -47,7 +47,7 @@ namespace TouristTourGuide.Common
             public const int AboutMaxLength = 4500;
 
 
-            public const int RegisteredAddressMaxLength = 25;
+            public const int RegisteredAddressMaxLength = 100;
             public const int RegisteredAddressMinLength = 3;
 
 

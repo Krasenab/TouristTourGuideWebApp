@@ -27,6 +27,9 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         [Range(PricePerPersonMin,PricePerPersonMax)]
         public decimal PricePerPerson { get; set; }
 
+        
+        public string Highlights { get;set;  }
+
         [Required]       
         public string FullDescription { get; set; }
 
