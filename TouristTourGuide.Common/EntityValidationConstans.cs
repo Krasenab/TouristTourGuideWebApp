@@ -1,4 +1,6 @@
-﻿namespace TouristTourGuide.Common
+﻿using System;
+
+namespace TouristTourGuide.Common
 {
     public static class EntityValidationConstans
     {
@@ -24,6 +26,7 @@
 
             public const int NotSuitableForMaxLenght = 2000;
             public const int NotSuitableForMinLenght = 2;
+
         }
 
         public static class GuideUserConstants
@@ -46,6 +49,10 @@
 
             public const int RegisteredAddressMaxLength = 25;
             public const int RegisteredAddressMinLength = 3;
+
+
+            public const int PhoneNumberMaxLenght = 50;
+            public const int PhnoeNumberMinLenght = 2;
 
         }
 

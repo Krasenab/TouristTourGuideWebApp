@@ -33,6 +33,9 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        [MaxLength(PhoneNumberMaxLenght)]
+        public string PhoneNumber { get; set; }
+
         [Required]
         [MaxLength(RegisteredAddressMaxLength)]
         public string RegisteredAddress { get; set; }

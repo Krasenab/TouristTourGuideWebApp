@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TouristTourGuide.Data;
 
@@ -11,9 +12,11 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    partial class TouristTourGuideDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240331181148_validationGuidUser")]
+    partial class validationGuidUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -389,11 +392,6 @@ namespace TouristTourGuide.Data.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("RegisteredAddress")
                         .IsRequired()
                         .HasMaxLength(25)
@@ -448,9 +446,7 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 3, 31, 20, 6, 34, 712, DateTimeKind.Utc).AddTicks(6177));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Duaration")
                         .IsRequired()

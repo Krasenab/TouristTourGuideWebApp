@@ -9,7 +9,23 @@ namespace TouristTourGuide.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<TouristTour> builder)
         {
-            builder.Property(d => d.PricePerPerson).HasPrecision(18, 2);
+            builder.Property(p => p.PricePerPerson).HasPrecision(18, 2);
+            builder.Property(d=>d.CreatedOn).HasDefaultValue(DateTime.UtcNow);
         }
+
+        private List<TouristTour> SetTouristTours() 
+        {
+            List<TouristTour> touristTours = new List<TouristTour>();
+
+            TouristTour t = new TouristTour()
+            {
+
+            };
+
+            return touristTours;
+
+        } 
+
+
     }
 }
