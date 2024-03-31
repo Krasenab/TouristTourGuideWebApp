@@ -25,29 +25,27 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         public string Duaration { get; set; }
 
         [Range(PricePerPersonMin,PricePerPersonMax)]
-        public decimal PricePerPerson { get; set; }
-
-        
-        public string Highlights { get;set;  }
+        public decimal PricePerPerson { get; set; }        
+        public string? Highlights { get;set;  }
 
         [Required]       
         public string FullDescription { get; set; }
 
         [MaxLength(NotSuitableForMaxLenght)]
-        public string NotSuitableFor { get; set; }
+        public string? NotSuitableFor { get; set; } 
 
         [Required]
         public string MeetingPoint { get; set; }
-        public string MeetingPointMapUrl { get; set; }
+        public string? MeetingPointMapUrl { get; set; }
 
         [MaxLength(IncludesMaxLenght)]
-        public string Includes { get; set; }
+        public string? Includes { get; set; }
 
         [MaxLength(WhatToBringMax)]
-        public string WhatToBring { get; set; }
+        public string? WhatToBring { get; set; }
        
         [MaxLength(KnowBeforeYouGoMax)]
-        public string KnowBeforeYouGo { get; set; }
+        public string? KnowBeforeYouGo { get; set; }
         public DateTime CreatedOn { get; set; }
 
         [ForeignKey(nameof(Location))]

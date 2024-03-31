@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TouristTourGuide.Data;
 
@@ -11,9 +12,11 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    partial class TouristTourGuideDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240331222901_changeDb")]
+    partial class changeDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -449,7 +452,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 3, 31, 22, 33, 52, 878, DateTimeKind.Utc).AddTicks(4505));
+                        .HasDefaultValue(new DateTime(2024, 3, 31, 22, 29, 1, 190, DateTimeKind.Utc).AddTicks(8880));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -467,10 +470,12 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Includes")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("KnowBeforeYouGo")
+                        .IsRequired()
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
@@ -482,6 +487,7 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MeetingPointMapUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NotSuitableFor")
@@ -498,6 +504,7 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("WhatToBring")
+                        .IsRequired()
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 

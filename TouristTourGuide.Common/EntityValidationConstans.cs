@@ -30,6 +30,7 @@ namespace TouristTourGuide.Common
             public const int IncludesMaxLenght = 500;
             public const int IncludesMinLenght = 2;
 
+            public const int HighLightsMin = 2;
         }
 
         public static class GuideUserConstants
