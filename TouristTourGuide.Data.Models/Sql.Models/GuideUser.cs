@@ -22,10 +22,12 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         public string LegalFirmName { get; set; }
 
         [MaxLength(VATNumberMaxLength)]
-        public string? ValueAddedTaxIdentificationNumber { get; set; }
+        public string ValueAddedTaxIdentificationNumber { get; set; }
 
+        [Required]
         [MaxLength(CRNLenghtMax)]
-        public string? CompanyRegistrationNumber { get; set; }
+        [RegularExpression(CRNpattern)]
+        public string CompanyRegistrationNumber { get; set; }
 
         [Required]
         [EmailAddress]

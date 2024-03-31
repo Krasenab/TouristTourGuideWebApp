@@ -2,6 +2,9 @@
 {
     public static class EntityValidationConstans
     {
+        /// <summary>
+        /// CRNs are always 8 characters long. These can be either 8 digits or 2 letters followed by 6 digits.
+        /// </summary>
         public static class TouristToursConstants
         {
             public const int NameMaxLength = 50;
@@ -33,6 +36,7 @@
 
             public const int CRNLenghtMax = 8;
             public const int CRNLenghtMin = 8;
+            public const string CRNpattern = @"([A-Za-z]{2}\d{6}|\d{8})";
 
             public const int VATNumberMaxLength = 15;
             public const int VATNumberMinLength = 4;

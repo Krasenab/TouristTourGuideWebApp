@@ -13,7 +13,7 @@ namespace TouristTourGuide.ViewModels
 
         [Required]
         [MaxLength(DuarationMaxLength)]
-        [MinLength(DuarationMinLength)]
+        [MinLength(DuarationMinLength)]        
         public string Duaration { get; set; }
 
         [Range(PricePerPersonMin, PricePerPersonMax)]
