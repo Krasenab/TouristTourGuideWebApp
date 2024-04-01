@@ -11,9 +11,19 @@ namespace TouristTourGuide.Data.Configuration
         {
             builder.Property(p => p.PricePerPerson).HasPrecision(18, 2);
             builder.Property(d=>d.CreatedOn).HasDefaultValue(DateTime.UtcNow);
+
+            builder.HasOne(c => c.Category)
+                .WithMany(t => t.TouristTours)
+                .HasForeignKey(ca => ca.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(l => l.Location)                
+                .WithMany(t => t.TouristTours)
+                 .HasForeignKey(ca => ca.LocationId)
+                .OnDelete(DeleteBehavior.Restrict);
+          
+              
             
             builder.HasData(SetTouristTours());
-
         }
 
         private List<TouristTour> SetTouristTours() 

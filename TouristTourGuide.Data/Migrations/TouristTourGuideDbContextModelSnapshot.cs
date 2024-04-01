@@ -181,7 +181,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasIndex("TouristTourId");
 
-                    b.ToTable("AppImages");
+                    b.ToTable("AppImages", (string)null);
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.ApplicationUser", b =>
@@ -264,7 +264,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -337,7 +337,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasIndex("TouristTourId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Dates", b =>
@@ -353,7 +353,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dates");
+                    b.ToTable("Dates", (string)null);
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.GuideUser", b =>
@@ -371,7 +371,6 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CompanyRegistrationNumber")
-                        .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
@@ -389,15 +388,10 @@ namespace TouristTourGuide.Data.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("RegisteredAddress")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("ValueAddedTaxIdentificationNumber")
                         .HasMaxLength(15)
@@ -407,7 +401,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("GuideUsers");
+                    b.ToTable("GuideUsers", (string)null);
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Location", b =>
@@ -434,15 +428,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "London",
-                            Country = "UK"
-                        });
+                    b.ToTable("Locations", (string)null);
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.TouristTour", b =>
@@ -455,9 +441,7 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 3, 31, 23, 25, 49, 346, DateTimeKind.Utc).AddTicks(2262));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -471,14 +455,8 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<Guid>("GuideUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Highlights")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Includes")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<string>("KnowBeforeYouGo")
+                        .IsRequired()
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
@@ -490,11 +468,12 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MeetingPointMapUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NotSuitableFor")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PricePerPerson")
                         .HasPrecision(18, 2)
@@ -506,6 +485,7 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("WhatToBring")
+                        .IsRequired()
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
@@ -517,23 +497,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("TouristsTours");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f4e0c782-d1a4-42d1-9182-90b6fb2935e4"),
-                            CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Duaration = "2.5 hours",
-                            FullDescription = "Experience the London of The Beatles with Richard Porter, author of the book Guide to the Beatles London.Discover the locations and landmarks where The Fab Four recorded, lived, and socialized in London during the Swinging Sixties.",
-                            GuideUserId = new Guid("63c2e7f4-2481-4cc7-9233-c102108a6a17"),
-                            Highlights = "Discover where The Beatles recorded, lived, and socialized in 1960s London and many others",
-                            LocationId = 1,
-                            MeetingPoint = "Meet Richard outside Exit 1 of Tottenham Court Road Station. He will be holding 'Beatles Walks' leaflets and wearing a Beatles shirt or hat.",
-                            PricePerPerson = 45.75m,
-                            TourName = "Beatles Tour incl. Abbey Road with Richard Porter"
-                        });
+                    b.ToTable("TouristsTours", (string)null);
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.TouristTourBooking", b =>
@@ -575,7 +539,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasIndex("TouristTourId");
 
-                    b.ToTable("TouristTourBookings");
+                    b.ToTable("TouristTourBookings", (string)null);
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.TouristTourDates", b =>
@@ -590,7 +554,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasIndex("DatesId");
 
-                    b.ToTable("TouristTourDates");
+                    b.ToTable("TouristTourDates", (string)null);
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Vote", b =>
@@ -612,7 +576,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasIndex("TouristTourId");
 
-                    b.ToTable("Vote");
+                    b.ToTable("Vote", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

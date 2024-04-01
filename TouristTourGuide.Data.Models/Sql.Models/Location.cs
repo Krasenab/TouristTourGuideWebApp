@@ -6,6 +6,10 @@ namespace TouristTourGuide.Data.Models.Sql.Models
 {
     public class Location
     {
+        public Location()
+        {
+            this.TouristTours = new List<TouristTour>();
+        }
         [Key]
         public int Id { get; set; }
 
@@ -19,5 +23,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
 
         [MaxLength(LocationPlaceMaxLength)]
         public string? Village { get; set; }
+
+        public virtual List<TouristTour> TouristTours { get; set; }
     }
 }
