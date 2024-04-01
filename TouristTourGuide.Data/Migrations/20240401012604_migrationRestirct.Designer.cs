@@ -12,8 +12,8 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    [Migration("20240401010727_AddNewTableAndColumns")]
-    partial class AddNewTableAndColumns
+    [Migration("20240401012604_migrationRestirct")]
+    partial class migrationRestirct
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -460,7 +460,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 1, 1, 7, 26, 830, DateTimeKind.Utc).AddTicks(6467));
+                        .HasDefaultValue(new DateTime(2024, 4, 1, 1, 26, 4, 347, DateTimeKind.Utc).AddTicks(3846));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -770,7 +770,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.HasOne("TouristTourGuide.Data.Models.Sql.Models.TouristTour", "TouristTour")
                         .WithMany("Votes")
                         .HasForeignKey("TouristTourId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");

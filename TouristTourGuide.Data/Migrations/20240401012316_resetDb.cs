@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TouristTourGuide.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class createDatabase : Migration
+    public partial class resetDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -207,11 +207,12 @@ namespace TouristTourGuide.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     LegalFirmName = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     ValueAddedTaxIdentificationNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
-                    CompanyRegistrationNumber = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: true),
+                    CompanyRegistrationNumber = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RegisteredAddress = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    RegisteredAddress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AboutTheActivityProvider = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false)
+                    AboutTheActivityProvider = table.Column<string>(type: "nvarchar(max)", maxLength: 4500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -232,13 +233,15 @@ namespace TouristTourGuide.Data.Migrations
                     TourName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Duaration = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     PricePerPerson = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Highlights = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NotSuitableFor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NotSuitableFor = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
                     MeetingPoint = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MeetingPointMapUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WhatToBring = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    KnowBeforeYouGo = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MeetingPointMapUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Includes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    WhatToBring = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
+                    KnowBeforeYouGo = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 4, 1, 1, 23, 16, 351, DateTimeKind.Utc).AddTicks(7837)),
                     LocationId = table.Column<int>(type: "int", nullable: true),
                     GuideUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -251,7 +254,7 @@ namespace TouristTourGuide.Data.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TouristsTours_GuideUsers_GuideUserId",
                         column: x => x.GuideUserId,
@@ -262,7 +265,8 @@ namespace TouristTourGuide.Data.Migrations
                         name: "FK_TouristsTours_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -289,6 +293,25 @@ namespace TouristTourGuide.Data.Migrations
                         column: x => x.TouristTourId,
                         principalTable: "TouristsTours",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
+                    TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_TouristsTours_TouristTourId",
+                        column: x => x.TouristTourId,
+                        principalTable: "TouristsTours",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -345,6 +368,32 @@ namespace TouristTourGuide.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Vote",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VoteValue = table.Column<int>(type: "int", maxLength: 5, nullable: false),
+                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vote", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vote_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Vote_TouristsTours_TouristTourId",
+                        column: x => x.TouristTourId,
+                        principalTable: "TouristsTours",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
@@ -361,6 +410,11 @@ namespace TouristTourGuide.Data.Migrations
                     { 9, "Religius and spiritual acttivities" },
                     { 11, "History and culture" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "Id", "City", "Country", "Village" },
+                values: new object[] { 1, "London", "UK", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AppImages_ApplicationUserId",
@@ -412,6 +466,11 @@ namespace TouristTourGuide.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_TouristTourId",
+                table: "Comments",
+                column: "TouristTourId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GuideUsers_ApplicationUserId",
                 table: "GuideUsers",
                 column: "ApplicationUserId");
@@ -445,6 +504,16 @@ namespace TouristTourGuide.Data.Migrations
                 name: "IX_TouristTourDates_DatesId",
                 table: "TouristTourDates",
                 column: "DatesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vote_ApplicationUserId",
+                table: "Vote",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vote_TouristTourId",
+                table: "Vote",
+                column: "TouristTourId");
         }
 
         /// <inheritdoc />
@@ -469,10 +538,16 @@ namespace TouristTourGuide.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "TouristTourBookings");
 
             migrationBuilder.DropTable(
                 name: "TouristTourDates");
+
+            migrationBuilder.DropTable(
+                name: "Vote");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

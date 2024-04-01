@@ -20,6 +20,11 @@ namespace TouristTourGuide.Data.Configuration
                 .WithMany(t => t.TouristTours)
                  .HasForeignKey(ca => ca.LocationId)
                 .OnDelete(DeleteBehavior.Restrict);
+           
+            //builder.HasMany(x => x.Votes)
+            //    .WithOne(x => x.TouristTour)
+            //    .HasForeignKey(x => x.TouristTourId)
+            //    .OnDelete(DeleteBehavior.NoAction);
           
               
             

@@ -12,8 +12,8 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    [Migration("20240325065146_createDatabase")]
-    partial class createDatabase
+    [Migration("20240401012316_resetDb")]
+    partial class resetDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -322,6 +322,27 @@ namespace TouristTourGuide.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Comments", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TouristTourId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TouristTourId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Dates", b =>
                 {
                     b.Property<int>("Id")
@@ -346,13 +367,14 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.Property<string>("AboutTheActivityProvider")
                         .IsRequired()
-                        .HasMaxLength(5000)
+                        .HasMaxLength(4500)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CompanyRegistrationNumber")
+                        .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
@@ -370,10 +392,15 @@ namespace TouristTourGuide.Data.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("RegisteredAddress")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ValueAddedTaxIdentificationNumber")
                         .HasMaxLength(15)
@@ -411,6 +438,14 @@ namespace TouristTourGuide.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Locations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "London",
+                            Country = "UK"
+                        });
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.TouristTour", b =>
@@ -423,7 +458,9 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 1, 1, 23, 16, 351, DateTimeKind.Utc).AddTicks(7837));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -437,8 +474,14 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<Guid>("GuideUserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Highlights")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Includes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("KnowBeforeYouGo")
-                        .IsRequired()
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
@@ -450,12 +493,11 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MeetingPointMapUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NotSuitableFor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<decimal>("PricePerPerson")
                         .HasPrecision(18, 2)
@@ -467,7 +509,6 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("WhatToBring")
-                        .IsRequired()
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
@@ -539,6 +580,33 @@ namespace TouristTourGuide.Data.Migrations
                     b.ToTable("TouristTourDates");
                 });
 
+            modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Vote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("ApplicationUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TouristTourId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("VoteValue")
+                        .HasMaxLength(5)
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("TouristTourId");
+
+                    b.ToTable("Vote");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -607,6 +675,17 @@ namespace TouristTourGuide.Data.Migrations
                     b.Navigation("TouristTour");
                 });
 
+            modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Comments", b =>
+                {
+                    b.HasOne("TouristTourGuide.Data.Models.Sql.Models.TouristTour", "TouristTour")
+                        .WithMany("Comments")
+                        .HasForeignKey("TouristTourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TouristTour");
+                });
+
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.GuideUser", b =>
                 {
                     b.HasOne("TouristTourGuide.Data.Models.Sql.Models.ApplicationUser", "ApplicationUser")
@@ -623,7 +702,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.HasOne("TouristTourGuide.Data.Models.Sql.Models.Category", "Category")
                         .WithMany("TouristTours")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("TouristTourGuide.Data.Models.Sql.Models.GuideUser", "GuideUser")
@@ -633,8 +712,9 @@ namespace TouristTourGuide.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("TouristTourGuide.Data.Models.Sql.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
+                        .WithMany("TouristTours")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Category");
 
@@ -679,6 +759,25 @@ namespace TouristTourGuide.Data.Migrations
                     b.Navigation("TouristTour");
                 });
 
+            modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Vote", b =>
+                {
+                    b.HasOne("TouristTourGuide.Data.Models.Sql.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TouristTourGuide.Data.Models.Sql.Models.TouristTour", "TouristTour")
+                        .WithMany("Votes")
+                        .HasForeignKey("TouristTourId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("TouristTour");
+                });
+
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.ApplicationUser", b =>
                 {
                     b.Navigation("AppImages");
@@ -701,13 +800,22 @@ namespace TouristTourGuide.Data.Migrations
                     b.Navigation("MyTours");
                 });
 
+            modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Location", b =>
+                {
+                    b.Navigation("TouristTours");
+                });
+
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.TouristTour", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("TourImages");
 
                     b.Navigation("TouristTourBookings");
 
                     b.Navigation("TouristTourDates");
+
+                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }
