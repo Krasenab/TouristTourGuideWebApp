@@ -319,27 +319,6 @@ namespace TouristTourGuide.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Comments", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("TouristTourId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TouristTourId");
-
-                    b.ToTable("Comments", (string)null);
-                });
-
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Dates", b =>
                 {
                     b.Property<int>("Id")
@@ -364,7 +343,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.Property<string>("AboutTheActivityProvider")
                         .IsRequired()
-                        .HasMaxLength(4500)
+                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ApplicationUserId")
@@ -557,28 +536,6 @@ namespace TouristTourGuide.Data.Migrations
                     b.ToTable("TouristTourDates", (string)null);
                 });
 
-            modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Vote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid?>("TouristTourId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("VoteValue")
-                        .HasMaxLength(5)
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TouristTourId");
-
-                    b.ToTable("Vote", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -643,17 +600,6 @@ namespace TouristTourGuide.Data.Migrations
                         .HasForeignKey("TouristTourId");
 
                     b.Navigation("ApplicationUser");
-
-                    b.Navigation("TouristTour");
-                });
-
-            modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Comments", b =>
-                {
-                    b.HasOne("TouristTourGuide.Data.Models.Sql.Models.TouristTour", "TouristTour")
-                        .WithMany("Comments")
-                        .HasForeignKey("TouristTourId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("TouristTour");
                 });
@@ -730,13 +676,6 @@ namespace TouristTourGuide.Data.Migrations
                     b.Navigation("TouristTour");
                 });
 
-            modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Vote", b =>
-                {
-                    b.HasOne("TouristTourGuide.Data.Models.Sql.Models.TouristTour", null)
-                        .WithMany("Votes")
-                        .HasForeignKey("TouristTourId");
-                });
-
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.ApplicationUser", b =>
                 {
                     b.Navigation("AppImages");
@@ -761,15 +700,11 @@ namespace TouristTourGuide.Data.Migrations
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.TouristTour", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("TourImages");
 
                     b.Navigation("TouristTourBookings");
 
                     b.Navigation("TouristTourDates");
-
-                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }

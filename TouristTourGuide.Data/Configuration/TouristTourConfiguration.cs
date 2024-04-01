@@ -23,7 +23,7 @@ namespace TouristTourGuide.Data.Configuration
           
               
             
-            builder.HasData(SetTouristTours());
+          //  builder.HasData(SetTouristTours());
         }
 
         private List<TouristTour> SetTouristTours() 
