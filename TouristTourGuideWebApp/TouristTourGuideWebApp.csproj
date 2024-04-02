@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TouristTourGuide.Data\TouristTourGuide.Data.csproj" />
+    <ProjectReference Include="..\TouristTourGuide.Services\TouristTourGuide.Services.csproj" />
     <ProjectReference Include="..\TouristTourGuide.ViewModels\TouristTourGuide.ViewModels.csproj" />
   </ItemGroup>
 
