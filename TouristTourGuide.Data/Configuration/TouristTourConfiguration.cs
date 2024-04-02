@@ -21,13 +21,8 @@ namespace TouristTourGuide.Data.Configuration
                  .HasForeignKey(ca => ca.LocationId)
                 .OnDelete(DeleteBehavior.Restrict);
            
-            //builder.HasMany(x => x.Votes)
-            //    .WithOne(x => x.TouristTour)
-            //    .HasForeignKey(x => x.TouristTourId)
-            //    .OnDelete(DeleteBehavior.NoAction);
-          
-              
-            
+           
+                         
           //  builder.HasData(SetTouristTours());
         }
 
@@ -37,7 +32,7 @@ namespace TouristTourGuide.Data.Configuration
 
             TouristTour t = new TouristTour()
             {
-                Id = new Guid("f4e0c782-d1a4-42d1-9182-90b6fb2935e4"),
+                Id = Guid.Parse("f4e0c782-d1a4-42d1-9182-90b6fb2935e4"),
                 TourName = "Beatles Tour incl. Abbey Road with Richard Porter",
                 Duaration = "2.5 hours",
                 PricePerPerson = 45.75m,                                

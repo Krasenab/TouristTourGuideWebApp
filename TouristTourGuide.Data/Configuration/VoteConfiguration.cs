@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TouristTourGuide.Data.Models.Sql.Models;
 namespace TouristTourGuide.Data.Configuration
@@ -11,11 +10,7 @@ namespace TouristTourGuide.Data.Configuration
            builder.HasOne(t=>t.TouristTour)
                 .WithMany(v=>v.Votes)
                 .HasForeignKey(tid=>tid.TouristTourId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-                
-                
-               
+                .OnDelete(DeleteBehavior.Restrict);                               
         }
     }
 }
