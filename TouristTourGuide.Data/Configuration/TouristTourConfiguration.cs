@@ -20,10 +20,8 @@ namespace TouristTourGuide.Data.Configuration
                 .WithMany(t => t.TouristTours)
                  .HasForeignKey(ca => ca.LocationId)
                 .OnDelete(DeleteBehavior.Restrict);
-           
-           
-                         
-          //  builder.HasData(SetTouristTours());
+                                                         
+            builder.HasData(SetTouristTours());
         }
 
         private List<TouristTour> SetTouristTours() 
