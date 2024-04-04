@@ -59,10 +59,10 @@
             <div class="form-header">
                 <h3>Create a Tour</h3>
             </div>
-            <form asp-controller="Tour" asp-action="Create" method="post" class="p-4">
+            <form asp-controller="TouristTour" asp-action="Create" method="post" class="p-4">
                 <div class="form-group">
                     <label asp-for="TourName"></label>
-                    <input asp-for="TourName" class="form-control" placeholder="Title...">
+                    <input asp-for="TourName" class="form-control" placeholder="Tour name">
                     <span asp-validation-for="TourName" class="small text-danger"></span>
                 </div>
 

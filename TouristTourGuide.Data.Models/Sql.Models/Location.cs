@@ -17,9 +17,8 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         [MaxLength(LocationPlaceMaxLength)]
         public string Country { get; set; }
 
-        [Required]
         [MaxLength(LocationPlaceMaxLength)]
-        public string City  { get; set; }
+        public string? City  { get; set; }
 
         [MaxLength(LocationPlaceMaxLength)]
         public string? Village { get; set; }

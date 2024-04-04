@@ -5,6 +5,6 @@ namespace TouristTourGuide.Services.Interfaces
 {
     public interface ITourService
     {
-        Task CreateTouristTour(TouristTourCreateViewModel viewModel, Guid userGuideId, int locationId);
+        void CreateTouristTour(TouristTourCreateViewModel viewModel, Guid userGuideId, int locationId);
     }
 }

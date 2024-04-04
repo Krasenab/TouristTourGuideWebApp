@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TouristTourGuide.Services;
-using TouristTourGuide.Services.Interfaces;
+using Nager.Country;
 
 namespace TouristTourGuideWebApp.Controllers
 {
     public class TouristTourController : Controller
     {
         private TourService _tourService;
-        
+       
         public TouristTourController(TourService tourService)
         {
                 this._tourService = tourService;

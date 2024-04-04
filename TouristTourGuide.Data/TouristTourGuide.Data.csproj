@@ -18,11 +18,22 @@
     <PackageReference Include="MongoDB.Bson" Version="2.24.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.24.0" />
     <PackageReference Include="MongoDB.Driver.Core" Version="2.24.0" />
+    <PackageReference Include="Nager.Country" Version="4.0.0" />
+    <PackageReference Include="Nager.Country.Translation" Version="3.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+    <PackageReference Include="System.Text.Json" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TouristTourGuide.Data.Models\TouristTourGuide.Data.Models.csproj" />
     <ProjectReference Include="..\TouristTourGuide.ViewModels\TouristTourGuide.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Datasets\countries.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
