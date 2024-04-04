@@ -1665,7 +1665,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 4, 20, 42, 57, 856, DateTimeKind.Utc).AddTicks(7401));
+                        .HasDefaultValue(new DateTime(2024, 4, 4, 21, 23, 59, 737, DateTimeKind.Utc).AddTicks(4025));
 
                     b.Property<string>("Duaration")
                         .IsRequired()

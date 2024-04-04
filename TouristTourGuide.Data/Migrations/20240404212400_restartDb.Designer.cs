@@ -12,7 +12,7 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    [Migration("20240404204258_restartDb")]
+    [Migration("20240404212400_restartDb")]
     partial class restartDb
     {
         /// <inheritdoc />
@@ -1668,7 +1668,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 4, 20, 42, 57, 856, DateTimeKind.Utc).AddTicks(7401));
+                        .HasDefaultValue(new DateTime(2024, 4, 4, 21, 23, 59, 737, DateTimeKind.Utc).AddTicks(4025));
 
                     b.Property<string>("Duaration")
                         .IsRequired()

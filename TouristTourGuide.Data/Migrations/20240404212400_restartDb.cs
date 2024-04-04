@@ -241,7 +241,7 @@ namespace TouristTourGuide.Data.Migrations
                     Includes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     WhatToBring = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
                     KnowBeforeYouGo = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 4, 4, 20, 42, 57, 856, DateTimeKind.Utc).AddTicks(7401)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 4, 4, 21, 23, 59, 737, DateTimeKind.Utc).AddTicks(4025)),
                     LocationId = table.Column<int>(type: "int", nullable: true),
                     GuideUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)

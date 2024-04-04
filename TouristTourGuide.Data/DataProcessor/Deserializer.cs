@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
 using TouristTourGuide.Data.DataProcessor.Dto;
 using TouristTourGuide.Data.Models.Sql.Models;
+using static TouristTourGuide.Common.EntityValidationConstans.LocationConstans;
 
 namespace TouristTourGuide.Data.DataProcessor
 {
     public static class Deserializer
     {
-        public static List<Location> ImportCountryName() 
+        public static List<Location> ImportLocationCountries()
         {
             List<Location> countiesNameList = new List<Location>();
             var json = File.ReadAllText(@"..\TouristTourGuide.Data\Datasets\countries.json");
@@ -16,13 +17,13 @@ namespace TouristTourGuide.Data.DataProcessor
 
             foreach (var item in getDataFromJsonFile)
             {
-                
-                if (item.Name==null) 
+
+                if (item.Name == null || item.Name.Length < LocationPlaceMinLength || item.Name.Length > LocationPlaceMaxLength) 
                 {
                     continue;
                 }
                 
-
+                
                 string currentCountryName = item.Name;
                 Location country = new Location()
                 {
