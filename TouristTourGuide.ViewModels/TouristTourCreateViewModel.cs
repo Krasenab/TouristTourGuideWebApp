@@ -57,6 +57,8 @@ namespace TouristTourGuide.ViewModels
         public int CategoryId { get; set; }
 
         public int LocationId { get; set; }
+
+        public string GuideUserId { get; set; }
        public List<CategoryFormViewModel> Categories { get; set; }
 
         public List<LocationFormViewModel> Locations { get; set; }

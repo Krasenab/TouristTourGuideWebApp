@@ -2,7 +2,6 @@
 using TouristTourGuide.ViewModels;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
-using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 namespace TouristTourGuide.Services
 {
     public class TourService : ITourService
@@ -12,7 +11,7 @@ namespace TouristTourGuide.Services
         {
                 _dbContext = db;
         }
-        public async void CreateTouristTour(TouristTourCreateViewModel viewModel, Guid userGuideId)
+        public async void CreateTouristTour(TouristTourCreateViewModel viewModel)
         {
              
             TouristTour tour = new TouristTour()

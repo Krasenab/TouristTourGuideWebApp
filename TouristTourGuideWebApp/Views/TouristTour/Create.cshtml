@@ -1,6 +1,6 @@
-﻿@model TouristTourCreateViewModel
-@{
-}
+﻿@using TouristTourGuide.Data.Models.Sql.Models
+@model TouristTourCreateViewModel
+
 
 <style>
     .form-container {
@@ -59,7 +59,7 @@
             <div class="form-header">
                 <h3>Create a Tour</h3>
             </div>
-            <form asp-controller="TouristTour" asp-action="Create" method="post" class="p-4">
+            <form asp-controller="TouristTour" asp-action="Create" method="post" asp-id="GuideUserId" class="p-4">
                 <div class="form-group">
                     <label asp-for="TourName"></label>
                     <input asp-for="TourName" class="form-control" placeholder="Tour name">

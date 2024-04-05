@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services;
 using TouristTourGuide.ViewModels;
 using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
@@ -23,21 +24,24 @@ namespace TouristTourGuideWebApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            
+            string userId = this.User.GetCurrentUserId();
+           
             TouristTourCreateViewModel model = new TouristTourCreateViewModel()
             {
                 Locations = _locationService.GetAllLocations(),
-                Categories = _categoryService.GetAllCategories()
+                Categories = _categoryService.GetAllCategories(),
+                GuideUserId = _guideUserService.GuidUserId(userId)     
             };
             return View(model);
         }
 
-
-        public IActionResult Create(TouristTourCreateViewModel model) 
+        [HttpGet]
+        public  IActionResult Create(TouristTourCreateViewModel model) 
         {
-          string getGuidUserId = _guideUserService.GuidUserId();
-            
+            //string getGuidUserId = _guideUserService.GuidUserId(ClaimPrincipalExtensions.GetCurrentUserId(this.User));
+            _tourService.CreateTouristTour(model);
             return RedirectToAction ("Index", "Home");
         }
+
     }
 }
