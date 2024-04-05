@@ -2,6 +2,8 @@
 
 using static TouristTourGuide.Common.EntityValidationConstans.TouristToursConstants;
 using static TouristTourGuide.Common.EntityValidationConstans.LocationConstans;
+using Nager.Country.CountryInfos;
+using TouristTourGuide.ViewModels.LocationViewModels;
 namespace TouristTourGuide.ViewModels
 {
     public class TouristTourCreateViewModel
@@ -47,12 +49,16 @@ namespace TouristTourGuide.ViewModels
         [Display(Name = "Location city")]
         public string LocationCity { get; set; }
 
-        [Required]
+
         [MaxLength(LocationPlaceMaxLength)]
         [MinLength(LocationPlaceMinLength)]
-        [Display(Name = "Location Country")]
-        public string LocationCountry { get; set; }
+        [Display(Name = "locality for camp etc.")]
+        public string LocationVillage { get; set; }
         public int CategoryId { get; set; }
+
+        public int LocationId { get; set; }
        public List<CategoryFormViewModel> Categories { get; set; }
+
+        public List<LocationFormViewModel> Locations { get; set; }
     }
 }

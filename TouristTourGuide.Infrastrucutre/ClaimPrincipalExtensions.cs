@@ -6,7 +6,8 @@ namespace TouristTourGuide.Infrastrucutre
     {
         public static string GetCurrentUserId(this ClaimsPrincipal applicationUser) 
         {
-            return applicationUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string currentUser =  applicationUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return currentUser;
         }
     }
 }

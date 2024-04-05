@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TouristTourGuide.Common\TouristTourGuide.Common.csproj" />
+    <ProjectReference Include="..\TouristTourGuide.Data.Models\TouristTourGuide.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TouristTourGuide.Data\TouristTourGuide.Data.csproj" />
+    <ProjectReference Include="..\TouristTourGuide.Infrastrucutre\TouristTourGuide.Infrastrucutre.csproj" />
     <ProjectReference Include="..\TouristTourGuide.ViewModels\TouristTourGuide.ViewModels.csproj" />
   </ItemGroup>
 
