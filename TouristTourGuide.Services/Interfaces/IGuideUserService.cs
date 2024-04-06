@@ -7,7 +7,7 @@ using TouristTourGuide.ViewModels.UserGuideViewModels;
 
 namespace TouristTourGuide.Services.Interfaces
 {
-    interface IGuideUserService
+   public interface IGuideUserService
     {
         Task<GuideUserFullInfoViewModel> GuidUserInfo();
         string GuidUserId(string applicationUserId);

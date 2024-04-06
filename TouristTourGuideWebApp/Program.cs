@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
-
-
+using TouristTourGuide.Infrastrucutre;
+using TouristTourGuide.Services;
+using TouristTourGuide.Services.Interfaces;
 namespace TouristTourGuideWebApp
 {
     public class Program
@@ -30,10 +31,16 @@ namespace TouristTourGuideWebApp
             )
                 .AddEntityFrameworkStores<TouristTourGuideDbContext>();
 
+            builder.Services.AddApplicationServices(typeof(ITourService));
+            builder.Services.AddApplicationServices(typeof(ILocationService));
+            builder.Services.AddApplicationServices(typeof(IGuideUserService));
+
             // MongoDB  
             var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDbConnection");
             var mongoClient = new MongoClient(mongoConnectionString);
+            
             builder.Services.AddSingleton<IMongoDatabase>(mongoClient.GetDatabase("TouristTourGuideWebApp"));
+        
 
             builder.Services.AddControllersWithViews();
             

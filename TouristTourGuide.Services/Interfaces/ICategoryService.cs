@@ -7,7 +7,7 @@ using TouristTourGuide.ViewModels;
 
 namespace TouristTourGuide.Services.Interfaces
 {
-    interface ICategoryService
+   public interface ICategoryService
     {
         List<CategoryFormViewModel> GetAllCategories();
     }

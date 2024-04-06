@@ -2,6 +2,7 @@
 using TouristTourGuide.ViewModels;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
+using Nager.Country.Currencies;
 namespace TouristTourGuide.Services
 {
     public class TourService : ITourService
@@ -11,7 +12,7 @@ namespace TouristTourGuide.Services
         {
                 _dbContext = db;
         }
-        public async void CreateTouristTour(TouristTourCreateViewModel viewModel)
+        public async void CreateTouristTour(TouristTourCreateViewModel viewModel, string guidUserId)
         {
              
             TouristTour tour = new TouristTour()
@@ -26,7 +27,8 @@ namespace TouristTourGuide.Services
                 WhatToBring = viewModel.WhatToBring,
                 KnowBeforeYouGo = viewModel.KnowBeforeYouGo,
                 LocationId = viewModel.LocationId,
-                CategoryId = viewModel.CategoryId
+                CategoryId = viewModel.CategoryId,
+                GuideUserId = Guid.Parse(viewModel.GuideUserId)
             };
 
             await _dbContext.TouristsTours.AddAsync(tour);

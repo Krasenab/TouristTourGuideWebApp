@@ -2,7 +2,7 @@
 
 namespace TouristTourGuide.Services.Interfaces
 {
-    interface ILocationService
+    public interface ILocationService
     {
         List<LocationFormViewModel> GetAllLocations();
     }

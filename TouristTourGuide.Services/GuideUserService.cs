@@ -1,7 +1,7 @@
 ﻿using TouristTourGuide.Data;
 using TouristTourGuide.Services.Interfaces;
 using TouristTourGuide.ViewModels.UserGuideViewModels;
-using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
+
 namespace TouristTourGuide.Services
 {
     public class GuideUserService : IGuideUserService
@@ -16,7 +16,12 @@ namespace TouristTourGuide.Services
             throw new NotImplementedException();
         }
 
-       public string GuidUserId(string applicationUserId) => GuidUserId(applicationUserId);
+        public string GuidUserId(string applicationUserId)
+        {
+            var toGuid = Guid.Parse(applicationUserId);
+            string getId = _dbContext.GuideUsers.Where(x =>x.Id==toGuid).FirstOrDefault().ToString();
+            return getId;
+        }
       
     }
 }
