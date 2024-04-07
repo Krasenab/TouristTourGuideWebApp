@@ -13,7 +13,7 @@ namespace TouristTourGuide.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Location> builder)
         {
-            builder.HasData(ImportLocationCountries());
+           // builder.HasData(ImportLocationCountries());
 
         }
        //TODO : refactoring . I can remova SetLocationMethod

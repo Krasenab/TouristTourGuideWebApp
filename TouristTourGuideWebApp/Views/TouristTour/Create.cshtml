@@ -59,7 +59,9 @@
             <div class="form-header">
                 <h3>Create a Tour</h3>
             </div>
-            <form asp-controller="TouristTour" asp-action="Create" method="post" asp-id="GuideUserId" class="p-4">
+
+            <form asp-controller="TouristTour" asp-action="Create" method="post" id="GuideUserId" class="p-4">
+               
                 <div class="form-group">
                     <label asp-for="TourName"></label>
                     <input asp-for="TourName" class="form-control" placeholder="Tour name">
@@ -85,6 +87,7 @@
                 </div>
 
                 <div class="form-group sm-3">
+                    <label asp-for="NotSuitableFor"></label>
                     <span asp-validation-for="NotSuitableFor" class="input-group-text"></span>
                     <textarea class="form-control" asp-for="NotSuitableFor" rows="3"  ></textarea>
                 </div>
@@ -132,7 +135,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="LocationId"></label>
+                    <label asp-for="LocationId" placeholder="Location Country Name"></label>
                     <select asp-for="LocationId" class="form-control">
                         @foreach (var location in Model.Locations)
                         {
@@ -163,7 +166,7 @@
                
 
                 <div class="text-center">
-                    <input class="btn btn-primary mt-3 w-50" type="submit" value="Create Tour" />
+                    <input class="btn btn-primary mt-3 w-50"  type="submit" value="Create Tour" />
                 </div>
             </form>
         </div>

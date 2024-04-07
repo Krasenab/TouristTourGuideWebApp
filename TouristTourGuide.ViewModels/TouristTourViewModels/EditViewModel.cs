@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TouristTourGuide.ViewModels.LocationViewModels;
 
 using static TouristTourGuide.Common.EntityValidationConstans.TouristToursConstants;
 using static TouristTourGuide.Common.EntityValidationConstans.LocationConstans;
-using TouristTourGuide.ViewModels.LocationViewModels;
 
-namespace TouristTourGuide.ViewModels
+namespace TouristTourGuide.ViewModels.TouristTourViewModels
 {
-    public class TouristTourCreateViewModel
+    public class EditViewModel
     {
         [Required]
         [MaxLength(NameMaxLength)]
@@ -15,7 +15,7 @@ namespace TouristTourGuide.ViewModels
 
         [Required]
         [MaxLength(DuarationMaxLength)]
-        [MinLength(DuarationMinLength)]        
+        [MinLength(DuarationMinLength)]
         public string Duaration { get; set; }
 
         [Range(PricePerPersonMin, PricePerPersonMax)]
@@ -30,7 +30,7 @@ namespace TouristTourGuide.ViewModels
         [MinLength(NotSuitableForMinLenght)]
         public string NotSuitableFor { get; set; }
 
-        [Required]        
+        [Required]
         public string MeetingPoint { get; set; }
 
         public string MeetingPointMapUrl { get; set; }
@@ -58,8 +58,7 @@ namespace TouristTourGuide.ViewModels
 
         public int LocationId { get; set; }
 
-        public string GuideUserId { get; set; }
-       public List<CategoryFormViewModel> Categories { get; set; }
+        public List<CategoryFormViewModel> Categories { get; set; }
 
         public List<LocationFormViewModel> Locations { get; set; }
     }

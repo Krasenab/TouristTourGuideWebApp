@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using TouristTourGuide.Infrastrucutre;
-using TouristTourGuide.Services;
 using TouristTourGuide.Services.Interfaces;
 using TouristTourGuide.ViewModels;
+using TouristTourGuide.ViewModels.TouristTourViewModels;
 using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 
 
@@ -14,6 +15,7 @@ namespace TouristTourGuideWebApp.Controllers
         private readonly ILocationService _locationService;
         private readonly ICategoryService _categoryService;
         private readonly IGuideUserService _guideUserService;
+     
         public TouristTourController(ITourService tourService,ILocationService locationService
             ,ICategoryService categoryService,IGuideUserService guideUserService)
         {
@@ -38,13 +40,24 @@ namespace TouristTourGuideWebApp.Controllers
         }
        
         [HttpPost]
-        public  IActionResult Create(TouristTourCreateViewModel model) 
+        public   IActionResult Create(TouristTourCreateViewModel model) 
         {
-            //string getGuidUserId = _guideUserService.GuidUserId(ClaimPrincipalExtensions.GetCurrentUserId(this.User));
+          
             string userId = this.User.GetCurrentUserId();
             string guideUserId = _guideUserService.GuidUserId(userId);
+
+            _locationService.CreateCityCountry(model.LocationId, model.LocationCity);
             _tourService.CreateTouristTour(model,guideUserId);
+
             return RedirectToAction ("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string touristTourId) 
+        {
+            EditViewModel editView =await _tourService.GetTourForEdit(touristTourId);
+
+            return View(editView);
         }
 
     }

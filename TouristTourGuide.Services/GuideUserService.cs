@@ -17,10 +17,11 @@ namespace TouristTourGuide.Services
         }
 
         public string GuidUserId(string applicationUserId)
-        {
-            var toGuid = Guid.Parse(applicationUserId);
-            string getId = _dbContext.GuideUsers.Where(x =>x.Id==toGuid).FirstOrDefault().ToString();
-            return getId;
+        {                     
+            var getGuide = _dbContext.GuideUsers.Where(x =>x.ApplicationUserId.ToString()==applicationUserId).FirstOrDefault();
+
+            var guideId = getGuide.Id;
+            return guideId.ToString();
         }
       
     }

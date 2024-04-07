@@ -2,7 +2,9 @@
 using TouristTourGuide.ViewModels;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
-using Nager.Country.Currencies;
+using TouristTourGuide.ViewModels.TouristTourViewModels;
+using Microsoft.EntityFrameworkCore;
+
 namespace TouristTourGuide.Services
 {
     public class TourService : ITourService
@@ -14,7 +16,8 @@ namespace TouristTourGuide.Services
         }
         public async void CreateTouristTour(TouristTourCreateViewModel viewModel, string guidUserId)
         {
-             
+            string userIdG = guidUserId;
+
             TouristTour tour = new TouristTour()
             {
                 TourName = viewModel.TourName,
@@ -28,11 +31,36 @@ namespace TouristTourGuide.Services
                 KnowBeforeYouGo = viewModel.KnowBeforeYouGo,
                 LocationId = viewModel.LocationId,
                 CategoryId = viewModel.CategoryId,
-                GuideUserId = Guid.Parse(viewModel.GuideUserId)
+                GuideUserId = Guid.Parse(guidUserId)
             };
 
             await _dbContext.TouristsTours.AddAsync(tour);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<EditViewModel> GetTourForEdit(string tourId)
+        {
+            EditViewModel getTour = await _dbContext.TouristsTours
+                .Where(x => x.Id.ToString() == tourId)
+                .Select(x=> new EditViewModel() 
+                {
+                    TourName= x.TourName,
+                    Duaration= x.Duaration,
+                    PricePerPerson= x.PricePerPerson,
+                    NotSuitableFor =x.NotSuitableFor,
+                    MeetingPoint = x.MeetingPoint,
+                    WhatToBring  = x.WhatToBring,
+                    FullDescription = x.FullDescription,
+                    LocationCity = x.Location.City,
+                    CategoryId = x.CategoryId,
+                    LocationId = x.Location.Id,
+
+
+
+                })
+                .FirstOrDefaultAsync();
+
+            throw new NotImplementedException();
         }
     }
 }

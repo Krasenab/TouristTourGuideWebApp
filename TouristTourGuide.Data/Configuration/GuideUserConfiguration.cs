@@ -15,7 +15,7 @@ namespace TouristTourGuide.Data.Configuration
         {
             GuideUser user = new GuideUser()
             {
-               Id = Guid.Parse("63c2e7f4-2481-4cc7-9233-c102108a6a17"),
+               Id = Guid.Parse("E92DF1B5-20F5-49AE-8917-D2C378EA18C1"),
                 Name = "Richard Porter",
                 LegalFirmName = "London Northwest.com Ltd",
                 RegisteredAddress = "75, Birchen Grove NW9 8RY London, London",
