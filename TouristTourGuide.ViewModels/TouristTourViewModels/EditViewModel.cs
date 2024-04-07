@@ -8,6 +8,12 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
 {
     public class EditViewModel
     {
+        public EditViewModel()
+        {
+           
+        }
+        public string TourId { get; set; }
+
         [Required]
         [MaxLength(NameMaxLength)]
         [MinLength(NameMinLength)]
@@ -54,12 +60,14 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         [MinLength(LocationPlaceMinLength)]
         [Display(Name = "locality for camp etc.")]
         public string LocationVillage { get; set; }
+      
+
+     
+
         public int CategoryId { get; set; }
+        public List<CategoryFormViewModel> Categories { get; set; } = new List<CategoryFormViewModel>();
 
-        public int LocationId { get; set; }
-
-        public List<CategoryFormViewModel> Categories { get; set; }
-
-        public List<LocationFormViewModel> Locations { get; set; }
+        public int? LocationId { get; set; }
+        public List<LocationFormViewModel> Locations { get; set; } = new List<LocationFormViewModel>();
     }
 }

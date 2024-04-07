@@ -15,7 +15,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
 
         [Required]
         [MaxLength(NameMaxLength)]
-        public string Name { get; set; }
+        public string Name { get; set; } 
 
         [Required]
         [MaxLength(LegalFirmNameMaxLength)]
@@ -31,7 +31,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Email { get; set; }  
 
         [MaxLength(PhoneNumberMaxLenght)]
         public string PhoneNumber { get; set; }

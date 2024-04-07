@@ -3,6 +3,7 @@ using TouristTourGuide.ViewModels;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.ViewModels.TouristTourViewModels;
+using TouristTourGuide.ViewModels.LocationViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace TouristTourGuide.Services
@@ -38,29 +39,49 @@ namespace TouristTourGuide.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<EditViewModel> GetTourForEdit(string tourId)
+        public void Edit(EditViewModel editViewModel)
         {
-            EditViewModel getTour = await _dbContext.TouristsTours
+            TouristTour ?tour = _dbContext.TouristsTours.Where(x => x.Id.ToString() == editViewModel.TourId)
+                .FirstOrDefault();
+            tour.TourName = editViewModel.TourName;
+            tour.Duaration = editViewModel.Duaration;
+            tour.MeetingPoint = editViewModel.MeetingPoint;
+            tour.MeetingPointMapUrl = editViewModel.MeetingPointMapUrl;
+            tour.FullDescription = editViewModel.FullDescription;
+            tour.PricePerPerson = editViewModel.PricePerPerson;
+            tour.LocationId = editViewModel.LocationId;
+            tour.CategoryId = editViewModel.CategoryId;
+            tour.WhatToBring = editViewModel.WhatToBring;
+            tour.KnowBeforeYouGo = editViewModel.KnowBeforeYouGo;
+
+            _dbContext.SaveChanges();
+        }
+
+        public async Task<EditViewModel> GetTourForEdit(string tourId,List<LocationFormViewModel> locations,List<CategoryFormViewModel> categories)
+        {
+            List<LocationFormViewModel> locationss = locations;
+            List<CategoryFormViewModel> categoryFormViewModels = categories;
+            EditViewModel ?getTour = await _dbContext.TouristsTours
                 .Where(x => x.Id.ToString() == tourId)
                 .Select(x=> new EditViewModel() 
                 {
+                    TourId = x.Id.ToString(),
                     TourName= x.TourName,
                     Duaration= x.Duaration,
                     PricePerPerson= x.PricePerPerson,
                     NotSuitableFor =x.NotSuitableFor,
                     MeetingPoint = x.MeetingPoint,
                     WhatToBring  = x.WhatToBring,
-                    FullDescription = x.FullDescription,
+                    FullDescription = x.FullDescription,                    
                     LocationCity = x.Location.City,
                     CategoryId = x.CategoryId,
-                    LocationId = x.Location.Id,
-
-
-
+                    LocationId = x.LocationId,
+                    Locations = locations,
+                    Categories = categories 
                 })
                 .FirstOrDefaultAsync();
 
-            throw new NotImplementedException();
+            return getTour;
         }
     }
 }

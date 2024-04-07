@@ -48,7 +48,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         public string? KnowBeforeYouGo { get; set; }
         public DateTime CreatedOn { get; set; }
 
-        [ForeignKey(nameof(Location))]
+        [ForeignKey(nameof(LocationId))]
         public int? LocationId { get; set; }
         public Location? Location { get; set; }
 
