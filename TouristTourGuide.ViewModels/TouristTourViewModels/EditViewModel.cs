@@ -3,6 +3,7 @@ using TouristTourGuide.ViewModels.LocationViewModels;
 
 using static TouristTourGuide.Common.EntityValidationConstans.TouristToursConstants;
 using static TouristTourGuide.Common.EntityValidationConstans.LocationConstans;
+using TouristTourGuide.ViewModels.CategoryVIewModel;
 
 namespace TouristTourGuide.ViewModels.TouristTourViewModels
 {
@@ -38,7 +39,6 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
 
         [Required]
         public string MeetingPoint { get; set; }
-
         public string MeetingPointMapUrl { get; set; }
 
         [Required]
@@ -55,19 +55,15 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         [Display(Name = "Location city")]
         public string LocationCity { get; set; }
 
-
         [MaxLength(LocationPlaceMaxLength)]
         [MinLength(LocationPlaceMinLength)]
         [Display(Name = "locality for camp etc.")]
         public string LocationVillage { get; set; }
-      
-
-     
-
+            
         public int CategoryId { get; set; }
-        public List<CategoryFormViewModel> Categories { get; set; } = new List<CategoryFormViewModel>();
-
+        public List<CategoryFormViewModel> ?Categories { get; set; } = new List<CategoryFormViewModel>();
         public int? LocationId { get; set; }
-        public List<LocationFormViewModel> Locations { get; set; } = new List<LocationFormViewModel>();
+        
+        public List<LocationFormViewModel> ?Locations { get; set; } = new List<LocationFormViewModel>();
     }
 }

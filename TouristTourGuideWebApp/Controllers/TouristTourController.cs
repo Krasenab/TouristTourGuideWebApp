@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services.Interfaces;
-using TouristTourGuide.ViewModels;
 using TouristTourGuide.ViewModels.LocationViewModels;
 using TouristTourGuide.ViewModels.TouristTourViewModels;
 using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
@@ -54,12 +53,12 @@ namespace TouristTourGuideWebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string touristTourId)
+        public async Task<IActionResult> Edit(string Id)
         {
-            var getLocations = _locationService.GetAllLocations();
-            var getCategories = _categoryService.GetAllCategories();
-              EditViewModel  editViewModel = await _tourService.GetTourForEdit(touristTourId
-                  ,getLocations,getCategories);  
+             var  editViewModel = await _tourService.GetTourForEdit(Id);
+             editViewModel.Categories = _categoryService.GetAllCategories();
+             editViewModel.Locations = _locationService.GetAllLocations();
+         
            
             return View(editViewModel);
         }
@@ -68,7 +67,7 @@ namespace TouristTourGuideWebApp.Controllers
         public IActionResult Edit(EditViewModel editViewModel)
         {
            
-            _tourService.Edit(editViewModel);
+            _tourService.EditTour(editViewModel);
 
             return RedirectToAction("Index", "Home");
         }

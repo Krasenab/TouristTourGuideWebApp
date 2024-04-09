@@ -2,7 +2,7 @@
 
 using TouristTourGuide.Data;
 using TouristTourGuide.Services.Interfaces;
-using TouristTourGuide.ViewModels;
+using TouristTourGuide.ViewModels.CategoryVIewModel;
 
 namespace TouristTourGuide.Services
 {

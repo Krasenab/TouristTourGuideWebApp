@@ -59,7 +59,7 @@
             </div>
 
             <form asp-controller="TouristTour" asp-action="Edit"  method="post"   class="p-4">
-
+                <input type="hidden" asp-for="@Model.TourId" />
                 <div class="form-group">
                     <label asp-for="TourName"></label>
                     <input asp-for="TourName" class="form-control" placeholder="Tour name">
@@ -117,14 +117,6 @@
                 </div>
 
 
-
-                <div class="form-group my-2 my-lg-0">
-                    <label asp-for="LocationVillage"></label>
-                    <input asp-for="LocationVillage" class="form-control  mr-sm-2"
-                           placeholder="Country location">
-                    <span asp-validation-for="LocationVillage" class="small text-danger"></span>
-                </div>
-
                 <div class="form-group my-2 my-lg-0">
                     <label asp-for="LocationCity"></label>
                     <input asp-for="LocationCity" class="form-control  mr-sm-2"
@@ -132,8 +124,9 @@
                     <span asp-validation-for="LocationCity" class="small text-danger"></span>
                 </div>
 
+
                 <div class="form-group">
-                    <label asp-for="LocationId" placeholder="Location Country Name"></label>
+                    <label asp-for="LocationId"></label>
                     <select asp-for="LocationId" class="form-control">
                         @foreach (var location in Model.Locations)
                         {

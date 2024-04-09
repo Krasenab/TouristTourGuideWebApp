@@ -1,5 +1,4 @@
 ﻿using TouristTourGuide.Services.Interfaces;
-using TouristTourGuide.ViewModels;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.ViewModels.TouristTourViewModels;
@@ -39,7 +38,7 @@ namespace TouristTourGuide.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public void Edit(EditViewModel editViewModel)
+        public void EditTour(EditViewModel editViewModel)
         {
             TouristTour ?tour = _dbContext.TouristsTours.Where(x => x.Id.ToString() == editViewModel.TourId)
                 .FirstOrDefault();
@@ -57,31 +56,30 @@ namespace TouristTourGuide.Services
             _dbContext.SaveChanges();
         }
 
-        public async Task<EditViewModel> GetTourForEdit(string tourId,List<LocationFormViewModel> locations,List<CategoryFormViewModel> categories)
+        public async Task<EditViewModel> GetTourForEdit(string tourId)
         {
-            List<LocationFormViewModel> locationss = locations;
-            List<CategoryFormViewModel> categoryFormViewModels = categories;
-            EditViewModel ?getTour = await _dbContext.TouristsTours
+
+            TouristTour? getTour = await _dbContext.TouristsTours
                 .Where(x => x.Id.ToString() == tourId)
-                .Select(x=> new EditViewModel() 
-                {
-                    TourId = x.Id.ToString(),
-                    TourName= x.TourName,
-                    Duaration= x.Duaration,
-                    PricePerPerson= x.PricePerPerson,
-                    NotSuitableFor =x.NotSuitableFor,
-                    MeetingPoint = x.MeetingPoint,
-                    WhatToBring  = x.WhatToBring,
-                    FullDescription = x.FullDescription,                    
-                    LocationCity = x.Location.City,
-                    CategoryId = x.CategoryId,
-                    LocationId = x.LocationId,
-                    Locations = locations,
-                    Categories = categories 
-                })
                 .FirstOrDefaultAsync();
 
-            return getTour;
+            EditViewModel viewModel = new EditViewModel()
+            {
+                TourId = getTour.Id.ToString(),
+                TourName = getTour.TourName,
+                Duaration = getTour.Duaration,
+                PricePerPerson = getTour.PricePerPerson,
+                NotSuitableFor = getTour.NotSuitableFor,
+                MeetingPoint = getTour.MeetingPoint,
+                WhatToBring = getTour.WhatToBring,
+                FullDescription = getTour.FullDescription,
+                KnowBeforeYouGo = getTour.KnowBeforeYouGo,
+                                
+            };
+
+
+            int brak = 0;
+            return viewModel;
         }
     }
 }

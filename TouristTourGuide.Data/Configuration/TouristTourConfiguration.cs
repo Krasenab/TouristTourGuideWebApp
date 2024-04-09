@@ -21,7 +21,7 @@ namespace TouristTourGuide.Data.Configuration
                  .HasForeignKey(ca => ca.LocationId)
                 .OnDelete(DeleteBehavior.Restrict);
                                                          
-           // builder.HasData(SetTouristTours());
+            builder.HasData(SetTouristTours());
         }
 
         private List<TouristTour> SetTouristTours() 
@@ -37,7 +37,7 @@ namespace TouristTourGuide.Data.Configuration
                 Highlights = "Discover where The Beatles recorded, lived, and socialized in 1960s London and many others",
                 FullDescription = "Experience the London of The Beatles with Richard Porter, author of the book Guide to the Beatles London." +
                 "Discover the locations and landmarks where The Fab Four recorded, lived, and socialized in London during the Swinging Sixties.",
-                GuideUserId = Guid.Parse("63c2e7f4-2481-4cc7-9233-c102108a6a17"),
+                GuideUserId = Guid.Parse("E92DF1B5-20F5-49AE-8917-D2C378EA18C1"),
                 MeetingPoint = "Meet Richard outside Exit 1 of Tottenham Court Road Station. He will be holding 'Beatles Walks' leaflets and wearing a Beatles shirt or hat.",
                 CategoryId = 1,
                 LocationId = 1

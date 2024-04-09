@@ -16,7 +16,7 @@ namespace TouristTourGuide.Data.Configuration
             builder.HasData(ImportLocationCountries());
 
         }
-       //TODO : refactoring . I can remova SetLocationMethod
+      
         private List<Location> SetLocation()
         {
             var deserilalizerLocationCountries = ImportLocationCountries();

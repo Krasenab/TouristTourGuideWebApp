@@ -1,4 +1,4 @@
-﻿namespace TouristTourGuide.ViewModels
+﻿namespace TouristTourGuide.ViewModels.CategoryVIewModel
 {
     public class CategoryFormViewModel
     {

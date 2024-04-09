@@ -61,5 +61,12 @@ namespace TouristTourGuide.Services
 
             return locations;
         }
+
+        public async Task<LocationFormViewModel> GetLocationCity(string tourloccity)
+        {
+
+
+            return null;
+        }
     }
 }
