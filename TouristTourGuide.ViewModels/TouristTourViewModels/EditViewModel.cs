@@ -55,15 +55,10 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         [Display(Name = "Location city")]
         public string LocationCity { get; set; }
 
-        [MaxLength(LocationPlaceMaxLength)]
-        [MinLength(LocationPlaceMinLength)]
-        [Display(Name = "locality for camp etc.")]
-        public string LocationVillage { get; set; }
             
         public int CategoryId { get; set; }
         public List<CategoryFormViewModel> ?Categories { get; set; } = new List<CategoryFormViewModel>();
-        public int? LocationId { get; set; }
-        
+        public int? LocationId { get; set; }        
         public List<LocationFormViewModel> ?Locations { get; set; } = new List<LocationFormViewModel>();
     }
 }

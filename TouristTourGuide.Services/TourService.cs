@@ -74,6 +74,8 @@ namespace TouristTourGuide.Services
                 WhatToBring = getTour.WhatToBring,
                 FullDescription = getTour.FullDescription,
                 KnowBeforeYouGo = getTour.KnowBeforeYouGo,
+                LocationId = getTour.LocationId,
+                CategoryId = getTour.CategoryId
                                 
             };
 

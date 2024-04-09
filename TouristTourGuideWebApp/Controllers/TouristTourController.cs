@@ -28,8 +28,7 @@ namespace TouristTourGuideWebApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-         
-           
+                    
             TouristTourCreateViewModel model = new TouristTourCreateViewModel()
             {
                 Locations = _locationService.GetAllLocations(),
@@ -40,7 +39,7 @@ namespace TouristTourGuideWebApp.Controllers
         }
        
         [HttpPost]
-        public   IActionResult Create(TouristTourCreateViewModel model) 
+        public IActionResult Create(TouristTourCreateViewModel model) 
         {
           
             string userId = this.User.GetCurrentUserId();
