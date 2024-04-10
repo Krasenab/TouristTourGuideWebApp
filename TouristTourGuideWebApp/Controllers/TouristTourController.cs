@@ -55,6 +55,7 @@ namespace TouristTourGuideWebApp.Controllers
         public async Task<IActionResult> Edit(string Id)
         {
              var  editViewModel = await _tourService.GetTourForEdit(Id);
+             editViewModel.LocationCity = await _locationService.GetTourCity(Id);      
              editViewModel.Categories = _categoryService.GetAllCategories();
              editViewModel.Locations = _locationService.GetAllLocations();
          
@@ -66,6 +67,12 @@ namespace TouristTourGuideWebApp.Controllers
         public IActionResult Edit(EditViewModel editViewModel)
         {
            
+            if (!_locationService.isCountryCityExist(editViewModel.LocationId, editViewModel.LocationCity))
+            {
+                int locationId = editViewModel.LocationId ?? 0; // if editViewModel.LocationId is null set 0 this is bcouse prop in my view model is type int?
+
+                _locationService.CreateCityCountry(locationId ,editViewModel.LocationCity);
+            }
             _tourService.EditTour(editViewModel);
 
             return RedirectToAction("Index", "Home");

@@ -52,6 +52,7 @@ namespace TouristTourGuide.Services
             tour.CategoryId = editViewModel.CategoryId;
             tour.WhatToBring = editViewModel.WhatToBring;
             tour.KnowBeforeYouGo = editViewModel.KnowBeforeYouGo;
+            
 
             _dbContext.SaveChanges();
         }
@@ -62,6 +63,8 @@ namespace TouristTourGuide.Services
             TouristTour? getTour = await _dbContext.TouristsTours
                 .Where(x => x.Id.ToString() == tourId)
                 .FirstOrDefaultAsync();
+
+           
 
             EditViewModel viewModel = new EditViewModel()
             {

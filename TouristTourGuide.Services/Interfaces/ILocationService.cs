@@ -6,6 +6,11 @@ namespace TouristTourGuide.Services.Interfaces
     {
         List<LocationFormViewModel> GetAllLocations();
         void CreateCityCountry(int countryId,string cityName);
-        Task<LocationFormViewModel> GetLocationCity(string city);
+
+        Task<string> GetTourCity(string tourLocationId);
+
+        bool isCountryCityExist(int? locationId, string city);
+
+        Task<LocationFormViewModel> LocationByTourId(string tourId);
     }
 }

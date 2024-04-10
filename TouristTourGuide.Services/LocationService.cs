@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Amazon.Runtime.Internal.Auth;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.Services.Interfaces;
@@ -62,11 +64,44 @@ namespace TouristTourGuide.Services
             return locations;
         }
 
-        public async Task<LocationFormViewModel> GetLocationCity(string tourloccity)
+        public async Task<LocationFormViewModel> LocationByTourId(string tourId)
         {
+            var location = await _dbContext.Locations
+                .Where(t => t.TouristTours.Any(id => id.Id.ToString() == tourId))
+                .Select(l => new LocationFormViewModel()
+                {
+                    City = l.City,
+                    Country = l.Country
+                })
+                .FirstOrDefaultAsync();
 
 
-            return null;
+            return location;
+
+        }
+
+        public bool isCountryCityExist(int? locationId,string city)
+        {
+            bool l = _dbContext.Locations.Any(c => c.Id == locationId &&
+            c.City == city);
+
+            if (!l)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+     
+
+        public async Task<string> GetTourCity(string tourId)
+        {
+            string? result = await _dbContext.Locations.
+                Where(x => x.TouristTours.Any(id=>id.Id.ToString()==tourId))
+                .Select(c => c.City).FirstOrDefaultAsync();
+
+            return result;
         }
     }
 }
