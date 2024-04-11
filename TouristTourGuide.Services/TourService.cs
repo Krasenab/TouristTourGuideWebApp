@@ -86,5 +86,33 @@ namespace TouristTourGuide.Services
             int brak = 0;
             return viewModel;
         }
+
+        public async Task<DetailsViewModel> TourById(string tourId)
+        {
+            
+            var getTour = await _dbContext.TouristsTours
+                .Where(id=>id.Id.ToString()==tourId)
+                .Select( t=> new DetailsViewModel() 
+                {
+                    Id = t.Id.ToString(),
+                    TourName= t.TourName,
+                    Duaration = t.Duaration,
+                    PricePerPerson = t.PricePerPerson,
+                    Highlights = t.Highlights,
+                    FullDescription = t.FullDescription,
+                    NotSuitableFor = t.NotSuitableFor,
+                    MeetingPoint = t.MeetingPoint,
+                    MeetingPointMapUrl = t.MeetingPointMapUrl,
+                    Includes = t.Includes,
+                    WhatToBring = t.WhatToBring,
+                    KnowBeforeYouGo = t.KnowBeforeYouGo,
+                    CreatedOn = t.CreatedOn.ToString(),
+                    LocationCountry = t.Location.Country,
+                    LocationCity = t.Location.City,
+                    Category = t.Category.Name
+                })
+                .FirstOrDefaultAsync();
+            return getTour;            
+        }
     }
 }
