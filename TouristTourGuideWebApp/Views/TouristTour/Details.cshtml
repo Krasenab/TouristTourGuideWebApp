@@ -1,4 +1,4 @@
-﻿
+﻿@model DetailsViewModel;
 <style>
     * {
         box-sizing: border-box;
@@ -79,32 +79,40 @@
 <div class="container mt-5">
 
     <div class="text-center mb-5">
-        <h2>@Model.Title</h2>
+        <h2>@Model.TourName</h2>
     </div>
 
-    @if (Model.Images != null && Model.Images.Count > 0)
+    @if (Model.ApplicationImages != null && Model.ApplicationImages.Count > 0)
     {
         <div class="position-relative">
-            @for (var i = 0; i < Model.Images.Count; i++)
+            @for (var i = 0; i < Model.ApplicationImages.Count; i++)
             {
                 <div class="mySlides">
-                    <div class="numbertext">@(i + 1) / @Model.Images.Count </div>
-                    <img src="@Url.Action("GetImage", "Tour", new { fileName = Model.Images[i].FileName })" style="width:100%; max-height: 500px;">
+                    <div class="numbertext">@(i + 1) / @Model.ApplicationImages.Count </div>
+                   @*  <img src="@Url.Action("GetImage", "Tour", new { fileName = Model.ApplicationImages[i].FileName })" style="width:100%; max-height: 500px;"> *@
+
+                    <img resource="@Model.ApplicationImages[i].FileData" />
+
                    @*  @if (isUserGuide) *@
                     
-                        <button onclick="deleteImage('@Model.Images[i].FileName', '@Model.Id')" class="btn btn-danger delete-button">Delete</button>
+                        <button onclick="deleteImage('@Model.ApplicationImages[i].FileName', '@Model.Id')" class="btn btn-danger delete-button">Delete</button>
                     
 
                 </div>
+            }
+            @foreach (var item in Model.ApplicationImages)
+            {
+               
             }
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
             <div class="text-center mt-3">
-                @for (var i = 0; i < Model.Images.Count; i++)
+                @for (var i = 0; i < Model.ApplicationImages.Count; i++)
                 {
-                    <img class="demo cursor" src="@Url.Action("GetImage", "Tour", new { fileName = Model.Images[i].FileName })" style="width:80px;" onclick="currentSlide(@i + 1)" alt="@Model.Images[i].FileName">
-                    //бутон за тестване
+                   @*  <img class="demo cursor" src="@Url.Action("GetImage", "Tour", new { fileName = Model.Images[i].FileName })" style="width:80px;" onclick="currentSlide(@i + 1)" alt="@Model.Images[i].FileName"> *@
+                  <img resource="@Model.ApplicationImages[i].FileData">
+                   //бутон за тестване
                     //<button onclick="deleteImage('@Model.Images[i].FileName', '@Model.Id')" class="btn btn-danger">Delete</button>
                 }
             </div>
@@ -121,12 +129,12 @@
         <div class="col-lg-6">
             <h4>Details</h4>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Duration:</strong> @Model.Duration</li>
+                <li class="list-group-item"><strong>Duration:</strong> @Model.Duaration</li>
                 <li class="list-group-item"><strong>Price Per Person:</strong> @Model.PricePerPerson.ToString("C2")</li>
                 <li class="list-group-item"><strong>Category:</strong> @Model.Category</li>
-                <li class="list-group-item"><strong>Location:</strong> @Model.Location</li>
+                <li class="list-group-item"><strong>Location:</strong> @Model.LocationCountry</li>
                 <li class="list-group-item"><strong>Meeting Point:</strong> @Model.MeetingPoint</li>
-                <li class="list-group-item"><strong>What to bring and know before you go :</strong> @Model.ImportInformation</li>
+                <li class="list-group-item"><strong>What to bring and know before you go :</strong> @Model.KnowBeforeYouGo</li>
                 <li class="list-group-item"><strong>Category: </strong> @Model.Category</li>
             </ul>
         </div>

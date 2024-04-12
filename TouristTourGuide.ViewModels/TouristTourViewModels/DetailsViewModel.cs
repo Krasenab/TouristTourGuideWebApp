@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using TouristTourGuide.Data.Models.Sql.Models;
+﻿using Microsoft.AspNetCore.Http;
 using TouristTourGuide.ViewModels.AppImageViewModels;
-using Microsoft.AspNetCore.Http;
 
 namespace TouristTourGuide.ViewModels.TouristTourViewModels
 {
@@ -25,6 +22,6 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         public string LocationCity { get; set; }
         public string GuideUserId { get; set; }
         public string Category { get; set; }
-        public List<FormFile> ApplicationImages { get; set; } = new List<FormFile>();
+        public List<AppImagesViewModel> ApplicationImages { get; set; } = new List<AppImagesViewModel>();
     }
 }

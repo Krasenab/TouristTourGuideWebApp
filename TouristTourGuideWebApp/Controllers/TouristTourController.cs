@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services.Interfaces;
-using TouristTourGuide.ViewModels.LocationViewModels;
 using TouristTourGuide.ViewModels.TouristTourViewModels;
 using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 
@@ -15,14 +13,17 @@ namespace TouristTourGuideWebApp.Controllers
         private readonly ILocationService _locationService;
         private readonly ICategoryService _categoryService;
         private readonly IGuideUserService _guideUserService;
+        private readonly IImageService _imageServie;
 
         public TouristTourController(ITourService tourService, ILocationService locationService
-            , ICategoryService categoryService, IGuideUserService guideUserService)
+            , ICategoryService categoryService, IGuideUserService guideUserService, IImageService imageServie)
         {
             this._tourService = tourService;
             this._locationService = locationService;
             this._categoryService = categoryService;
             this._guideUserService = guideUserService;
+            this._imageServie = imageServie;
+
         }
 
         [HttpGet]
@@ -83,8 +84,25 @@ namespace TouristTourGuideWebApp.Controllers
         {
          
             var detailsViewModel = await _tourService.TourById(id);
+            if( await _imageServie.GetTourImgMongoDb(id)!=null)
+            {
+                detailsViewModel.ApplicationImages = await _imageServie.GetTourImgMongoDb(id);
+            }
 
             return View(detailsViewModel);
+        }
+
+        public async Task<IActionResult> AddImage(string tourId, IFormFile imageFile)
+        {
+            bool isValid = _imageServie.IsFileExtensionValid(imageFile);
+
+
+            if (!isValid)
+            {
+                return BadRequest("Invalid image extension");
+            }
+            _imageServie.AddTourImage(tourId, imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User));
+            return Ok();
         }
 
     }
