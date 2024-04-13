@@ -83,6 +83,7 @@ namespace TouristTourGuideWebApp.Controllers
         public async Task<IActionResult> Details(string id) 
         {
          
+
             var detailsViewModel = await _tourService.TourById(id);
             if( await _imageServie.GetTourImgMongoDb(id)!=null)
             {
@@ -92,6 +93,7 @@ namespace TouristTourGuideWebApp.Controllers
             return View(detailsViewModel);
         }
 
+        [HttpPost]
         public async Task<IActionResult> AddImage(string tourId, IFormFile imageFile)
         {
             bool isValid = _imageServie.IsFileExtensionValid(imageFile);
@@ -101,7 +103,13 @@ namespace TouristTourGuideWebApp.Controllers
             {
                 return BadRequest("Invalid image extension");
             }
-            _imageServie.AddTourImage(tourId, imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User));
+            if (imageFile !=null && imageFile.Length >0) 
+            {
+               await _imageServie.AddTourImage(tourId, imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User));
+                await _imageServie.AddTourImageFileMongoDb(imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User), tourId);
+                return RedirectToAction("Index", "Home");
+            }
+           
             return Ok();
         }
 

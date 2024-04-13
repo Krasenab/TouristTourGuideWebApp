@@ -1,0 +1,74 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+.mySlides {
+    display: none;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    padding: 8px;
+    margin-top: -25px;
+    color: white;
+    font-size: 24px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: background-color 0.3s ease;
+    text-decoration: none
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+    .prev:hover, .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+.numbertext {
+    color: #f2f2f2;
+    font-size: 14px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+}
+
+.column {
+    float: left;
+    width: 16.66%;
+    padding: 5px;
+}
+
+.demo {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+    .demo:hover, .active {
+        opacity: 1;
+    }
+
+
+.btn-primary {
+    background-color: #007BFF;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }

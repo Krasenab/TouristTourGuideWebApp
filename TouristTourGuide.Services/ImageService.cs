@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using TouristTourGuide.Data;
@@ -26,14 +27,14 @@ namespace TouristTourGuide.Services
         
         }
 
-        public async void AddTourImageFileMongoDb(IFormFile imageFile, string userId, string tourId)
+        public async Task AddTourImageFileMongoDb(IFormFile imageFile, string userId, string tourId)
         {
-            string fileName = _dbContext.AppImages.Where(x => x.TouristTourId == Guid.Parse(tourId))
+            string fileName = await  _dbContext.AppImages.Where(x => x.TouristTourId == Guid.Parse(tourId))
                 .Select(x => x.FileName)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync(); 
 
-            using (MemoryStream memoryStreem = new MemoryStream())
-            {
+           await using (MemoryStream memoryStreem = new MemoryStream())
+           {
                 await imageFile.CopyToAsync(memoryStreem);
 
                 AppImageFile imgFile = new AppImageFile()
@@ -48,16 +49,19 @@ namespace TouristTourGuide.Services
             };
         }
 
-        public void AddTourImage(string tourId, IFormFile imageFile, string userId)
+        public async Task AddTourImage(string tourId, IFormFile imageFile, string userId)
         {
+            string generateFileNewFileName = GenerateUnicFileName(imageFile.FileName);
+
             AppImages img = new AppImages()
             {
-                FileName = GenerateUnicFileName(imageFile.FileName),
+                FileName = generateFileNewFileName,
                 TouristTourId = Guid.Parse(tourId),
                 ApplicationUserId = Guid.Parse(userId),
             };
-            _dbContext.AppImages.Add(img);
-            _dbContext.SaveChanges();
+           await _dbContext.AppImages.AddAsync(img);
+            await _dbContext.SaveChangesAsync();
+ 
         }
 
         public bool IsFileExtensionValid(IFormFile imageFile)
@@ -83,12 +87,6 @@ namespace TouristTourGuide.Services
                     TouristTourId = x.TouristTourId
                 })
                 .ToListAsync();
-                
-
-            if (fileImges.Count==0)
-            {
-               
-            }
 
             return fileImges;
 
