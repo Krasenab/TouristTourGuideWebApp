@@ -22,6 +22,8 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         public string LocationCity { get; set; }
         public string GuideUserId { get; set; }
         public string Category { get; set; }
-        public List<AppImagesViewModel> ApplicationImages { get; set; } = new List<AppImagesViewModel>();
+        public List<AppImagesViewModel> AllTourApplicationImages { get; set; } = new List<AppImagesViewModel>();
+
+        public List<byte[]> Top3TourImages { get; set; } = new List<byte[]>();
     }
 }

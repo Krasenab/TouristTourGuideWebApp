@@ -82,19 +82,16 @@ namespace TouristTourGuide.Services
 
         public bool isCountryCityExist(int? locationId,string city)
         {
-            bool l = _dbContext.Locations.Any(c => c.Id == locationId &&
+            bool isExistCoucationCountry = _dbContext.Locations.Any(c => c.Id == locationId &&
             c.City == city);
-
-            if (!l)
+            if (!isExistCoucationCountry)
             {
                 return false;
             }
-
             return true;
         }
 
-     
-
+    
         public async Task<string> GetTourCity(string tourId)
         {
             string? result = await _dbContext.Locations.

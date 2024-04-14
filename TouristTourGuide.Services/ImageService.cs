@@ -2,11 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.MongoDb.Models;
 using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.Services.Interfaces;
 using TouristTourGuide.ViewModels.AppImageViewModels;
+using TouristTourGuide.ViewModels.ApplicationImageViewModels;
 using static TouristTourGuide.Infrastrucutre.AppFileExtension;
 
 namespace TouristTourGuide.Services
@@ -90,6 +92,28 @@ namespace TouristTourGuide.Services
 
             return fileImges;
 
+        }
+
+        public async Task<List<AppImagesViewModel>> GetTop3TourImagesFileMongoDb(string tourId)
+        {
+            int isTourHaveThreeAppPic = _dbContext.AppImages
+               .Where(x => x.TouristTourId.ToString() == tourId)
+               .Count();
+
+       
+            var getTourImagesSql = await  _dbContext.AppImages
+                .Where(t => t.TouristTourId.ToString() == tourId)
+                .Select(x => new AppImageSqlMetaDataViewModel()
+                {
+                    FileName = x.FileName,
+                    ApplicationUserId = x.ApplicationUserId.ToString(),
+                    TouristTourId = x.TouristTourId.ToString()
+                })
+                .ToListAsync();
+
+
+            return null;
+          
         }
     }
 }
