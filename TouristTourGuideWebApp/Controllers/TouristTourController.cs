@@ -36,6 +36,7 @@ namespace TouristTourGuideWebApp.Controllers
                 Categories = _categoryService.GetAllCategories()
 
             };
+
             return View(model);
         }
 
