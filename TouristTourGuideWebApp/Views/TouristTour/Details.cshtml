@@ -6,27 +6,31 @@
     <title>@Model.TourName</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
-    
+
     <style>
-              
+
         .gallery-item {
             margin-bottom: 15px;
         }
+
         .details-list {
-            background-color: #f7f7f7; 
-            border-radius: 5px; 
-            padding: 15px; 
-        }      
+            background-color: #f7f7f7;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
         .upload-form {
             background-color: #f7f7f7;
             border-radius: 5px;
             padding: 15px;
         }
+
         .footer-buttons .btn {
             margin-right: 10px;
         }
     </style>
 </head>
+
 <body>
 
     <div class="text-center mb-5">
@@ -38,22 +42,86 @@
     {
         <div class="container-xxl py-5 destination">
             <div class="row g-3">
-                @foreach (var image in Model.AllTourApplicationImages)
-                {
-                    <div class="col-lg-3 col-md-4 col-6">
-                        <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(image.FileData))" data-lightbox="gallery" data-title="@image.FileName">
-                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(image.FileData))" alt="@image.FileName" class="img-fluid">
-                        </a>
+                <div class="col-lg-7 col-md-6">
+                    <div class="row g-3">
+                        @for (int i = 0; i < Model.AllTourApplicationImages.Count; i++)
+                        {
+                            @if (i == 0)
+                            {
+                                <div class="col-lg-12 col-md-12  @(i >= 3 ? "d-none" : "") wow zoomIn" data-wow-delay="0.1s">
+                                    <a class="position-relative d-block overflow-hidden" href="@("data:image/jpeg;base64,"+ Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
+                                       data-lightbox="gallery" data-title="@Model.AllTourApplicationImages[i].FileName">
+
+                                        <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(@Model.AllTourApplicationImages[i].FileData))"
+                                             alt="" class="img-fluid">
+                                    </a>
+                                </div>
+                            }
+                            else if (i == 1)
+                            {
+                                <div class="col-lg-6 col-md-12  wow zoomIn" data-wow-delay="0.3s">
+                                    <a class="position-relative d-block overflow-hidden" href="@("data:image/jpeg;base64,"+ Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
+                                       data-lightbox="gallery" data-title="@Model.AllTourApplicationImages[i].FileName">
+
+                                        <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
+                                             alt="" class="img-fluid">
+                                    </a>
+                                </div>
+                            }
+                            else if (i == 2)
+                            {
+                                <div class="col-lg-6 col-md-12 wow zoomIn" data-wow-delay="0.5s">
+                                    <a class="position-relative d-block overflow-hidden" href="@("data:image/jpeg;base64,"+ Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
+                                       data-lightbox="gallery" data-title="@Model.AllTourApplicationImages[i].FileName">
+
+                                        <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
+                                             alt="" class="img-fluid">
+                                    </a>
+                                </div>
+                            }
+                            else if (i == 3)
+                            {
+                                <div class="col-lg-5 col-md-6 wow zoomIn" data-wow-delay="0.7s" style="min-height: 350px;">
+                                    <a class="position-relative d-block overflow-hidden" href="@("data:image/jpeg;base64,"+ Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
+                                       data-lightbox="gallery" data-title="@Model.AllTourApplicationImages[i].FileName">
+
+                                        <img class="img-fluid position-absolute w-100 h-100"
+                                             src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
+                                             alt="" style="object-fit: cover;"
+                                         >
+                                       
+                                    </a>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="col-lg-5 col-md-6 wow zoomIn " data-wow-delay="0.7s" style="min-height: 350px; display:none">
+                                    <a class="position-relative d-block overflow-hidden" href="@("data:image/jpeg;base64,"+ Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
+                                       data-lightbox="gallery" data-title="@Model.AllTourApplicationImages[i].FileName">
+
+                                        <img class="img-fluid position-absolute w-100 h-100"
+                                             src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
+                                             alt="" style="object-fit: cover;">
+
+                                    </a>
+                                </div>
+                            }
+
+
+
+
+
+                        }
+
+
                     </div>
-                    <button onclick="deleteImage('@image.FileName', '@Model.Id')" 
-                     class="btn btn-danger delete-button" >
-                        Delete
-                    </button>
-                }
+
+                </div>
             </div>
         </div>
     }
-    else 
+    else
     {
         <div class="alert alert-warning">No images available for this tour.</div>
     }
