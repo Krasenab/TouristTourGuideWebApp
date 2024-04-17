@@ -86,9 +86,9 @@ namespace TouristTourGuideWebApp.Controllers
          
 
             var detailsViewModel = await _tourService.TourById(id);
-            if( await _imageServie.GetTourImgMongoDb(id)!=null)
+            if(  _imageServie.GetTourImgMongoDb(id)!=null)
             {
-                detailsViewModel.AllTourApplicationImages = await _imageServie.GetTourImgMongoDb(id);
+                detailsViewModel.AllTourApplicationImages = _imageServie.GetTourImgMongoDb(id);
             }
 
             return View(detailsViewModel);

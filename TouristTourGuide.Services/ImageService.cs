@@ -76,9 +76,9 @@ namespace TouristTourGuide.Services
             return true;
         }
 
-        public async Task<List<AppImagesViewModel>> GetTourImgMongoDb(string tourId)
+        public  List<AppImagesViewModel> GetTourImgMongoDb(string tourId)
         {
-            List<AppImagesViewModel> fileImges = await
+            List<AppImagesViewModel> fileImges = 
                 _appImageFileCollectionMDB
                 .Find(tId => tId.TouristTourId.ToString() == tourId)
                 .Project(x => new AppImagesViewModel
@@ -88,20 +88,20 @@ namespace TouristTourGuide.Services
                     ApplicationUserId = x.ApplicationUserId,
                     TouristTourId = x.TouristTourId
                 })
-                .ToListAsync();
+                .ToList();
 
             return fileImges;
 
         }
 
-        public async Task<List<AppImagesViewModel>> GetTop3TourImagesFileMongoDb(string tourId)
+        public  List<AppImagesViewModel> GetTop3TourImagesFileMongoDb(string tourId)
         {
             int isTourHaveThreeAppPic = _dbContext.AppImages
                .Where(x => x.TouristTourId.ToString() == tourId)
                .Count();
 
        
-            var getTourImagesSql = await  _dbContext.AppImages
+            var getTourImagesSql =   _dbContext.AppImages
                 .Where(t => t.TouristTourId.ToString() == tourId)
                 .Select(x => new AppImageSqlMetaDataViewModel()
                 {
@@ -109,7 +109,7 @@ namespace TouristTourGuide.Services
                     ApplicationUserId = x.ApplicationUserId.ToString(),
                     TouristTourId = x.TouristTourId.ToString()
                 })
-                .ToListAsync();
+                .ToList();
 
 
             return null;
