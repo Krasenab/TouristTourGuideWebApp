@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TouristTourGuide.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class resetDb : Migration
+    public partial class resetDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -232,6 +232,7 @@ namespace TouristTourGuide.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TourName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Duaration = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    startEndHouers = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PricePerPerson = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Highlights = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -241,7 +242,7 @@ namespace TouristTourGuide.Data.Migrations
                     Includes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     WhatToBring = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
                     KnowBeforeYouGo = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 4, 7, 6, 25, 15, 478, DateTimeKind.Utc).AddTicks(2969)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 4, 18, 20, 54, 22, 983, DateTimeKind.Utc).AddTicks(1727)),
                     LocationId = table.Column<int>(type: "int", nullable: true),
                     GuideUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -275,7 +276,7 @@ namespace TouristTourGuide.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UniqueFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -320,6 +321,7 @@ namespace TouristTourGuide.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BookedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BookQueryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CountOfPeople = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),

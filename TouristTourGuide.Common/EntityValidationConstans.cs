@@ -63,7 +63,6 @@ namespace TouristTourGuide.Common
         public static class LocationConstans
         {
             
-
             public const int LocationPlaceMinLength = 2;
             public const int LocationPlaceMaxLength = 100;
         }
@@ -71,7 +70,7 @@ namespace TouristTourGuide.Common
         public static class TouristTourBookingConstans
         {
             public const int countOfPeopleMax = 100;
-            public static int countOfPeopleMin = 1;
+            public const int countOfPeopleMin = 1;
         }
 
         public static class Comments 

@@ -16,11 +16,6 @@ namespace TouristTourGuide.Data.Configuration
             builder.HasData(ImportLocationCountries());
 
         }
-      
-        private List<Location> SetLocation()
-        {
-            var deserilalizerLocationCountries = ImportLocationCountries();
-            return deserilalizerLocationCountries;
-        }
+             
     }
 }

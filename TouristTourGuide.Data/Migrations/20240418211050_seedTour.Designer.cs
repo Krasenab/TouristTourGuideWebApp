@@ -12,8 +12,8 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    [Migration("20240407062515_resetDb")]
-    partial class resetDb
+    [Migration("20240418211050_seedTour")]
+    partial class seedTour
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -171,12 +171,12 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<Guid>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("TouristTourId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UniqueFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1668,7 +1668,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 7, 6, 25, 15, 478, DateTimeKind.Utc).AddTicks(2969));
+                        .HasDefaultValue(new DateTime(2024, 4, 18, 21, 10, 49, 528, DateTimeKind.Utc).AddTicks(8931));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -1720,6 +1720,9 @@ namespace TouristTourGuide.Data.Migrations
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("startEndHouers")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -1729,6 +1732,22 @@ namespace TouristTourGuide.Data.Migrations
                     b.HasIndex("LocationId");
 
                     b.ToTable("TouristsTours");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f4e0c782-d1a4-42d1-9182-90b6fb2935e4"),
+                            CategoryId = 1,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Duaration = "2.5 hours",
+                            FullDescription = "Experience the London of The Beatles with Richard Porter, author of the book Guide to the Beatles London.Discover the locations and landmarks where The Fab Four recorded, lived, and socialized in London during the Swinging Sixties.",
+                            GuideUserId = new Guid("9a4399f1-422b-4911-bccb-f3f01004235a"),
+                            Highlights = "Discover where The Beatles recorded, lived, and socialized in 1960s London and many others",
+                            LocationId = 1,
+                            MeetingPoint = "Meet Richard outside Exit 1 of Tottenham Court Road Station. He will be holding 'Beatles Walks' leaflets and wearing a Beatles shirt or hat.",
+                            PricePerPerson = 45.75m,
+                            TourName = "Beatles Tour incl. Abbey Road with Richard Porter"
+                        });
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.TouristTourBooking", b =>
@@ -1739,6 +1758,9 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.Property<Guid>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("BookQueryDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("BookedDate")
                         .HasColumnType("datetime2");

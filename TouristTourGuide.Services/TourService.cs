@@ -87,6 +87,14 @@ namespace TouristTourGuide.Services
             return viewModel;
         }
 
+        public bool isHavePictures(string tourId)
+        {
+            bool isHavePictures = _dbContext.TouristsTours
+                .Where(x=> x.TourImages.Any(y=>y.TouristTourId.ToString()==tourId)).Any();
+
+            return isHavePictures;
+        }
+
         public async Task<DetailsViewModel> TourById(string tourId)
         {
             

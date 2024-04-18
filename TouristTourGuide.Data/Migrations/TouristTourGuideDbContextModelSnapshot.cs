@@ -168,12 +168,12 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<Guid>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("TouristTourId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UniqueFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1665,7 +1665,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 7, 6, 41, 25, 36, DateTimeKind.Utc).AddTicks(811));
+                        .HasDefaultValue(new DateTime(2024, 4, 18, 21, 10, 49, 528, DateTimeKind.Utc).AddTicks(8931));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -1717,6 +1717,9 @@ namespace TouristTourGuide.Data.Migrations
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("startEndHouers")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -1735,7 +1738,7 @@ namespace TouristTourGuide.Data.Migrations
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Duaration = "2.5 hours",
                             FullDescription = "Experience the London of The Beatles with Richard Porter, author of the book Guide to the Beatles London.Discover the locations and landmarks where The Fab Four recorded, lived, and socialized in London during the Swinging Sixties.",
-                            GuideUserId = new Guid("e92df1b5-20f5-49ae-8917-d2c378ea18c1"),
+                            GuideUserId = new Guid("9a4399f1-422b-4911-bccb-f3f01004235a"),
                             Highlights = "Discover where The Beatles recorded, lived, and socialized in 1960s London and many others",
                             LocationId = 1,
                             MeetingPoint = "Meet Richard outside Exit 1 of Tottenham Court Road Station. He will be holding 'Beatles Walks' leaflets and wearing a Beatles shirt or hat.",
@@ -1752,6 +1755,9 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.Property<Guid>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("BookQueryDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("BookedDate")
                         .HasColumnType("datetime2");

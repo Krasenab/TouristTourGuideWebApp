@@ -24,6 +24,8 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         [MaxLength(DuarationMaxLength)]
         public string Duaration { get; set; }
 
+        public string? startEndHouers { get; set; }
+
         [Range(PricePerPersonMin,PricePerPersonMax)]
         public decimal PricePerPerson { get; set; }        
         public string? Highlights { get;set;  }
@@ -61,13 +63,9 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         public virtual Category Category { get; set; }
 
         public virtual List<AppImages> TourImages { get; set; }
-
         public virtual List<TouristTourDates> TouristTourDates { get; set; }
-
         public virtual List<TouristTourBooking> TouristTourBookings { get; set; }
-
         public virtual List<Comments> Comments { get; set; }
-
         public List<Vote> Votes { get; set; }
 
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Identity;
+using Microsoft.AspNetCore.Mvc;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services.Interfaces;
 using TouristTourGuide.ViewModels.TouristTourViewModels;
@@ -84,13 +85,13 @@ namespace TouristTourGuideWebApp.Controllers
         public async Task<IActionResult> Details(string id) 
         {
          
-
             var detailsViewModel = await _tourService.TourById(id);
-            if(  _imageServie.GetTourImgMongoDb(id)!=null)
+            if (_tourService.isHavePictures(id))
             {
-                detailsViewModel.AllTourApplicationImages = _imageServie.GetTourImgMongoDb(id);
+                var uniqFileName = await _imageServie.TourImageUniqueName(id);
+                detailsViewModel.AllTourApplicationImages = _imageServie.GetImagesFilesMongoDb(uniqFileName);
             }
-
+            
             return View(detailsViewModel);
         }
 
@@ -104,14 +105,17 @@ namespace TouristTourGuideWebApp.Controllers
             {
                 return BadRequest("Invalid image extension");
             }
-            if (imageFile !=null && imageFile.Length >0) 
+            if (imageFile ==null && imageFile.Length <=0) 
             {
-               await _imageServie.AddTourImage(tourId, imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User));
-                await _imageServie.AddTourImageFileMongoDb(imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User), tourId);
-                return RedirectToAction("Index", "Home");
+                //TODO: add toast message for invalid fail 
+                return Ok();
             }
-           
-            return Ok();
+            await _imageServie.AddTourImage(tourId, imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User));
+            string uniqueFileName = await _imageServie.TourImageUniqueName(tourId);
+            await _imageServie.AddImageFileToMongoDb(imageFile,uniqueFileName);
+            //  await _imageServie.AddTourImageFileMongoDb(imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User), tourId);
+
+            return RedirectToAction("All","TouristTour");
         }
 
     }

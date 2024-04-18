@@ -8,6 +8,7 @@ namespace TouristTourGuide.Services.Interfaces
         Task<EditViewModel> GetTourForEdit(string tourId);
         void EditTour(EditViewModel editViewModel);
         Task<DetailsViewModel> TourById(string id);
-
+        bool isHavePictures(string tourId);
+        
     }
 }

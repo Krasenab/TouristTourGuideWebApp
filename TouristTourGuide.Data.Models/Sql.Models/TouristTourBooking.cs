@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-
+using static TouristTourGuide.Common.EntityValidationConstans.TouristTourBookingConstans;
 
 namespace TouristTourGuide.Data.Models.Sql.Models
 {
@@ -14,6 +14,10 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         public DateTime BookedDate { get; set; }
 
         [Required]
+        public DateTime BookQueryDate { get; set; }
+
+        [Required]
+        [Range(countOfPeopleMin,countOfPeopleMax)]
         public int CountOfPeople { get; set; }
 
         public decimal? TotalPrice { get; set; }

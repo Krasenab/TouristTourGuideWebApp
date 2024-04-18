@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using System.Reflection;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.MongoDb.Models;
 using TouristTourGuide.Data.Models.Sql.Models;
@@ -29,43 +30,50 @@ namespace TouristTourGuide.Services
         
         }
 
-        public async Task AddTourImageFileMongoDb(IFormFile imageFile, string userId, string tourId)
+      
+        public async Task AddImageFileToMongoDb(IFormFile imageFile, string uniqueFileName)
         {
-            string fileName = await  _dbContext.AppImages.Where(x => x.TouristTourId == Guid.Parse(tourId))
-                .Select(x => x.FileName)
-                .FirstOrDefaultAsync(); 
+            await using (MemoryStream memoryStream = new MemoryStream())
+            {
+                await imageFile.CopyToAsync(memoryStream);
 
-           await using (MemoryStream memoryStreem = new MemoryStream())
-           {
-                await imageFile.CopyToAsync(memoryStreem);
-
-                AppImageFile imgFile = new AppImageFile()
+                AppImageFile file = new AppImageFile()
                 {
-                    FileData = memoryStreem.ToArray(),
-                    FileName = fileName,
-                    TouristTourId = tourId,
-                    ApplicationUserId = userId
+                    FileData = memoryStream.ToArray(),
+                    UniqueFileName = uniqueFileName
                 };
 
-                _appImageFileCollectionMDB.InsertOne(imgFile);
-            };
-        }
+                _appImageFileCollectionMDB.InsertOne(file);
 
+            }
+        }
         public async Task AddTourImage(string tourId, IFormFile imageFile, string userId)
         {
             string generateFileNewFileName = GenerateUnicFileName(imageFile.FileName);
 
             AppImages img = new AppImages()
             {
-                FileName = generateFileNewFileName,
+                UniqueFileName = generateFileNewFileName,
                 TouristTourId = Guid.Parse(tourId),
                 ApplicationUserId = Guid.Parse(userId),
             };
-           await _dbContext.AppImages.AddAsync(img);
+            await _dbContext.AppImages.AddAsync(img);
             await _dbContext.SaveChangesAsync();
  
         }
 
+        public List<AppImagesViewModel> GetImagesFilesMongoDb(string uniqueFileName)
+        {
+            List<AppImagesViewModel> appImageFiles = _appImageFileCollectionMDB
+                 .Find(x => x.UniqueFileName == uniqueFileName)
+                 .Project(aif => new AppImagesViewModel
+                 {
+                     UniqueFileName = aif.UniqueFileName,
+                     FileData = aif.FileData
+                 }).ToList();
+
+            return appImageFiles;
+        }
         public bool IsFileExtensionValid(IFormFile imageFile)
         {
             string fileExtns = Path.GetExtension(imageFile.FileName);
@@ -76,44 +84,22 @@ namespace TouristTourGuide.Services
             return true;
         }
 
-        public  List<AppImagesViewModel> GetTourImgMongoDb(string tourId)
-        {
-            List<AppImagesViewModel> fileImges = 
-                _appImageFileCollectionMDB
-                .Find(tId => tId.TouristTourId.ToString() == tourId)
-                .Project(x => new AppImagesViewModel
-                {
-                    FileData = x.FileData,
-                    FileName = x.FileName,
-                    ApplicationUserId = x.ApplicationUserId,
-                    TouristTourId = x.TouristTourId
-                })
-                .ToList();
-
-            return fileImges;
-
-        }
-
-        public  List<AppImagesViewModel> GetTop3TourImagesFileMongoDb(string tourId)
-        {
-            int isTourHaveThreeAppPic = _dbContext.AppImages
-               .Where(x => x.TouristTourId.ToString() == tourId)
-               .Count();
-
+        
        
-            var getTourImagesSql =   _dbContext.AppImages
-                .Where(t => t.TouristTourId.ToString() == tourId)
-                .Select(x => new AppImageSqlMetaDataViewModel()
-                {
-                    FileName = x.FileName,
-                    ApplicationUserId = x.ApplicationUserId.ToString(),
-                    TouristTourId = x.TouristTourId.ToString()
-                })
-                .ToList();
+        public async Task<string> TourImageUniqueName(string tourId)
+        {
+            string fileName = await _dbContext.AppImages.Where(x => x.TouristTourId == Guid.Parse(tourId))
+                .Select(x => x.UniqueFileName)
+                .FirstOrDefaultAsync();
 
+            if (String.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentNullException("The uniqueFile is null or not exist");
+            }
 
-            return null;
-          
+            return fileName;
         }
+
+     
     }
 }
