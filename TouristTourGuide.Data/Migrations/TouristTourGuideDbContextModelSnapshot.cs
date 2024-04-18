@@ -325,6 +325,9 @@ namespace TouristTourGuide.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ApplicationUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(5000)
@@ -334,6 +337,8 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("TouristTourId");
 
@@ -1665,7 +1670,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 21, 10, 49, 528, DateTimeKind.Utc).AddTicks(8931));
+                        .HasDefaultValue(new DateTime(2024, 4, 18, 22, 11, 18, 255, DateTimeKind.Utc).AddTicks(4081));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -1729,22 +1734,6 @@ namespace TouristTourGuide.Data.Migrations
                     b.HasIndex("LocationId");
 
                     b.ToTable("TouristsTours");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f4e0c782-d1a4-42d1-9182-90b6fb2935e4"),
-                            CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Duaration = "2.5 hours",
-                            FullDescription = "Experience the London of The Beatles with Richard Porter, author of the book Guide to the Beatles London.Discover the locations and landmarks where The Fab Four recorded, lived, and socialized in London during the Swinging Sixties.",
-                            GuideUserId = new Guid("9a4399f1-422b-4911-bccb-f3f01004235a"),
-                            Highlights = "Discover where The Beatles recorded, lived, and socialized in 1960s London and many others",
-                            LocationId = 1,
-                            MeetingPoint = "Meet Richard outside Exit 1 of Tottenham Court Road Station. He will be holding 'Beatles Walks' leaflets and wearing a Beatles shirt or hat.",
-                            PricePerPerson = 45.75m,
-                            TourName = "Beatles Tour incl. Abbey Road with Richard Porter"
-                        });
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.TouristTourBooking", b =>
@@ -1831,7 +1820,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasIndex("TouristTourId");
 
-                    b.ToTable("Vote");
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -1904,11 +1893,19 @@ namespace TouristTourGuide.Data.Migrations
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Comments", b =>
                 {
+                    b.HasOne("TouristTourGuide.Data.Models.Sql.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TouristTourGuide.Data.Models.Sql.Models.TouristTour", "TouristTour")
                         .WithMany("Comments")
                         .HasForeignKey("TouristTourId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("TouristTour");
                 });

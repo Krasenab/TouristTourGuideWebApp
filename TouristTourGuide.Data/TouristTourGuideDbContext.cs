@@ -23,19 +23,16 @@ namespace TouristTourGuide.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<GuideUser> GuideUsers { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Vote> Votes { get; set; }
+        public DbSet<Comments> Comments { get; set; }
 
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
-
             Assembly assembliWithConfig = Assembly.GetAssembly(typeof(TouristTourGuideDbContext)) ?? Assembly.GetExecutingAssembly();
 
-
             builder.ApplyConfigurationsFromAssembly(assembliWithConfig);
-
-
 
             base.OnModelCreating(builder);
         }

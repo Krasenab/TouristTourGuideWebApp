@@ -15,7 +15,10 @@ namespace TouristTourGuide.Data.Models.Sql.Models
 
         [ForeignKey(nameof(TouristTourId))]
         public Guid TouristTourId { get; set; }
-
         public virtual TouristTour TouristTour { get; set; }
+
+        [ForeignKey(nameof(ApplicationUserId))]
+        public Guid ApplicationUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

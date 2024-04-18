@@ -12,8 +12,8 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    [Migration("20240418205423_resetDB")]
-    partial class resetDB
+    [Migration("20240418221118_resetDbAgain")]
+    partial class resetDbAgain
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -328,6 +328,9 @@ namespace TouristTourGuide.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ApplicationUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(5000)
@@ -337,6 +340,8 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("TouristTourId");
 
@@ -1668,7 +1673,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 20, 54, 22, 983, DateTimeKind.Utc).AddTicks(1727));
+                        .HasDefaultValue(new DateTime(2024, 4, 18, 22, 11, 18, 255, DateTimeKind.Utc).AddTicks(4081));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -1818,7 +1823,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.HasIndex("TouristTourId");
 
-                    b.ToTable("Vote");
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -1891,11 +1896,19 @@ namespace TouristTourGuide.Data.Migrations
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.Comments", b =>
                 {
+                    b.HasOne("TouristTourGuide.Data.Models.Sql.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TouristTourGuide.Data.Models.Sql.Models.TouristTour", "TouristTour")
                         .WithMany("Comments")
                         .HasForeignKey("TouristTourId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("TouristTour");
                 });

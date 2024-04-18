@@ -115,7 +115,7 @@ namespace TouristTourGuideWebApp.Controllers
             await _imageServie.AddImageFileToMongoDb(imageFile,uniqueFileName);
             //  await _imageServie.AddTourImageFileMongoDb(imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User), tourId);
 
-            return RedirectToAction("All","TouristTour");
+            return RedirectToAction("Details", "TouristTour", new {id=tourId });
         }
 
     }
