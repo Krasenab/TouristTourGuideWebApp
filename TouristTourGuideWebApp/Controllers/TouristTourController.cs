@@ -110,10 +110,11 @@ namespace TouristTourGuideWebApp.Controllers
                 //TODO: add toast message for invalid fail 
                 return Ok();
             }
+
             await _imageServie.AddTourImage(tourId, imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User));
             string uniqueFileName = await _imageServie.TourImageUniqueName(tourId);
             await _imageServie.AddImageFileToMongoDb(imageFile,uniqueFileName);
-            //  await _imageServie.AddTourImageFileMongoDb(imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User), tourId);
+            
 
             return RedirectToAction("Details", "TouristTour", new {id=tourId });
         }

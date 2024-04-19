@@ -9,6 +9,6 @@ namespace TouristTourGuide.ViewModels
     public class CreateCommentFormViewModel
     {
         public string TourId  { get; set; }
-        public string Conent { get; set; }
+        public string Content { get; set; }
     }
 }

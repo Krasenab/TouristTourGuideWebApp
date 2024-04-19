@@ -14,17 +14,17 @@ namespace TouristTourGuide.Services
         private TouristTourGuideDbContext _db;
         public CommentsService(TouristTourGuideDbContext dbContext)
         {
-                _db= dbContext; 
+            _db = dbContext;
         }
         public async Task Create(string tourId, string content, string appUserId)
         {
-            //Comments c = new Comments() 
-            //{
-            //    TouristTourId = Guid.Parse(tourId),
-            //    Content = content,
-            //    ApplicationUserId = Guid.Parse(appUserId)
-            //};
-            //await _db.Comments.AddAsync(c);
+            Comments c = new Comments()
+            {
+                TouristTourId = Guid.Parse(tourId),
+                Content = content,
+                ApplicationUserId = Guid.Parse(appUserId)
+            };
+            await _db.Comments.AddAsync(c);
             await _db.SaveChangesAsync();
 
         }

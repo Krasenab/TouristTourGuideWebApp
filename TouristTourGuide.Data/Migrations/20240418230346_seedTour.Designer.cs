@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TouristTourGuide.Data;
 
@@ -11,9 +12,11 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    partial class TouristTourGuideDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240418230346_seedTour")]
+    partial class seedTour
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1670,7 +1673,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 23, 11, 21, 119, DateTimeKind.Utc).AddTicks(5686));
+                        .HasDefaultValue(new DateTime(2024, 4, 18, 23, 3, 45, 711, DateTimeKind.Utc).AddTicks(3454));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -1734,22 +1737,6 @@ namespace TouristTourGuide.Data.Migrations
                     b.HasIndex("LocationId");
 
                     b.ToTable("TouristsTours");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f4e0c782-d1a4-42d1-9182-90b6fb2935e4"),
-                            CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Duaration = "2.5 hours",
-                            FullDescription = "Experience the London of The Beatles with Richard Porter, author of the book Guide to the Beatles London.Discover the locations and landmarks where The Fab Four recorded, lived, and socialized in London during the Swinging Sixties.",
-                            GuideUserId = new Guid("9a4399f1-422b-4911-bccb-f3f01004235a"),
-                            Highlights = "Discover where The Beatles recorded, lived, and socialized in 1960s London and many others",
-                            LocationId = 1,
-                            MeetingPoint = "Meet Richard outside Exit 1 of Tottenham Court Road Station. He will be holding 'Beatles Walks' leaflets and wearing a Beatles shirt or hat.",
-                            PricePerPerson = 45.75m,
-                            TourName = "Beatles Tour incl. Abbey Road with Richard Porter"
-                        });
                 });
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.TouristTourBooking", b =>

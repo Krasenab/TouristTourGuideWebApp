@@ -22,7 +22,7 @@ namespace TouristTourGuide.Data.Configuration
         //        AboutTheActivityProvider = "One of the good tour guides u can find in London",
         //        Email = "RichardPorter@gmail.com",
         //        PhoneNumber = "0887123123",
-        //        ApplicationUserId = Guid.Parse("CA26C134-C7F2-46BD-E086-08DC5FDF58F6"),
+        //        ApplicationUserId = Guid.Parse("1D0A0090-2D23-49BB-4FE2-08DC5FFA7DE7"),
         //        CompanyRegistrationNumber = "UK123456",
 
         //    };

@@ -35,6 +35,7 @@ namespace TouristTourGuideWebApp
             builder.Services.AddApplicationServices(typeof(ILocationService));
             builder.Services.AddApplicationServices(typeof(IGuideUserService));
             builder.Services.AddApplicationServices(typeof(IImageService));
+            builder.Services.AddApplicationServices(typeof(ICommentsService));
 
 
             // MongoDB  
