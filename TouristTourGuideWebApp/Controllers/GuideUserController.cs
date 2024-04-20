@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services.Interfaces;
+using TouristTourGuide.ViewModels.GuideUserViewModels;
 using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 
 namespace TouristTourGuideWebApp.Controllers
@@ -24,9 +25,9 @@ namespace TouristTourGuideWebApp.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
+            BecomeGuideUserViewModel view = new BecomeGuideUserViewModel();
             
-            return View();
+            return View(view);
         }
     }
 }

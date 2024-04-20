@@ -1,0 +1,173 @@
+﻿@using TouristTourGuide.ViewModels.GuideUserViewModels
+@model BecomeGuideUserViewModel
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        #regForm {
+            background-color: #ffffff;
+            margin:1em auto;
+            padding:1em;
+            width: 70%;
+            min-width: 300px;
+            border-radius: 8px;
+           /*  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); */
+        }
+
+        .form-group {
+            margin-bottom: 1.5em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            font-weight: 600;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+            input:focus,
+            textarea:focus {
+                outline: none;
+                border-color: #007BFF;
+            }
+
+            input.invalid {
+                border-color: #ff7373;
+            }
+
+        .tab {
+            display: none;
+        }
+
+        #prevBtn, #nextBtn {
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #007BFF, #0056b3);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #prevBtn:hover, #nextBtn:hover {
+                background: linear-gradient(90deg, #0056b3, #007BFF);
+        }
+
+
+        .step {
+            height: 30px;
+            width: 30px;
+            margin: 0 10px;
+            background-color: #ccc;
+            border: none;
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.5;
+            line-height: 30px;
+            text-align: center;
+            font-size: 16px;
+            color: #fff;
+        }
+
+            .step.active {
+                opacity: 1;
+                background-color: #007BFF;
+            }
+
+            .step.finish {
+                background-color: #28a745;
+            }
+
+    </style>
+
+</head>
+
+<div class="text-center mb-5">
+    <h1>Become guide</h1>
+</div>
+
+<form  id="regForm" asp-action="BecomeGuide" asp-controller="UserGuide" method="post">
+   
+
+    <div class="tab">
+        <div class="form-group mb-3">
+            <label asp-for="Name">Guide name</label>
+            <input asp-for="Name" class="form-control" placeholder="John Doe guide">
+            <span asp-validation-for="Name" class="small text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="LegalFirmName">Legal firm name</label>
+            <input asp-for="LegalFirmName" class="form-control" placeholder="Best Tour Trip Eood">
+            <span asp-validation-for="LegalFirmName" class="small text-danger"></span>
+        </div>
+
+    </div>
+
+    <div class="tab">
+        <div class="form-group mb-3">
+            <label asp-for="ValueAddedTaxIdentificationNumber">Value added tax identification number </label>
+            <input asp-for="ValueAddedTaxIdentificationNumber" class="form-control" placeholder="Value added tax identification number" id="vatNumber">
+            <span asp-validation-for="ValueAddedTaxIdentificationNumber" class="small text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="CompanyRegistrationNumber">Company Registration Number</label>
+            <input asp-for="CompanyRegistrationNumber" class="form-control" placeholder="Company Registration Number" id="companyRegNumber">
+            <span asp-validation-for="CompanyRegistrationNumber" class="small text-danger"></span>
+        </div>
+    </div>
+
+    <div class="tab">
+        <div class="form-group mb-3">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="form-control" placeholder="company@email.com">
+            <span asp-validation-for="Email" class="small text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="RegisteredAddress">Frim registered address</label>
+            <input asp-for="RegisteredAddress" class="form-control" placeholder="Company Registration Number" id="companyRegNumber">
+            <span asp-validation-for="RegisteredAddress" class="small text-danger"></span>
+        </div>
+
+    </div>
+    <div class="tab">
+
+        <div class="form-group mb-4">
+            <label asp-for="AboutTheActivityProvider">About the activity provider</label>
+            <textarea asp-for="AboutTheActivityProvider" class="form-control" rows="5" placeholder="About The Activity Provider"></textarea>
+            <span asp-validation-for="AboutTheActivityProvider" class="small text-danger"></span>
+        </div>
+    </div>
+
+
+
+    <div style="overflow:auto;">
+        <div style="float:right;">
+            <button  type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+            <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+        </div>
+    </div>
+
+    <div style="text-align:center;margin-top:2em;">
+        <span class="step"><i class="fas fa-user"></i></span>
+        <span class="step"><i class="fas fa-briefcase"></i></span>
+        <span class="step"><i class="fas fa-envelope"></i></span>
+        <span class="step"><i class="fas fa-briefcase"></i></span>
+    </div>
+
+</form>
