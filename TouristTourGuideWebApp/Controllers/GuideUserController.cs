@@ -18,8 +18,8 @@ namespace TouristTourGuideWebApp.Controllers
         public  IActionResult BecomeGuide()
         {
             string getAppUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
-
-            if (!_guideUserService.isUserGuide(getAppUser))
+            int i = 0;
+            if (_guideUserService.isUserGuide(getAppUser))
             {
                 //TODO add toast 
                 return RedirectToAction("Index", "Home");
@@ -28,6 +28,19 @@ namespace TouristTourGuideWebApp.Controllers
             BecomeGuideUserViewModel view = new BecomeGuideUserViewModel();
             
             return View(view);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BecomeGuide(BecomeGuideUserViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            // TODO method in _guideUserService.CreateGuide();
+            // TODO return RedirectToAction("GuideProfile","GuideUser")
+            return RedirectToAction("Index", "Home");
         }
     }
 }
