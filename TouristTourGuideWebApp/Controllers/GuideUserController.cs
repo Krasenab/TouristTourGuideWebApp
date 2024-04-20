@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services.Interfaces;
 using TouristTourGuide.ViewModels.GuideUserViewModels;
@@ -11,14 +12,14 @@ namespace TouristTourGuideWebApp.Controllers
         private IGuideUserService _guideUserService;
         public GuideUserController(IGuideUserService guideUserService)
         {
-                _guideUserService = guideUserService;
+            _guideUserService = guideUserService;
         }
 
         [HttpGet]
-        public  IActionResult BecomeGuide()
+        public IActionResult BecomeGuide()
         {
             string getAppUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
-            int i = 0;
+
             if (_guideUserService.isUserGuide(getAppUser))
             {
                 //TODO add toast 
@@ -26,7 +27,7 @@ namespace TouristTourGuideWebApp.Controllers
             }
 
             BecomeGuideUserViewModel view = new BecomeGuideUserViewModel();
-            
+
             return View(view);
         }
 
@@ -38,8 +39,10 @@ namespace TouristTourGuideWebApp.Controllers
                 return View(viewModel);
             }
 
-            // TODO method in _guideUserService.CreateGuide();
-            // TODO return RedirectToAction("GuideProfile","GuideUser")
+
+            string getUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+            await _guideUserService.CreateGuide(viewModel, getUser);
+
             return RedirectToAction("Index", "Home");
         }
     }

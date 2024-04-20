@@ -30,7 +30,9 @@ namespace TouristTourGuide.ViewModels.GuideUserViewModels
         [EmailAddress]
         public string Email { get; set; }
 
+        [Required]
         [MaxLength(PhoneNumberMaxLenght)]
+        [MinLength(PhnoeNumberMinLenght)]
         public string PhoneNumber { get; set; }
 
         [Required]
@@ -42,8 +44,7 @@ namespace TouristTourGuide.ViewModels.GuideUserViewModels
         public string ApplicationUserId { get; set; }
 
         [Required]
-        [MaxLength(AboutMaxLength)]
-       
+        [MaxLength(AboutMaxLength)]       
         public string AboutTheActivityProvider { get; set; }
     }
 }

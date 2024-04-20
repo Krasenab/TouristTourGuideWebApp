@@ -107,14 +107,20 @@
     <div class="tab">
         <div class="form-group mb-3">
             <label asp-for="Name">Guide name</label>
-            <input asp-for="Name" class="form-control" placeholder="John Doe guide">
+            <input asp-for="Name" class="form-control" placeholder="John Doe guide" id="nameGuide">
             <span asp-validation-for="Name" class="small text-danger"></span>
         </div>
 
         <div class="form-group mb-3">
-            <label asp-for="LegalFirmName">Legal firm name</label>
-            <input asp-for="LegalFirmName" class="form-control" placeholder="Best Tour Trip Eood">
+            <label asp-for="LegalFirmName">Firm or Company name</label>
+            <input asp-for="LegalFirmName" class="form-control" placeholder="Best Tour Trip Eood" id="legalFirmName">
             <span asp-validation-for="LegalFirmName" class="small text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="PhoneNumber">Phone number</label>
+            <input asp-for="PhoneNumber" class="form-control" placeholder="" id="phoneNumber" >
+            <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
         </div>
 
     </div>
@@ -140,7 +146,7 @@
         </div>
         <div class="form-group mb-3">
             <label asp-for="RegisteredAddress">Frim registered address</label>
-            <input asp-for="RegisteredAddress" class="form-control" placeholder="Company Registration Number" id="companyRegNumber">
+            <input asp-for="RegisteredAddress" class="form-control" placeholder="Registration address" id="companyRegNumber">
             <span asp-validation-for="RegisteredAddress" class="small text-danger"></span>
         </div>
 
@@ -206,16 +212,26 @@
 
     function validateForm() {
         var x, y, i, valid = true;
+
         x = document.getElementsByClassName("tab");
         y = x[currentTab].getElementsByTagName("input");
-        for (i = 0; i < y.length; i++) {
-            if (y[i].id === "vatNumber" || y[i].id === "companyRegNumber") continue;
+        var z = x[currentTab].getElementsByTagName("textarea");
 
+        for (i = 0; i < y.length; i++) {
+           
             if (y[i].value == "") {
                 y[i].className += " invalid";
                 valid = false;
             }
         }
+
+        for (i = 0; i < z.length; i++) {
+            if (z[i].value == "") {
+                z[i].className += " invalid";
+                valid = false;
+            }
+        }
+
         if (valid) {
             document.getElementsByClassName("step")[currentTab].className += " finish";
         }
