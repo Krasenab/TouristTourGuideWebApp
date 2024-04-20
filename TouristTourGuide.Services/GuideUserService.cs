@@ -23,6 +23,10 @@ namespace TouristTourGuide.Services
             var guideId = getGuide.Id;
             return guideId.ToString();
         }
-      
+
+        public bool isUserGuide(string appUserId)
+        {
+           return _dbContext.GuideUsers.Any(au=>au.ApplicationUserId.ToString()==appUserId);
+        }
     }
 }

@@ -136,32 +136,69 @@ else
     </div>
 </div>
 
-<div class="row ms-5">
-    <div id="addComment" onclick="showForm()">
-        
+
+
+<section style="background-color:#fff;">
+    <div class="container my-5 py-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-10 col-xl-8">
+                <div class="card">
+
+                    <button id="showFormBtn" class="btn btn-primary">Show Form</button>
+                    <form id="commentForm" style="display:none;">
+                        <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                            <div class="d-flex flex-start w-100">
+                                <img class="rounded-circle shadow-1-strong me-3"
+                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+                                     height="40" />
+
+                                <div data-mdb-input-init class="form-outline w-100">
+                                    <textarea class="form-control" id="Content" name="Content" rows="5"
+                                              style="background: #fff; flex-shrink:unset"></textarea>
+
+                                </div>
+                            </div>
+                            <input type="hidden" id="TourId" name="TourId" value="@Model.Id">
+                            <div class="float-end mt-2 pt-1">
+
+                                <button type="button" for="Content"
+                                        id="postCommentBtn"
+                                        data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-sm ">
+                                    Post comment
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+                    <div class="card-body">
+                        <div class="d-flex flex-start align-items-center">
+                            <img class="rounded-circle shadow-1-strong me-3"
+                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
+                                 height="60" />
+                            <div>
+                                <h6 class="fw-bold text-primary mb-1">
+                                    Danny Kotkova
+                                </h6>
+                                <p class="text-muted small mb-0">
+                                    Shared publicly - Jan 2020
+                                </p>
+                            </div>
+                        </div>
+
+                        <p class="mt-3 mb-4 pb-2">
+                            Add actual comments
+                        </p>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
-    <form method="post" >
-        <div data-mdb-input-init class="form-outline w-100">
-            <textarea class="form-control" id="Content" name="Content" rows="5"
-                      style="background: #fff; flex-shrink:unset">
-            </textarea>
-        </div>
-        <input type="hidden" id="TourId" name="TourId" value="@Model.Id">
-        <div class="float-end mt-2 pt-1">
-
-            <button type="button" for="Content" 
-                id="postCommentBtn"
-                    data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-sm ">
-                Post comment
-            </button>
-
-        </div>
-
-    </form>
-
-</div>
-
-
+</section>
 
 
 
@@ -169,6 +206,23 @@ else
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('showFormBtn').addEventListener('click', function () {
+            var form = document.getElementById('commentForm');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+
 
 <script>
     $(document).ready(function () {
@@ -229,7 +283,7 @@ else
         }
     }
 
- 
+
 </script>
 
 
