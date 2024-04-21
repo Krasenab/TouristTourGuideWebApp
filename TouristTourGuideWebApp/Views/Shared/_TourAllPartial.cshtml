@@ -3,18 +3,26 @@
 @using TouristTourGuide.Infrastrucutre;
 @inject IGuideUserService ugs;
 @inject ITourService tourService;
+@inject IImageService imageService;
 
 @{
     bool isCurrentUserOwner = false;
 
+
     bool userIsGuide = ugs.isUserGuide(this.User.GetCurrentUserId());
 
+    
     if (userIsGuide)
     {
         string guideId = ugs.GuidUserId(this.User.GetCurrentUserId());
 
         isCurrentUserOwner = await tourService.IsTourOwner(guideId, Model.Id);
+
+        
     }
+
+   
+
 
 }
 
@@ -23,7 +31,10 @@
     <div class="card mb-3">
         @if ((@Model.TourImage != null))
         {
-            <img class="card-img-top" src="@Url.Action("GetImage", "Tour", new { fileName = Model.TourImage.FileName })" alt="Tour Image not found">
+
+            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(imageService.GetImageBytesMongoDb(Model.TourImage.UniqueFileName)))"
+                     alt="" class="img-fluid">
+            
         }
         <div class="card-body text-center">
             <h4>@Model.Title</h4>

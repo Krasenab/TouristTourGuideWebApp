@@ -62,6 +62,25 @@ namespace TouristTourGuide.Services
  
         }
 
+        public byte[] GetImageBytesMongoDb(string uqnicName)
+        {
+            int i = 1;
+            
+            var fileObject = _appImageFileCollectionMDB.Find(x=>x.UniqueFileName==uqnicName)
+                .Project(x => new AppImagesViewModel()
+                {
+                    FileData = x.FileData
+                }).FirstOrDefault();
+
+            return fileObject.FileData;
+            
+            
+           
+            
+            
+          
+        }
+
         public List<AppImagesViewModel> GetImagesFilesMongoDb(string uniqueFileName)
         {
             List<AppImagesViewModel> appImageFiles = _appImageFileCollectionMDB

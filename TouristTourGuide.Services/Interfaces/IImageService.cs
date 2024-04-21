@@ -7,6 +7,7 @@ namespace TouristTourGuide.Services.Interfaces
 {
     public interface IImageService
     {
+        byte[] GetImageBytesMongoDb (string uqnicName);
         Task AddTourImage(string tourId, IFormFile imageFile, string userId);
         Task AddImageFileToMongoDb(IFormFile imageFile,string uniqueFileName);
         bool IsFileExtensionValid(IFormFile imageFile);

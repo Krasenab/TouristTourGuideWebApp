@@ -4,6 +4,8 @@ using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.ViewModels.TouristTourViewModels;
 using TouristTourGuide.ViewModels.LocationViewModels;
 using Microsoft.EntityFrameworkCore;
+using TouristTourGuide.ViewModels.EnumAppModels;
+using TouristTourGuide.ViewModels.AppImageViewModels;
 
 namespace TouristTourGuide.Services
 {
@@ -14,6 +16,70 @@ namespace TouristTourGuide.Services
         {
                 _dbContext = db;
         }
+
+        public async Task<AllToursFilteredAndPagedServiceModel> AllAsync(AllToursQueryViewModel viewModel)
+        {
+            IQueryable<TouristTour> toursQuery = this._dbContext.TouristsTours.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(viewModel.Category))
+            {
+                toursQuery = toursQuery.Where(x => x.Category.Name == viewModel.Category);
+            }
+            if (!string.IsNullOrWhiteSpace(viewModel.SerchByString))
+            {
+                string wildCard = $"%{viewModel.SerchByString.ToLower()}%";
+
+                toursQuery = toursQuery.Where(t => EF.Functions.Like(t.TourName, wildCard) ||
+                                                   EF.Functions.Like(t.Duaration, wildCard) ||
+                                                   EF.Functions.Like(t.Location.Country, wildCard) ||
+                                                   EF.Functions.Like(t.Location.Village, wildCard));
+            }
+
+            toursQuery = viewModel.TourSorting switch
+            {
+                TourSorting.Newest => toursQuery.OrderBy(c => c.CreatedOn),
+                TourSorting.Oldest => toursQuery.OrderByDescending(c => c.CreatedOn),
+                TourSorting.PriceAscending => toursQuery.OrderBy(x => x.PricePerPerson),
+                TourSorting.PriceDescending => toursQuery.OrderByDescending(x => x.PricePerPerson),
+
+
+            };
+
+            // tova kato go izpolzvah mi vadishe na stranicata all edni i sushti snimki za tova vzimaneto na snimkata e napravo vuv zaqvkata kakto trqbva da e 
+
+            List<AllViewModel> allTour = await toursQuery.Skip((viewModel.CurrentPage - 1) * viewModel.TourPerPage)
+              .Take(viewModel.TourPerPage)
+              .Select(t => new AllViewModel()
+              {
+                  Id = t.Id.ToString(),
+                  Title = t.TourName,
+                  TourImage = t.TourImages.Where(i => i.TouristTourId == t.Id).Select(x => new AppImagesViewModel()
+                  {
+                      UniqueFileName = x.UniqueFileName,
+                      TouristTourId = x.TouristTourId.ToString(),
+                      
+                      
+
+
+
+                  }).FirstOrDefault(),
+                  Location = $"{t.Location.Country}" + $"{t.Location.City}",
+                  PricePerPerson = t.PricePerPerson,
+
+
+
+              }).ToListAsync();
+
+            int totalsTour = allTour.Count();
+
+            return new AllToursFilteredAndPagedServiceModel()
+            {
+                TotalTourCount = totalsTour,
+                Tours = allTour
+            };
+
+        }
+
         public async void CreateTouristTour(TouristTourCreateViewModel viewModel, string guidUserId)
         {
             string userIdG = guidUserId;

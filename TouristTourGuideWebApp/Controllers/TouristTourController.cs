@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services.Interfaces;
+using TouristTourGuide.ViewModels.AppImageViewModels;
 using TouristTourGuide.ViewModels.TouristTourViewModels;
 using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 
@@ -26,6 +27,21 @@ namespace TouristTourGuideWebApp.Controllers
             this._imageServie = imageServie;
 
         }
+
+        public async Task<IActionResult> All([FromQuery] AllToursQueryViewModel queryModel)
+        {
+            
+            AllToursFilteredAndPagedServiceModel serviceModel = await _tourService.AllAsync(queryModel);
+
+            queryModel.Tours = serviceModel.Tours;
+            
+            var categories =  _categoryService.GetAllCategories();
+            var convertToString = categories.ConvertAll<string>(x => x.Name);            
+            queryModel.Categories = convertToString;
+            
+            return View(queryModel);
+        }
+
 
         [HttpGet]
         public IActionResult Create()
