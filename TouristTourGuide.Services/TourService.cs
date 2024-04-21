@@ -45,7 +45,7 @@ namespace TouristTourGuide.Services
 
             };
 
-            // tova kato go izpolzvah mi vadishe na stranicata all edni i sushti snimki za tova vzimaneto na snimkata e napravo vuv zaqvkata kakto trqbva da e 
+            
 
             List<AllViewModel> allTour = await toursQuery.Skip((viewModel.CurrentPage - 1) * viewModel.TourPerPage)
               .Take(viewModel.TourPerPage)
@@ -56,18 +56,11 @@ namespace TouristTourGuide.Services
                   TourImage = t.TourImages.Where(i => i.TouristTourId == t.Id).Select(x => new AppImagesViewModel()
                   {
                       UniqueFileName = x.UniqueFileName,
-                      TouristTourId = x.TouristTourId.ToString(),
-                      
-                      
-
-
-
+                      TouristTourId = x.TouristTourId.ToString()                      
                   }).FirstOrDefault(),
-                  Location = $"{t.Location.Country}" + $"{t.Location.City}",
-                  PricePerPerson = t.PricePerPerson,
-
-
-
+                  Location = $"{t.Location.Country}",
+                  LocationCity = t.Location.City.ToString(),
+                  PricePerPerson = t.PricePerPerson
               }).ToListAsync();
 
             int totalsTour = allTour.Count();

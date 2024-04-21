@@ -15,6 +15,9 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
 
         [Display(Name = "Location")]
         public string Location { get; set; }
+
+        [Display(Name = "City")]
+        public string LocationCity { get; set; }
         public AppImagesViewModel TourImage { get; set; }
     }
 }
