@@ -4,7 +4,7 @@
     <title>@Model.TourName</title>
     <link rel="stylesheet" href="~/css/gallerypictures.css" style="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
-    <link rel="stylesheet" href="~/css/votestartstyle.css" style="stylesheet"/>
+    <link rel="stylesheet" href="~/css/votestartstyle.css" style="stylesheet" />
 </head>
 
 
@@ -136,19 +136,23 @@ else
     </div>
 </div>
 
-<div class="">
-    <div class="row">
-        <div class="col">
-            <div class="star-rating" data-rating="">
-                <ul class="ratings">
-                    <li class="star" onclick="sendRating(@Model.Id,1)"></li>
-                    <li class="star" onclick="sendRating(@Model.Id,2)"></li>
-                    <li class="star" onclick="sendRating(@Model.Id,3)"></li>
-                    <li class="star" onclick="sendRating(@Model.Id,4)"></li>
-                    <li class="star" onclick="sendRating(@Model.Id,5)"></li>
-                </ul>
-            </div>
-        </div>       
+
+
+<div class="star-rating">
+    <ul class="ratings">
+        <li class="star" onclick="sendVote('@Model.Id',1)"></li>
+        <li class="star" onclick="sendVote('@Model.Id',2)"></li>
+        <li class="star" onclick="sendVote('@Model.Id',3)"></li>
+        <li class="star" onclick="sendVote('@Model.Id',4)"></li>
+        <li class="star" onclick="sendVote('@Model.Id',5)"></li>
+    </ul>
+</div>
+
+
+
+<div class="row" style="padding-top:0.1em">
+    <div class="col">
+        <p>@Model.TourRatign.ToString("f2")</p>
     </div>
 </div>
 
@@ -223,19 +227,18 @@ else
 
 <script>
 
-    function sendVote(tourId, starValue) 
-    {
-        var json = { tourId: tourId, starValue: starValue; }
+    function sendVote(tourId, starValue) {
+        var json = { tourId: tourId, starValue: starValue };
 
-        console.log(json);
+
         $.ajax({
-            url: "/api/Rating",
+            url: "/api/vote",
             type: "POST",
             data: JSON.stringify(json),
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
-               
+
             }
 
         });

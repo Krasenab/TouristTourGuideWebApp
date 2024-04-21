@@ -108,6 +108,7 @@ namespace TouristTourGuideWebApp.Controllers
                 detailsViewModel.AllTourApplicationImages = _imageServie.GetImagesFilesMongoDb(uniqFileName);
             }
             
+            
             return View(detailsViewModel);
         }
 

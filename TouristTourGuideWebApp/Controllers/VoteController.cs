@@ -7,7 +7,7 @@ using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 
 namespace TouristTourGuideWebApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/vote")]
     [ApiController]
     public class VoteController : ControllerBase
     {
