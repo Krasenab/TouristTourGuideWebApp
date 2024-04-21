@@ -1,5 +1,60 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model AllViewModel
+@using TouristTourGuide.Services.Interfaces
+@using TouristTourGuide.Infrastrucutre;
+@inject IGuideUserService ugs;
+@inject ITourService tourService;
+
 @{
+
+    bool userIsGuide =  ugs.isUserGuide(this.User.GetCurrentUserId());
+    bool isOwner = false;
+    if (userIsGuide)
+    {
+        var takedata = await ugs.GetUserGuideInfo(this.User.GetCurrentUserId());
+
+        isOwner = await tourService.IsThisOwner(takedata.Id.ToString(), Model.Id);
+    }
+
 }
+
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        @if ((@Model.TourImage != null))
+        {
+            <img class="card-img-top" src="@Url.Action("GetImage", "Tour", new { fileName = Model.TourImage.FileName })" alt="Tour Image not found">
+        }
+        <div class="card-body text-center">
+            <h4>@Model.Title</h4>
+
+            <h6>Location: <b>@Model.Location</b></h6>
+            <h6>
+                Price Per Person:
+                <b>@String.Format("{0:f2}", Model.PricePerPerson) BGN</b>
+            </h6>
+
+            <br />
+            <a asp-controller="Tour" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-success">Details</a>
+            @if (this.User.Identity.IsAuthenticated)
+            {
+                @if (userIsGuide)
+                {
+                    @if (isOwner)
+                    {
+                        <a asp-controller="Tour" asp-action="Edit" asp-route-id="@Model.Id"
+                           class="btn btn-warning">Edit</a>
+
+                        <a asp-controller="Tour" asp-action="Delete" asp-routeid="@Model.Id"
+                           class="btn btn-danger">Delete</a>
+
+                    }
+
+                }
+
+                <p></p>
+            }
+        </div>
+    </div>
+</div>
+</div>
