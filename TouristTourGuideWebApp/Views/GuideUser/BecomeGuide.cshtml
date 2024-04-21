@@ -11,12 +11,12 @@
 
         #regForm {
             background-color: #ffffff;
-            margin:1em auto;
-            padding:1em;
+            margin: 1em auto;
+            padding: 1em;
             width: 70%;
             min-width: 300px;
             border-radius: 8px;
-           /*  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); */
+            /*  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); */
         }
 
         .form-group {
@@ -64,9 +64,9 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        #prevBtn:hover, #nextBtn:hover {
+            #prevBtn:hover, #nextBtn:hover {
                 background: linear-gradient(90deg, #0056b3, #007BFF);
-        }
+            }
 
 
         .step {
@@ -101,11 +101,11 @@
     <h1>Become guide</h1>
 </div>
 
-<form  id="regForm" asp-action="BecomeGuide" asp-controller="UserGuide" method="post">
-   
+<form id="regForm" asp-action="BecomeGuide" asp-controller="UserGuide" method="post">
+
 
     <div class="tab">
-        <div class="form-group mb-3" >
+        <div class="form-group mb-3">
             <label asp-for="Name">Guide name</label>
             <input asp-for="Name" class="form-control" placeholder="John Doe guide" data-required="true">
             <span asp-validation-for="Name" class="small text-danger"></span>
@@ -164,7 +164,7 @@
 
     <div style="overflow:auto;">
         <div style="float:right;">
-            <button  type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+            <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
             <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
         </div>
     </div>

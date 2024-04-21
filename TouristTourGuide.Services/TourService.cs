@@ -95,6 +95,12 @@ namespace TouristTourGuide.Services
             return isHavePictures;
         }
 
+        public async Task<bool> IsTourOwner(string guideId, string tourId)
+        {
+            return await _dbContext.TouristsTours.AnyAsync(x => x.GuideUserId.ToString() == guideId
+             && x.Id.ToString() == tourId);
+        }
+
         public async Task<DetailsViewModel> TourById(string tourId)
         {
             

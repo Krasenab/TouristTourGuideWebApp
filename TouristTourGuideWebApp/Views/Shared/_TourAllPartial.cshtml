@@ -5,14 +5,15 @@
 @inject ITourService tourService;
 
 @{
+    bool isCurrentUserOwner = false;
 
-    bool userIsGuide =  ugs.isUserGuide(this.User.GetCurrentUserId());
-    bool isOwner = false;
+    bool userIsGuide = ugs.isUserGuide(this.User.GetCurrentUserId());
+
     if (userIsGuide)
     {
-        var takedata = await ugs.GetUserGuideInfo(this.User.GetCurrentUserId());
+        string guideId = ugs.GuidUserId(this.User.GetCurrentUserId());
 
-        isOwner = await tourService.IsThisOwner(takedata.Id.ToString(), Model.Id);
+        isCurrentUserOwner = await tourService.IsTourOwner(guideId, Model.Id);
     }
 
 }
@@ -36,25 +37,24 @@
             <br />
             <a asp-controller="Tour" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-success">Details</a>
-            @if (this.User.Identity.IsAuthenticated)
+            @*  @if (this.User.Identity.IsAuthenticated) *@
+
+            @if (userIsGuide)
             {
-                @if (userIsGuide)
+                @if (isCurrentUserOwner)
                 {
-                    @if (isOwner)
-                    {
-                        <a asp-controller="Tour" asp-action="Edit" asp-route-id="@Model.Id"
-                           class="btn btn-warning">Edit</a>
+                    <a asp-controller="Tour" asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-warning">Edit</a>
 
-                        <a asp-controller="Tour" asp-action="Delete" asp-routeid="@Model.Id"
-                           class="btn btn-danger">Delete</a>
-
-                    }
+                    <a asp-controller="Tour" asp-action="Delete" asp-routeid="@Model.Id"
+                       class="btn btn-danger">Delete</a>
 
                 }
 
-                <p></p>
             }
+
+            <p></p>
+
         </div>
     </div>
-</div>
 </div>

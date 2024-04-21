@@ -12,7 +12,7 @@ namespace TouristTourGuide.Services
         private readonly TouristTourGuideDbContext _dbContext;
         public GuideUserService(TouristTourGuideDbContext dbContext)
         {
-                _dbContext = dbContext; 
+            _dbContext = dbContext;
         }
         public Task<GuideUserFullInfoViewModel> GuidUserInfo()
         {
@@ -20,8 +20,8 @@ namespace TouristTourGuide.Services
         }
 
         public string GuidUserId(string applicationUserId)
-        {                     
-            var getGuide = _dbContext.GuideUsers.Where(x =>x.ApplicationUserId.ToString()==applicationUserId).FirstOrDefault();
+        {
+            var getGuide = _dbContext.GuideUsers.Where(x => x.ApplicationUserId.ToString() == applicationUserId).FirstOrDefault();
 
             var guideId = getGuide.Id;
             return guideId.ToString();
@@ -29,29 +29,29 @@ namespace TouristTourGuide.Services
 
         public bool isUserGuide(string appUserId)
         {
-           return _dbContext.GuideUsers.Any(au=>au.ApplicationUserId.ToString()==appUserId);
+            return _dbContext.GuideUsers.Any(au => au.ApplicationUserId.ToString() == appUserId);
         }
 
-        public async Task CreateGuide(BecomeGuideUserViewModel viewModel,string applicationUserId)
+        public async Task CreateGuide(BecomeGuideUserViewModel viewModel, string applicationUserId)
         {
-            
-                GuideUser guideUser = new GuideUser()
-                {
-                    Name = viewModel.Name,
-                    LegalFirmName = viewModel.LegalFirmName,
-                    AboutTheActivityProvider = viewModel.AboutTheActivityProvider,
-                    RegisteredAddress = viewModel.RegisteredAddress,
-                    ApplicationUserId = Guid.Parse(applicationUserId),
-                    CompanyRegistrationNumber = viewModel.CompanyRegistrationNumber,
-                    PhoneNumber = viewModel.PhoneNumber,
-                    ValueAddedTaxIdentificationNumber = viewModel.ValueAddedTaxIdentificationNumber,
-                    Email = viewModel.Email
-                    
-                };
+
+            GuideUser guideUser = new GuideUser()
+            {
+                Name = viewModel.Name,
+                LegalFirmName = viewModel.LegalFirmName,
+                AboutTheActivityProvider = viewModel.AboutTheActivityProvider,
+                RegisteredAddress = viewModel.RegisteredAddress,
+                ApplicationUserId = Guid.Parse(applicationUserId),
+                CompanyRegistrationNumber = viewModel.CompanyRegistrationNumber,
+                PhoneNumber = viewModel.PhoneNumber,
+                ValueAddedTaxIdentificationNumber = viewModel.ValueAddedTaxIdentificationNumber,
+                Email = viewModel.Email
+
+            };
 
             await _dbContext.GuideUsers.AddAsync(guideUser);
             await _dbContext.SaveChangesAsync();
-            
+
         }
     }
 }
