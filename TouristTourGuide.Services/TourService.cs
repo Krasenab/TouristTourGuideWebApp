@@ -19,11 +19,11 @@ namespace TouristTourGuide.Services
 
         public async Task<AllToursFilteredAndPagedServiceModel> AllAsync(AllToursQueryViewModel viewModel)
         {
-            IQueryable<TouristTour> toursQuery = this._dbContext.TouristsTours.AsQueryable();
+            IQueryable<TouristTour> toursQuery =  this._dbContext.TouristsTours.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(viewModel.Category))
             {
-                toursQuery = toursQuery.Where(x => x.Category.Name == viewModel.Category);
+                toursQuery =  toursQuery.Where(x => x.Category.Name == viewModel.Category);
             }
             if (!string.IsNullOrWhiteSpace(viewModel.SerchByString))
             {
@@ -32,6 +32,7 @@ namespace TouristTourGuide.Services
                 toursQuery = toursQuery.Where(t => EF.Functions.Like(t.TourName, wildCard) ||
                                                    EF.Functions.Like(t.Duaration, wildCard) ||
                                                    EF.Functions.Like(t.Location.Country, wildCard) ||
+                                                   EF.Functions.Like(t.Location.City,wildCard)||
                                                    EF.Functions.Like(t.Location.Village, wildCard));
             }
 
@@ -49,7 +50,7 @@ namespace TouristTourGuide.Services
 
             List<AllViewModel> allTour = await toursQuery.Skip((viewModel.CurrentPage - 1) * viewModel.TourPerPage)
               .Take(viewModel.TourPerPage)
-              .Select(t => new AllViewModel()
+              .Select( t => new AllViewModel()
               {
                   Id = t.Id.ToString(),
                   Title = t.TourName,
@@ -58,8 +59,8 @@ namespace TouristTourGuide.Services
                       UniqueFileName = x.UniqueFileName,
                       TouristTourId = x.TouristTourId.ToString()                      
                   }).FirstOrDefault(),
-                  Location = $"{t.Location.Country}",
-                  LocationCity = t.Location.City.ToString(),
+                  Location = t.Location.Country ?? "Unknown Coutry",
+                  LocationCity = t.Location.City.ToString() ?? "Unknown City",
                   PricePerPerson = t.PricePerPerson
               }).ToListAsync();
 
