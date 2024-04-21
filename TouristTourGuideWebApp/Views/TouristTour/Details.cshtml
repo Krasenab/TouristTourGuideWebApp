@@ -138,7 +138,7 @@ else
 
 
 
-<div class="star-rating">
+<div class="star-rating" >
     <ul class="ratings">
         <li class="star" onclick="sendVote('@Model.Id',1)"></li>
         <li class="star" onclick="sendVote('@Model.Id',2)"></li>
@@ -152,7 +152,7 @@ else
 
 <div class="row" style="padding-top:0.1em">
     <div class="col">
-        <p>@Model.TourRatign.ToString("f2")</p>
+        <p id="ratingDisplay">@Model.TourRatign.ToString("f2")</p>
     </div>
 </div>
 
@@ -229,7 +229,7 @@ else
 
     function sendVote(tourId, starValue) {
         var json = { tourId: tourId, starValue: starValue };
-
+       
 
         $.ajax({
             url: "/api/vote",
@@ -237,10 +237,11 @@ else
             data: JSON.stringify(json),
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            success: function (data) {
-
+            success: function (response) {
+                console.log(response);
+                var newRatingValue = response.ratingResultAfretVote;              
+                $('#ratingDisplay').text(newRatingValue.toFixed(2)); 
             }
-
         });
 
     }
