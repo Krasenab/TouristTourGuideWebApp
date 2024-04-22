@@ -25,7 +25,7 @@ namespace TouristTourGuideWebApp.Controllers
 
             await _voteService.AddVoteAsync(tourId,appUserId,valueOfStarRating);
 
-            double newRatingValue = await _voteService.GetRatingAsync(tourId);
+            double newRatingValue = await _voteService.CalculateRatingAsync(tourId);
 
             VoteResponseViewModel responseValue = new VoteResponseViewModel()
             {

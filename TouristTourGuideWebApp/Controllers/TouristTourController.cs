@@ -16,15 +16,18 @@ namespace TouristTourGuideWebApp.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IGuideUserService _guideUserService;
         private readonly IImageService _imageServie;
+        private readonly IVoteService _voteService;
 
         public TouristTourController(ITourService tourService, ILocationService locationService
-            , ICategoryService categoryService, IGuideUserService guideUserService, IImageService imageServie)
+            , ICategoryService categoryService, IGuideUserService guideUserService, IImageService imageServie,
+            IVoteService voteService)
         {
             this._tourService = tourService;
             this._locationService = locationService;
             this._categoryService = categoryService;
             this._guideUserService = guideUserService;
             this._imageServie = imageServie;
+            this._voteService = voteService;
 
         }
 
@@ -107,7 +110,7 @@ namespace TouristTourGuideWebApp.Controllers
                 var uniqFileName = await _imageServie.TourImageUniqueName(id);
                 detailsViewModel.AllTourApplicationImages = _imageServie.GetImagesFilesMongoDb(uniqFileName);
             }
-            
+          
             
             return View(detailsViewModel);
         }

@@ -51,18 +51,21 @@ namespace TouristTourGuide.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<double> GetRatingAsync(string tourId)
+        public async Task<double> CalculateRatingAsync(string tourId)
         {
-            var toursVotes = await _dbContext.Votes.Where(t => t.TouristTourId.ToString() == tourId)
-                .Select(s => s.ApplicationUserId.ToString()).ToListAsync();
-            if (toursVotes.Count<1)
+            var votesUsersCount = await _dbContext.Votes.Where(t => t.TouristTourId.ToString() == tourId)
+                .Select(s => s.ApplicationUserId.ToString()).CountAsync();
+            if (votesUsersCount<1)
             {
                 return 0;
             }
             
-            int peopleCount = toursVotes.Count;
-
+            double peopleCount = votesUsersCount;
+        
+            
+            
             double rating = _dbContext.Votes.Where(x=>x.TouristTourId.ToString()==tourId).Sum(vS=>vS.VoteValue) / peopleCount;
+            double checkResult = rating;
             return rating;
 
         }

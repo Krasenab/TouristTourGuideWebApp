@@ -5,6 +5,6 @@ namespace TouristTourGuide.Services.Interfaces
     {
         Task AddVoteAsync(string tourId, string applicationUserId, int starValue);
         Task<int> GetUserCurrentVote(string applicationUserId,string tourId);
-       Task<double> GetRatingAsync(string tourId);
+       Task<double> CalculateRatingAsync(string tourId);
     }
 }
