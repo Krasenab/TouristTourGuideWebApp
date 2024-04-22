@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,13 @@ namespace TouristTourGuide.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Comments> builder)
         {
+           
           builder.HasOne(t=>t.TouristTour)
                 .WithMany(cc=>cc.Comments)
                 .HasForeignKey(f=>f.TouristTourId)
                 .OnDelete(DeleteBehavior.NoAction);
-                
+
+            builder.Property(x => x.CreatedOn).HasDefaultValue(DateTime.UtcNow);
                 
         }
     }

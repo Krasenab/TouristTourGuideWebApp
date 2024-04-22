@@ -10,6 +10,8 @@ namespace TouristTourGuide.Data.Models.Sql.Models
             this.AppImages = new List<AppImages>();
         }
 
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public List<TouristTourBooking> UserToursBookings { get; set; }
         public List<AppImages> AppImages {  get; set; } 
     }

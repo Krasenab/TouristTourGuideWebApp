@@ -12,6 +12,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         [Required]
         [MaxLength(contentMaxLength)]
         public string Content { get; set; }
+        public DateTime CreatedOn { get; set; }
 
         [ForeignKey(nameof(TouristTourId))]
         public Guid TouristTourId { get; set; }
