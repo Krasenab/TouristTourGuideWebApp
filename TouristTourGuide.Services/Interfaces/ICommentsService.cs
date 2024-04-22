@@ -9,6 +9,7 @@ namespace TouristTourGuide.Services.Interfaces
 {
     public interface ICommentsService
     {
+        Task<CommentResponseViewModel> GetLatestCommentsAsync(string userId);
         Task Create(string tourId,string content,string appUserId);
         Task<List<AllComentsViewModels>> GetAllComentAsync(string tourId);
     }

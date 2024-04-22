@@ -38,10 +38,20 @@ namespace TouristTourGuide.Services
                 {
                     Content = x.Content,
                     TourId = x.TouristTourId.ToString(),
-                    AppUserName = x.ApplicationUser.UserName??"??? ???"
+                    AppUserName = x.ApplicationUser.UserName ?? "Not found"
                 }).ToListAsync();
 
             return coments;
+        }
+
+        public async Task<CommentResponseViewModel> GetLatestCommentsAsync(string userId)
+        {
+           return await _db.Comments.Where(x=>x.ApplicationUserId.ToString()==userId).
+                Select(x=>new CommentResponseViewModel() 
+                {
+                   Content = x.Content,
+                   AppUserName = x.ApplicationUser.UserName
+                }).FirstOrDefaultAsync();
         }
     }
 }

@@ -20,14 +20,7 @@ namespace TouristTourGuideWebApp.Controllers
         {
             var userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
 
-            //if (model==null|| model.Content==null||model.TourId==null)
-            //{
-            //    throw new ArgumentNullException("Comment null value");
-            //}
-            //if (model.TourId==null || model.Content==null ) 
-            //{
-            //    return Content("Error posting comment");
-            //}
+          
 
             if (model == null || string.IsNullOrEmpty(model.Content) || string.IsNullOrEmpty(model.TourId))
             {
@@ -38,17 +31,24 @@ namespace TouristTourGuideWebApp.Controllers
             try
             {
                 await _commentsService.Create(model.TourId, model.Content, userId);
-                return Json(new { success = true, message = "Comment posted successfully" });
+                var comment = await _commentsService.GetLatestCommentsAsync(userId);
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Comment posted successfully",
+                    data = new
+                    {
+                       content = comment.Content,
+                       appUserName = comment.AppUserName
+                    }
+                });
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message });
             }
-
-          
-            
-                      
-            //return RedirectToAction("Details", "TouristTour", new { id = model.TourId });
         }
+    
     }
 }

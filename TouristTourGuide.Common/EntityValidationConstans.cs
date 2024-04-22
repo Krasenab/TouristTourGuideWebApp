@@ -84,5 +84,19 @@ namespace TouristTourGuide.Common
             public const int VoteValueMax = 5;
             public const int VoteValueMin = 1;
         }
+
+        public static class AppUsersConstans 
+        {
+            public const int FirstNameMaxLength = 40;
+            public const int FirstNameMinLength = 2;
+
+            public const int LastNameMaxLength = 40;
+            public const int LastNameMinLength = 2; 
+
+            public const int PasswordMaxChar = 90;
+            public const int PasswordMinChar = 6;
+
+            
+        }
     }
 }

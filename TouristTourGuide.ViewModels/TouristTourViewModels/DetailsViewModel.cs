@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using TouristTourGuide.ViewModels.AppImageViewModels;
+using TouristTourGuide.ViewModels.CommentsViewModels;
 
 namespace TouristTourGuide.ViewModels.TouristTourViewModels
 {
@@ -22,8 +23,8 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         public string LocationCity { get; set; }
         public string GuideUserId { get; set; }
         public string Category { get; set; }
-
         public double TourRatign { get; set; }
+        public List<AllComentsViewModels> Comments { get; set; } = new List<AllComentsViewModels>();
         public List<AppImagesViewModel> AllTourApplicationImages { get; set; } = new List<AppImagesViewModel>();
     }
 }

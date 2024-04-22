@@ -17,10 +17,11 @@ namespace TouristTourGuideWebApp.Controllers
         private readonly IGuideUserService _guideUserService;
         private readonly IImageService _imageServie;
         private readonly IVoteService _voteService;
+        private readonly ICommentsService _commentsService;
 
         public TouristTourController(ITourService tourService, ILocationService locationService
             , ICategoryService categoryService, IGuideUserService guideUserService, IImageService imageServie,
-            IVoteService voteService)
+            IVoteService voteService,ICommentsService commentsService)
         {
             this._tourService = tourService;
             this._locationService = locationService;
@@ -28,6 +29,7 @@ namespace TouristTourGuideWebApp.Controllers
             this._guideUserService = guideUserService;
             this._imageServie = imageServie;
             this._voteService = voteService;
+            this._commentsService = commentsService;
 
         }
 
@@ -102,8 +104,7 @@ namespace TouristTourGuideWebApp.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Details(string id) 
-        {
-         
+        {         
             var detailsViewModel = await _tourService.TourById(id);
             if (_tourService.isHavePictures(id))
             {
@@ -112,6 +113,7 @@ namespace TouristTourGuideWebApp.Controllers
             }
           
             detailsViewModel.TourRatign = await _voteService.CalculateRatingAsync(id);
+            detailsViewModel.Comments = await _commentsService.GetAllComentAsync(id);
             return View(detailsViewModel);
         }
 
