@@ -61,18 +61,29 @@ namespace TouristTourGuide.Services
             }
             
             double peopleCount = votesUsersCount;
-        
-            
-            
+                    
             double rating = _dbContext.Votes.Where(x=>x.TouristTourId.ToString()==tourId).Sum(vS=>vS.VoteValue) / peopleCount;
             double checkResult = rating;
             return rating;
 
         }
 
-        public Task<int> GetUserCurrentVote(string applicationUserId, string tourId)
+        public async Task<int> CountVoteByTourIdAsync(string tourId)
         {
-            throw new NotImplementedException();
+            int voteCount = await _dbContext.Votes.Where(x=>x.TouristTourId.ToString()==tourId)
+                .Select(x=>x.VoteValue).CountAsync();
+
+            return voteCount;
+        }
+
+       
+
+        public async Task<int> GetUserCurrentVote(string applicationUserId, string tourId)
+        {
+            int currentValue = await _dbContext.Votes.Where(ta => ta.TouristTourId.ToString() == tourId)
+                 .Select(x => x.VoteValue).FirstOrDefaultAsync();
+
+            return currentValue;
         }
     }
 }

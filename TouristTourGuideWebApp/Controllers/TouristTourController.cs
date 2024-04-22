@@ -111,7 +111,7 @@ namespace TouristTourGuideWebApp.Controllers
                 detailsViewModel.AllTourApplicationImages = _imageServie.GetImagesFilesMongoDb(uniqFileName);
             }
           
-            
+            detailsViewModel.TourRatign = await _voteService.CalculateRatingAsync(id);
             return View(detailsViewModel);
         }
 
