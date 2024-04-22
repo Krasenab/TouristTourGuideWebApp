@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.Services.Interfaces;
+using TouristTourGuide.ViewModels.CommentsViewModels;
 
 namespace TouristTourGuide.Services
 {
@@ -27,6 +29,19 @@ namespace TouristTourGuide.Services
             await _db.Comments.AddAsync(c);
             await _db.SaveChangesAsync();
 
+        }
+
+        public async Task<List<AllComentsViewModels>> GetAllComentAsync(string tourId)
+        {
+            var coments = await _db.Comments.Where(x => x.TouristTourId.ToString() == tourId)
+                .Select(x => new AllComentsViewModels()
+                {
+                    Content = x.Content,
+                    TourId = x.TouristTourId.ToString(),
+                    AppUserName = x.ApplicationUser.UserName??"??? ???"
+                }).ToListAsync();
+
+            return coments;
         }
     }
 }
