@@ -28,17 +28,17 @@
 @if (Model.AllTourApplicationImages != null && Model.AllTourApplicationImages.Count > 0)
 {
 
-    <div class="container">
+    <div class="container overflow-hidden">
         <div class="gallery">
             @for (int i = 0; i < Model.AllTourApplicationImages.Count; i++)
             {
                 @if (i == 0)
                 {
                     <figure class="gallery__item gallery__item--1">
-                        <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[3].FileData))"
+                        <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
                            data-lightbox="gallery"
                            data-title="@Model.TourName">
-                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[3].FileData))"
+                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
                                  alt="" class="img-fluid">
                         </a>
                     </figure>
@@ -71,10 +71,10 @@
                 else if (i == 3)
                 {
                     <figure class="gallery__item gallery__item--4">
-                        <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[0].FileData))"
+                        <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
                            data-lightbox="gallery" style=""
                            data-title="@Model.TourName">
-                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[0].FileData))"
+                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
                                  alt="" class="img-fluid">
                         </a>
                     </figure>
@@ -162,24 +162,6 @@ else
     
    
 </div>
-
-@* <div class="row mt-5">
-    <div class="col-lg-6">
-        <h4>Details</h4>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Duration:</strong> @Model.Duaration</li>
-            <li class="list-group-item"><strong>Price Per Person:</strong> @Model.PricePerPerson.ToString("C2")</li>
-            <li class="list-group-item"><strong>Category:</strong> @Model.Category</li>
-            <li class="list-group-item"><strong>Location:</strong> @Model.LocationCountry</li>
-            <li class="list-group-item"><strong>Meeting Point:</strong> @Model.MeetingPoint</li>
-            <li class="list-group-item"><strong>What to bring and know before you go :</strong> @Model.KnowBeforeYouGo</li>
-            <li class="list-group-item"><strong>Category:</strong> @Model.Category</li>
-        </ul>
-    </div>
-    <div class="col-lg-5">
-        <h4>Full description</h4>
-        <p>@Model.FullDescription</p>
-    </div> *@
 
 <div class="row mb-auto">
     @*   @if (isUserGuide)*@
