@@ -11,6 +11,6 @@ namespace TouristTourGuide.Services.Interfaces
     {
         Task CreateBooking(CreateBookingViewModel viewModel);
 
-        Task BookingsDetails()
+        Task<List<BookingDetailsViewModel>> BookingsDetails();
     }
 }

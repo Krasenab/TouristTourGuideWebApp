@@ -17,6 +17,12 @@ namespace TouristTourGuide.Services
         {
             _db = dbContext;
         }
+
+        public Task BookingsDetails()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task CreateBooking(CreateBookingViewModel viewModel)
         {
             TouristTourBooking b = new TouristTourBooking()
