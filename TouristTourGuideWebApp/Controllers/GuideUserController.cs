@@ -34,10 +34,7 @@ namespace TouristTourGuideWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> BecomeGuide(BecomeGuideUserViewModel viewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            
 
 
             string getUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);

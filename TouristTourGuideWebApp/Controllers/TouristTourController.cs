@@ -104,7 +104,11 @@ namespace TouristTourGuideWebApp.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Details(string id) 
-        {         
+        {
+            if (!_tourService.IsTourExist(id))
+            {
+                return StatusCode(404);
+            }
             var detailsViewModel = await _tourService.TourById(id);
             if (_tourService.isHavePictures(id))
             {

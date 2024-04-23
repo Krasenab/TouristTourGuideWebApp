@@ -157,7 +157,9 @@ namespace TouristTourGuide.Services
 
         public bool IsTourExist(string tourId)
         {
-            throw new NotImplementedException();
+           bool isExist = _dbContext.TouristsTours.Where(x=>x.Id.ToString()==tourId)
+                .Any();
+            return isExist;
         }
 
         public async Task<bool> IsTourOwner(string guideId, string tourId)
