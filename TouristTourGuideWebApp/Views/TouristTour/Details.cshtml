@@ -6,7 +6,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <link rel="stylesheet" href="~/css/votestartstyle.css" style="stylesheet" />
     
-
+    <style>
+        .text-truncate {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block;
+            width: 100%;
+            cursor: help;
+        }
+    </style>
 
 </head>
 
@@ -94,26 +103,63 @@ else
 {
     <div class="alert alert-warning">No images available for this tour.</div>
 }
-<div class="row">
-    <div class="col">Duration @Model.Duaration</div>
-    <div class="col">Price Per Person @Model.PricePerPerson</div>
-    <div class="col">Location City @Model.LocationCity</div>
-    <div class="col">Category @Model.Category</div>
-</div>
-<div class="row">
-    <div class="col">@Model.WhatToBring</div>
-    <div class="col">@Model.Includes</div>
-</div>
-<div class="row">
-    <div class="col">@Model.MeetingPoint</div>
-    <div class="col">@Model.MeetingPointMapUrl</div>
-</div>
-<div class="row">
-    <div class="col">@Model.NotSuitableFor</div>
-    <div class="col">@Model.KnowBeforeYouGo</div>
-</div>
-<div class="row">
-    <div class="col-8">@Model.FullDescription</div>
+<div class="container-info">
+ 
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <strong>Price Per Person:</strong> <span>@Model.PricePerPerson</span>
+        </div>
+        <div class="col-md-4">
+            <strong>Duration:</strong> <span>@Model.Duaration</span>
+        </div>
+        <div class="col-md-4">
+            <strong>Location:</strong> <span>@Model.LocationCity, @Model.LocationCountry</span>
+        </div>
+        <div class="col-md-4">
+            <strong>Category:</strong> <span>@Model.Category</span>
+        </div>
+    </div>
+
+   
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <strong>Meeting Point:</strong> <span class="text-truncate" title="@Model.MeetingPoint">@Model.MeetingPoint</span>
+        </div>
+        <div class="col-md-6">
+        <strong>See on Google Map:</strong> <a href="@Model.MeetingPointMapUrl" style="cursor:pointer">Map Link</a>
+    </div>
+    </div>
+
+    
+    
+    <div class="row mb-5">
+        
+        <div class="col-xxl-1">
+            <strong>Know Before You Go:</strong> <span class="text-truncate" title="@Model.KnowBeforeYouGo">@Model.KnowBeforeYouGo</span>
+        </div>        
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-xxl-1">
+            <strong>Not Suitable For:</strong> <span>@Model.NotSuitableFor</span>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-lg-5">
+            <strong>What to Bring:</strong> <span class="text-truncate" title="@Model.WhatToBring">@Model.WhatToBring</span>
+        </div>
+        <div class="col-lg-5">
+            <strong>Includes:</strong> <span>@Model.Includes</span>
+        </div>
+        
+    </div>
+    <div class="row mb-5">
+        <div class="col-md-5">
+            <strong>Full Description:</strong> <span class="text-truncate" title="@Model.FullDescription">@Model.FullDescription</span>
+        </div>
+    </div>
+    
    
 </div>
 

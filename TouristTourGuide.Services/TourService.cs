@@ -98,6 +98,11 @@ namespace TouristTourGuide.Services
             await _dbContext.SaveChangesAsync();
         }
 
+        public Task Delete(string tourId, string ownerId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void EditTour(EditViewModel editViewModel)
         {
             TouristTour ?tour = _dbContext.TouristsTours.Where(x => x.Id.ToString() == editViewModel.TourId)
