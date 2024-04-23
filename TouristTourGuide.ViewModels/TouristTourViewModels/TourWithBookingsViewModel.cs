@@ -13,6 +13,7 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         {
             this.TourBookings = new List<BookingDetailsViewModel>();
         }
+        public string Id { get; set; }
         public string TourName { get; set; }
 
         public List<BookingDetailsViewModel> TourBookings { get; set; }

@@ -27,7 +27,7 @@ namespace TouristTourGuideWebApp.Controllers
         {
             string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
             bookingViewModel.ApplicationUserId = userId;
-         
+            await _bookingService.CreateBooking(bookingViewModel);
             
 
             return RedirectToAction("Index", "Home");   

@@ -167,7 +167,8 @@ namespace TouristTourGuideWebApp.Controllers
             var getBookings = await _bookingService.BookingsDetails(tourId);
             TourWithBookingsViewModel viewModel = new TourWithBookingsViewModel()
             {
-                TourName = name,
+                Id = tourId,
+                TourName = name,                
                 TourBookings = getBookings
             };
 

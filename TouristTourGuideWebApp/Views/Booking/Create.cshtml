@@ -52,7 +52,7 @@
     <div class="booking-form">
         <h2>Book your tour now</h2>
         <form asp-action="Create" asp-controller="Booking" method="post">
-            <input type="hidden" asp-for="TouristTourId" />
+            <input type="hidden" id="@Model.TouristTourId" />
 
             <div class="form-group">
                 <label for="Email">Email</label>
@@ -79,7 +79,7 @@
             </div>
 
             <div class="form-group mt-4">
-                <button type="submit" class="btn">Submit  request</button>
+                <button type="submit"  class="btn">Submit  request</button>
             </div>
         </form>
     </div>
