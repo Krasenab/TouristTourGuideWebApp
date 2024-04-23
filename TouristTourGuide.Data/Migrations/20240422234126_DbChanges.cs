@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TouristTourGuide.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class resetDbAgain : Migration
+    public partial class DbChanges : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,6 +32,8 @@ namespace TouristTourGuide.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -242,7 +244,7 @@ namespace TouristTourGuide.Data.Migrations
                     Includes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     WhatToBring = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
                     KnowBeforeYouGo = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 4, 18, 22, 11, 18, 255, DateTimeKind.Utc).AddTicks(4081)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 4, 22, 23, 41, 25, 471, DateTimeKind.Utc).AddTicks(5625)),
                     LocationId = table.Column<int>(type: "int", nullable: true),
                     GuideUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -302,6 +304,7 @@ namespace TouristTourGuide.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 4, 22, 23, 41, 25, 470, DateTimeKind.Utc).AddTicks(756)),
                     TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },

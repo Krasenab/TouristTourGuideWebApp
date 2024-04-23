@@ -12,7 +12,7 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    [Migration("20240422230142_DbChanges")]
+    [Migration("20240422234126_DbChanges")]
     partial class DbChanges
     {
         /// <inheritdoc />
@@ -208,12 +208,12 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -347,7 +347,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 22, 23, 1, 41, 895, DateTimeKind.Utc).AddTicks(3339));
+                        .HasDefaultValue(new DateTime(2024, 4, 22, 23, 41, 25, 470, DateTimeKind.Utc).AddTicks(756));
 
                     b.Property<Guid>("TouristTourId")
                         .HasColumnType("uniqueidentifier");
@@ -1686,7 +1686,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 22, 23, 1, 41, 897, DateTimeKind.Utc).AddTicks(7277));
+                        .HasDefaultValue(new DateTime(2024, 4, 22, 23, 41, 25, 471, DateTimeKind.Utc).AddTicks(5625));
 
                     b.Property<string>("Duaration")
                         .IsRequired()

@@ -112,21 +112,28 @@ namespace TouristTourGuideWebApp.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+           // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                ApplicationUser applicationUser = new ApplicationUser()
+                {
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    
+                };
+
+                await _userStore.SetUserNameAsync(applicationUser, Input.Email, CancellationToken.None);
              
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(applicationUser, Input.Password);
 
                 if (result.Succeeded)
                 {
                   
 
                     var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
@@ -142,7 +149,7 @@ namespace TouristTourGuideWebApp.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        await _signInManager.SignInAsync(applicationUser, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
                 }
