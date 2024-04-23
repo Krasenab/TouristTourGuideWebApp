@@ -1,8 +1,85 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@* <head>
+    <style>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+   
+
+        /* Hero Section */
+        .hero {
+            background: url('https://via.placeholder.com/1200x800') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            margin-left:0em;
+            margin-right:0em;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<div class="main-container">
+    <section class="hero" id="home">
+        <h1>Welcome to Travel Guide</h1>
+        <p>Your journey starts here</p>
+    </section>
+</div> *@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" integrity="sha512-kb1CHTNhoLzinkElTgWn246D6pX22xj8jFNKsDmVwIQo+px7n1yjJUZraVuR/ou6Kmgea4vZXZeUDbqKtXkEMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .services {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .service-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+            .service-box:hover {
+                transform: translateY(-10px);
+            }
+    </style>
+</head>
+<div class="herof">
+    <div class="container-fluid py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center py-5">
+                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-3 text-white mb-3 animated animate__slideInDown">Enjoy Your Vacation With Us</h1>
+                    <p class="fs-4 text-white mb-4 animated animate__slideInDown">Tempor erat elitr rebum at clita diam amet diam et eos erat ipsum lorem sit</p>
+                    <div class="position-relative w-75 mx-auto animate__slideInDown">
+                        <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Thailand">
+                        <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<section class="services" id="services">
+    <div class="service-box">
+        <h2>Exclusive Tours</h2>
+        <p>Personalized tours to exotic destinations around the globe.</p>
+    </div>
+    <div class="service-box">
+        <h2>Adventure Trips</h2>
+        <p>Thrilling adventure tours for adrenaline junkies.</p>
+    </div>
+    <div class="service-box">
+        <h2>City Breaks</h2>
+        <p>Explore the top cities with our expertly guided tours.</p>
+    </div>
+</section>

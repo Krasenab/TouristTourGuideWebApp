@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="~/css/gallerypictures.css" style="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <link rel="stylesheet" href="~/css/votestartstyle.css" style="stylesheet" />
-
+    
 
 
 </head>
@@ -25,14 +25,15 @@
             {
                 @if (i == 0)
                 {
-                    <figure class="gallery__item gallery__item--4">
-                        <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[0].FileData))"
-                           data-lightbox="gallery" style=""
+                    <figure class="gallery__item gallery__item--1">
+                        <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[3].FileData))"
+                           data-lightbox="gallery"
                            data-title="@Model.TourName">
-                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[0].FileData))"
+                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[3].FileData))"
                                  alt="" class="img-fluid">
                         </a>
                     </figure>
+                   
                 }
                 else if (i == 1)
                 {
@@ -60,16 +61,14 @@
                 }
                 else if (i == 3)
                 {
-                    <figure class="gallery__item gallery__item--1">
-                        <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[3].FileData))"
-                           data-lightbox="gallery"
+                    <figure class="gallery__item gallery__item--4">
+                        <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[0].FileData))"
+                           data-lightbox="gallery" style=""
                            data-title="@Model.TourName">
-                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[3].FileData))"
+                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[0].FileData))"
                                  alt="" class="img-fluid">
                         </a>
                     </figure>
-
-
 
                 }
                 else if (i >= 4)
@@ -95,8 +94,30 @@ else
 {
     <div class="alert alert-warning">No images available for this tour.</div>
 }
+<div class="row">
+    <div class="col">Duration @Model.Duaration</div>
+    <div class="col">Price Per Person @Model.PricePerPerson</div>
+    <div class="col">Location City @Model.LocationCity</div>
+    <div class="col">Category @Model.Category</div>
+</div>
+<div class="row">
+    <div class="col">@Model.WhatToBring</div>
+    <div class="col">@Model.Includes</div>
+</div>
+<div class="row">
+    <div class="col">@Model.MeetingPoint</div>
+    <div class="col">@Model.MeetingPointMapUrl</div>
+</div>
+<div class="row">
+    <div class="col">@Model.NotSuitableFor</div>
+    <div class="col">@Model.KnowBeforeYouGo</div>
+</div>
+<div class="row">
+    <div class="col-8">@Model.FullDescription</div>
+   
+</div>
 
-<div class="row mt-5">
+@* <div class="row mt-5">
     <div class="col-lg-6">
         <h4>Details</h4>
         <ul class="list-group list-group-flush">
@@ -112,15 +133,15 @@ else
     <div class="col-lg-5">
         <h4>Full description</h4>
         <p>@Model.FullDescription</p>
-    </div>
+    </div> *@
 
-
+<div class="row mb-auto">
     @*   @if (isUserGuide)*@
     <div>
-        <form asp-controller="Tour" asp-action="DeleteTour" asp-route-tourId="@Model.Id" method="post" class="d-inline ml-2">
+        <form asp-controller="TouristTour" asp-action="DeleteTour" asp-route-tourId="@Model.Id" method="post" class="d-inline ml-2">
             <button type="submit" class="btn btn-danger">DeleteTour</button>
         </form>
-        <a asp-controller="TourBooking" asp-action="BookingOnTour" asp-route-tourId="@Model.Id" class="btn btn-success d-inline ml-3">Tour bookings</a>
+        <a asp-controller="Booking" asp-action="BookingTours" asp-route-tourId="@Model.Id" class="btn btn-success d-inline ml-3">Tour bookings</a>
     </div>
 
 </div>
@@ -263,7 +284,7 @@ else
                 data: JSON.stringify({ Content: content, TourId: tourId }),
                 success: function (response) {
                     alert('Comment posted successfully');
-                    $('#Content').val(''); // Clear the textarea after successful post
+                    $('#Content').val(''); 
                     var newCommentHtml = '<div class="card-body">' +
                         '<div class="d-flex flex-start align-items-center">' +
                         '<img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60" height="60" />' +

@@ -33,13 +33,16 @@ namespace TouristTourGuide.Services
 
         public async Task<List<AllComentsViewModels>> GetAllComentAsync(string tourId)
         {
+
+          
             var coments = await _db.Comments.Where(x => x.TouristTourId.ToString() == tourId)
                 .Select(x => new AllComentsViewModels()
                 {
                     Content = x.Content,
                     TourId = x.TouristTourId.ToString(),
-                    AppUserName = x.ApplicationUser.UserName ?? "Not found"
+                    AppUserName = x.ApplicationUser.UserName ?? "N/A"
                 }).ToListAsync();
+  
 
             return coments;
         }
@@ -53,5 +56,7 @@ namespace TouristTourGuide.Services
                    AppUserName = x.ApplicationUser.UserName
                 }).FirstOrDefaultAsync();
         }
+
+        
     }
 }

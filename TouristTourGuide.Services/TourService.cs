@@ -60,7 +60,7 @@ namespace TouristTourGuide.Services
                       TouristTourId = x.TouristTourId.ToString()                      
                   }).FirstOrDefault(),
                   Location = t.Location.Country ?? "Unknown Coutry",
-                  LocationCity = t.Location.City.ToString() ?? "Unknown City",
+                  LocationCity = t.Location.City.ToString() ?? "Unknown City",                  
                   PricePerPerson = t.PricePerPerson
               }).ToListAsync();
 
@@ -153,6 +153,11 @@ namespace TouristTourGuide.Services
                 .Where(x=> x.TourImages.Any(y=>y.TouristTourId.ToString()==tourId)).Any();
 
             return isHavePictures;
+        }
+
+        public bool IsTourExist(string tourId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<bool> IsTourOwner(string guideId, string tourId)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,27 @@ namespace TouristTourGuide.Services
             _db = dbContext;
         }
 
-        public Task BookingsDetails()
+        public async Task AcceptBooking(string bookingId)
         {
-            throw new NotImplementedException();
+            var b = await _db.TouristTourBookings.Where(x => x.Id.ToString() == bookingId).FirstOrDefaultAsync();
+            b.isAccepted = true;
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<List<BookingDetailsViewModel>> BookingsDetails(string tourId)
+        {
+            var bookings = await _db.TouristTourBookings.Where(t => t.TouristTourId.ToString() == tourId)
+                .Select(x => new BookingDetailsViewModel()
+                {
+                    Id = x.Id.ToString(),
+                    TourName = x.TouristTour.TourName,
+                    PhoneNumber = x.PhoneNumber,
+                    Email = x.Email,
+                    CountOfPeople = x.CountOfPeople,
+                    BookingDate = x.BookedDate.ToString()
+
+                }).ToListAsync();
+            return bookings;
         }
 
         public async Task CreateBooking(CreateBookingViewModel viewModel)
