@@ -29,7 +29,6 @@ namespace TouristTourGuideWebApp.Controllers
             bookingViewModel.ApplicationUserId = userId;
             await _bookingService.CreateBooking(bookingViewModel);
             
-
             return RedirectToAction("Index", "Home");   
         }
         
