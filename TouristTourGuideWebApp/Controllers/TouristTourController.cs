@@ -81,6 +81,10 @@ namespace TouristTourGuideWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string Id)
         {
+            if (!_tourService.IsTourExist(Id))
+            {
+                return StatusCode(404);
+            }
             var editViewModel = await _tourService.GetTourForEdit(Id);
             editViewModel.LocationCity = await _locationService.GetTourCity(Id);
             editViewModel.Categories = _categoryService.GetAllCategories();
@@ -150,10 +154,10 @@ namespace TouristTourGuideWebApp.Controllers
             return RedirectToAction("Details", "TouristTour", new {id=tourId });
         }
 
-        [HttpGet]
+
         public async Task<IActionResult> TourBookings(string tourId) 
         {
-            if (_tourService.IsTourExist(tourId))
+            if (!_tourService.IsTourExist(tourId))
             {
                 return StatusCode(404);
             }

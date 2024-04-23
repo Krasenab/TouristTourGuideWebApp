@@ -31,4 +31,10 @@
     <ProjectReference Include="..\TouristTourGuide.ViewModels\TouristTourGuide.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\TouristTour\TourBookings.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
