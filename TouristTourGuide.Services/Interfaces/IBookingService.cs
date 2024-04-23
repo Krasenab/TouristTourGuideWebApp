@@ -9,7 +9,7 @@ namespace TouristTourGuide.Services.Interfaces
 {
     public interface IBookingService
     {
-        Task CreateBooking(CreateBookingViewModel viewModel);
+        Task CreateBooking(CreateBookingViewModel viewModel,string tourId);
         Task<List<BookingDetailsViewModel>> BookingsDetails(string tourId);
         Task AcceptBooking(string bookingId);
      

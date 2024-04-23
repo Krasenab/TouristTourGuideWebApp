@@ -38,7 +38,7 @@ namespace TouristTourGuide.Services
             return bookings;
         }
 
-        public async Task CreateBooking(CreateBookingViewModel viewModel)
+        public async Task CreateBooking(CreateBookingViewModel viewModel, string tourId)
         {
             
 
@@ -46,7 +46,7 @@ namespace TouristTourGuide.Services
             {
                 CountOfPeople = viewModel.CountOfPeople,
                 ApplicationUserId = Guid.Parse(viewModel.ApplicationUserId),
-                TouristTourId = Guid.Parse(viewModel.TouristTourId),
+                TouristTourId = Guid.Parse(tourId),
                 Email = viewModel.Email,
                 PhoneNumber= viewModel.PhoneNumber,
                

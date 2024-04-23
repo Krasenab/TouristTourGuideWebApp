@@ -23,11 +23,11 @@ namespace TouristTourGuideWebApp.Controllers
             return View(bookingViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateBookingViewModel bookingViewModel)
+        public async Task<IActionResult> Create(CreateBookingViewModel bookingViewModel,string tourId)
         {
             string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
             bookingViewModel.ApplicationUserId = userId;
-            await _bookingService.CreateBooking(bookingViewModel);
+            await _bookingService.CreateBooking(bookingViewModel,tourId);
             
             return RedirectToAction("Index", "Home");   
         }
