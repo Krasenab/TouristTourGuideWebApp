@@ -152,6 +152,14 @@ namespace TouristTourGuide.Services
             return viewModel;
         }
 
+        public async Task<decimal> GetTourPricePerPerson(string tourId)
+        {
+            var price = await _dbContext.TouristsTours.Where(x=>x.Id.ToString()==tourId)
+                .Select(p=>p.PricePerPerson).FirstAsync();
+            return price;
+           
+        }
+
         public bool isHavePictures(string tourId)
         {
             bool isHavePictures = _dbContext.TouristsTours

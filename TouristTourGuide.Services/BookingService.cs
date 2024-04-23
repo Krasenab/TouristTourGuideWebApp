@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.Services.Interfaces;
@@ -21,6 +16,7 @@ namespace TouristTourGuide.Services
 
         public async Task AcceptBooking(string bookingId)
         {
+            
             var b = await _db.TouristTourBookings.Where(x => x.Id.ToString() == bookingId).FirstOrDefaultAsync();
             b.isAccepted = true;
             await _db.SaveChangesAsync();
@@ -44,15 +40,23 @@ namespace TouristTourGuide.Services
 
         public async Task CreateBooking(CreateBookingViewModel viewModel)
         {
+            
+
             TouristTourBooking b = new TouristTourBooking()
             {
                 CountOfPeople = viewModel.CountOfPeople,
                 ApplicationUserId = Guid.Parse(viewModel.ApplicationUserId),
-                TouristTourId = Guid.Parse(viewModel.TouristTourId)
+                TouristTourId = Guid.Parse(viewModel.TouristTourId),
+                Email = viewModel.Email,
+                PhoneNumber= viewModel.PhoneNumber,
+               
             };
 
             await _db.TouristTourBookings.AddAsync(b);
             await _db.SaveChangesAsync();
         }
+
+     
+
     }
 }

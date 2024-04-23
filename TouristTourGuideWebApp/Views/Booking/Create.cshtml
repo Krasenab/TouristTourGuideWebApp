@@ -51,7 +51,7 @@
 <div class="container">
     <div class="booking-form">
         <h2>Book your tour now</h2>
-        <form asp-action="CreateBooking" asp-controller="Booking" method="post">
+        <form asp-action="Create" asp-controller="Booking" method="post">
             <input type="hidden" asp-for="TouristTourId" />
 
             <div class="form-group">
@@ -72,6 +72,10 @@
             <div class="form-group">
                 <label for="CountOfPeople">Number of Persons</label>
                 <input type="number" class="form-control" asp-for="CountOfPeople" required min="1" />
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalPrice">Total Price</label>
+                <input type="number" class="form-control" asp-for="TotalPrice"  />
             </div>
 
             <div class="form-group mt-4">

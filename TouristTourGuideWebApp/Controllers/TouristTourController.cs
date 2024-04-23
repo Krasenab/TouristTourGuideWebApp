@@ -18,10 +18,12 @@ namespace TouristTourGuideWebApp.Controllers
         private readonly IImageService _imageServie;
         private readonly IVoteService _voteService;
         private readonly ICommentsService _commentsService;
+        private readonly IBookingService _bookingService;
 
         public TouristTourController(ITourService tourService, ILocationService locationService
             , ICategoryService categoryService, IGuideUserService guideUserService, IImageService imageServie,
-            IVoteService voteService,ICommentsService commentsService)
+            IVoteService voteService,ICommentsService commentsService,
+            IBookingService bookingService)
         {
             this._tourService = tourService;
             this._locationService = locationService;
@@ -30,6 +32,7 @@ namespace TouristTourGuideWebApp.Controllers
             this._imageServie = imageServie;
             this._voteService = voteService;
             this._commentsService = commentsService;
+            this._bookingService = bookingService;
 
         }
 
@@ -145,6 +148,27 @@ namespace TouristTourGuideWebApp.Controllers
             
 
             return RedirectToAction("Details", "TouristTour", new {id=tourId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TourBookings(string tourId) 
+        {
+            if (_tourService.IsTourExist(tourId))
+            {
+                return StatusCode(404);
+            }
+            var tour = await _tourService.GetTourForEdit(tourId);
+            string name = tour.TourName;
+
+            var getBookings = await _bookingService.BookingsDetails(tourId);
+            TourWithBookingsViewModel viewModel = new TourWithBookingsViewModel()
+            {
+                TourName = name,
+                TourBookings = getBookings
+            };
+
+
+            return View(viewModel);
         }
 
     }

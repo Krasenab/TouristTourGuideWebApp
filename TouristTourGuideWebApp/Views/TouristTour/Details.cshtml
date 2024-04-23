@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="~/css/gallerypictures.css" style="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <link rel="stylesheet" href="~/css/votestartstyle.css" style="stylesheet" />
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
         .text-truncate {
             overflow: hidden;
@@ -103,19 +103,25 @@ else
 {
     <div class="alert alert-warning">No images available for this tour.</div>
 }
-<div class="container-info">
+<div class="container-info overflow-hidden">
  
     <div class="row mb-5">
-        <div class="col-md-4">
-            <strong>Price Per Person:</strong> <span>@Model.PricePerPerson</span>
+        <div class="col-md-3">
+            <strong>
+                <span class="material-symbols-outlined">payments</span>Price Per Person
+            </strong> <span>@Model.PricePerPerson</span>
         </div>
-        <div class="col-md-4">
-            <strong>Duration:</strong> <span>@Model.Duaration</span>
+        <div class="col-md-3">
+            <strong>
+                <span class="material-symbols-outlined">av_timer</span>Duration - 
+            </strong>@Model.Duaration
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <span class="material-symbols-outlined">public</span>
             <strong>Location:</strong> <span>@Model.LocationCity, @Model.LocationCountry</span>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <span class="material-symbols-outlined">category</span>
             <strong>Category:</strong> <span>@Model.Category</span>
         </div>
     </div>
@@ -132,7 +138,7 @@ else
 
     
     
-    <div class="row mb-5">
+    <div class="row mb-5" <span class="material-symbols-outlined">info</span>
         
         <div class="col-xxl-1">
             <strong>Know Before You Go:</strong> <span class="text-truncate" title="@Model.KnowBeforeYouGo">@Model.KnowBeforeYouGo</span>
@@ -173,6 +179,8 @@ else
     </div>
 
 </div>
+
+<a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id"  class="btn btn-success d-inline ml-3 ">Create book</a>
 
 @*TODO hide div for regulate users*@
 <div class="row mt-5">

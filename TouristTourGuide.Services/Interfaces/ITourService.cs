@@ -1,9 +1,11 @@
-﻿using TouristTourGuide.ViewModels.TouristTourViewModels;
+﻿using TouristTourGuide.ViewModels.BookingViewModels;
+using TouristTourGuide.ViewModels.TouristTourViewModels;
 
 namespace TouristTourGuide.Services.Interfaces
 {
     public interface ITourService
-    {
+    {      
+        Task<decimal> GetTourPricePerPerson(string tourId);
         Task Delete(string tourId,string ownerId);
         Task<AllToursFilteredAndPagedServiceModel> AllAsync(AllToursQueryViewModel viewModel);
         void CreateTouristTour(TouristTourCreateViewModel viewModel,string guidUserId);
