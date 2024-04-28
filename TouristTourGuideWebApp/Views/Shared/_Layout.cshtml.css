@@ -40,7 +40,8 @@ button.accept-policy {
 }
 /*smenqm go na 4/28/2024*/
 .containers {
-    border:2px solid black;
+  padding-left:1em;
+  padding-right:1em;
 }
 
 

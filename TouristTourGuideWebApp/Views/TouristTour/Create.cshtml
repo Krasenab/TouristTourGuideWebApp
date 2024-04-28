@@ -6,27 +6,31 @@
         background-color: #fff;
         padding: 30px;
         border-radius: 15px;
-        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: auto;
     }
 
     .form-header {
         text-align: center;
-        border-bottom: 2px solid #007bff;
-        padding-bottom: 15px;
-        margin-bottom: 25px;
+        border-bottom: 3px solid #007bff;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
         color: #007bff;
+        font-size: 24px; 
     }
 
     .form-control {
-        border: 2px solid #e0e0e0;
+        border: 2px solid #ccc;
         border-radius: 5px;
-        padding: 10px 15px;
-        transition: border-color 0.3s;
+        padding: 15px;
+        width: 100%; 
+        box-sizing: border-box; 
     }
 
         .form-control:focus {
             border-color: #007bff;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
         }
 
     .btn-primary {
@@ -36,17 +40,43 @@
         border-radius: 25px;
         font-size: 16px;
         letter-spacing: 1px;
-        transition: background-color 0.3s, transform 0.3s;
+        width: 100%;
+        cursor: pointer; 
     }
 
-        .btn-primary:hover {
+        .btn-primary:hover, .btn-primary:focus {
             background-color: #0056b3;
-            transform: translateY(-2px);
+            outline: none; /* Removes the outline on focus */
         }
 
-        .btn-primary:active {
-            transform: translateY(0);
-        }
+    .input-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px; /* Adds space between groups */
+    }
+
+    .input-group-text {
+        background: #f8f9fa;
+        border: 2px solid #ccc;
+        border-radius: 5px 0 0 5px;
+        padding: 10px 15px;
+        width: auto; 
+    }
+
+    .input-group .form-control {
+        border-radius: 0 5px 5px 0; 
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    textarea {
+        height: auto; 
+        resize: vertical; 
+    }
 
 
 </style>

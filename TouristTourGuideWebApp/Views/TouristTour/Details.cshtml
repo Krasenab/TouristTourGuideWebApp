@@ -22,8 +22,8 @@
 <head>
     <title>@Model.TourName</title>
     <link rel="stylesheet" href="~/css/gallerypictures.css" style="stylesheet" />
-    <link rel="stylesheet" href="~/css/votestartstyle.css" style="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">  
+    <link rel="stylesheet" href="~/css/votestartstyle.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
         .text-truncate {
@@ -53,32 +53,6 @@
             box-sizing: border-box;
         }
 
-        .ratings {
-            display: flex;
-            list-style-type: none;
-            margin: 1em 0; 
-            padding: 0; 
-            justify-content: center; 
-        }
-
-        .star {
-            cursor: pointer;
-            line-height: 1; 
-            font-size: 40px;
-            color: #ebebeb; 
-            transition: color 0.2s ease; 
-        }
-
-            .star:hover,
-            .star:hover ~ .star { 
-                color: #ffc107; 
-            }
-
-            .star.active {
-                color: #ffc107; 
-            }
-
-   
     </style>
 
 </head>
@@ -254,28 +228,37 @@ else
         </div>
     </div>
 
-    <div class="star-rating">
-        <ul class="ratings">
-            <li class="star" onclick="sendVote('@Model.Id',1)"></li>
-            <li class="star" onclick="sendVote('@Model.Id',2)"></li>
-            <li class="star" onclick="sendVote('@Model.Id',3)"></li>
-            <li class="star" onclick="sendVote('@Model.Id',4)"></li>
-            <li class="star" onclick="sendVote('@Model.Id',5)"></li>
-        </ul>
-    </div>
 
-    <div class="custom-row justify-content-center">
-        <div class="col">
-            <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2") / Based on : ### voted users</p>
-        </div>
+</div>
+
+@* <ul class="ratings">
+    // излагането със звездите беше поради липсващият код междъ <li></li> <li>&#9733;</li>
+    <li class="star" onclick="sendVote('@Model.Id',1)"></li>
+    <li class="star" onclick="sendVote('@Model.Id',2)"></li>
+    <li class="star" onclick="sendVote('@Model.Id',3)"></li>
+    <li class="star" onclick="sendVote('@Model.Id',4)"></li>
+    <li class="star" onclick="sendVote('@Model.Id',5)"></li>
+</ul> *@
+
+
+
+<div class="custom-row" style="text-align:center">
+    <div class="col">
+        <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2") / Based on : ### voted users</p>
     </div>
 </div>
 
-
-
+<div class="star-rating" style="text-align:center; font-size:30px;">
+    <span class="star" onclick="sendVote('@Model.Id',1)">&#9733;</span>
+    <span class="star" onclick="sendVote('@Model.Id',2)">&#9733;</span>
+    <span class="star" onclick="sendVote('@Model.Id',3)">&#9733;</span>
+    <span class="star" onclick="sendVote('@Model.Id',4)">&#9733;</span>
+    <span class="star" onclick="sendVote('@Model.Id',5)">&#9733;</span>
+</div>
 
 <section style="background-color:#fff;">
-    <div class="container my-5 py-5">
+    <div class="container ">
+        @*my-5 py-5*@
         <div class="row d-flex justify-content-center right-align-comments">
             <div class="col-md-12 col-lg-10 col-xl-8 col-md-offset">
                 <div class="card">
@@ -407,18 +390,28 @@ else
 
 
 <script>
-
+    document.addEventListener('DOMContentLoaded', function () {
+        var stars = document.querySelectorAll('.star');
+        stars.forEach(function (star, index) {
+            star.addEventListener('click', function () {
+                updateStars(index + 1);
+                sendVote('@Model.Id', index + 1);
+            });
+        });
+        function updateStars(rating) {
+            stars.forEach(function (star, idx) {
+                if (idx < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+    });
     function sendVote(tourId, starValue) {
         var json = { tourId: tourId, starValue: starValue };
 
-        var stars = document.querySelectorAll('.star');
-        stars.forEach(function (star, index) {
-            if (index < starValue) {
-                star.classList.add('active');
-            } else {
-                star.classList.remove('active');
-            }
-        });
+
         $.ajax({
             url: "/api/vote",
             type: "POST",

@@ -150,9 +150,6 @@ namespace TouristTourGuide.Services
                 CategoryId = getTour.CategoryId
                                 
             };
-
-
-            int brak = 0;
             return viewModel;
         }
 

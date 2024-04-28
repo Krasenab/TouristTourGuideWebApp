@@ -54,8 +54,6 @@ namespace TouristTourGuideWebApp.Controllers
             var view = await _guideUserService.GuidUserInfo(userGuideId);
 
             return View(view);
-
-
         }
     }
 }
