@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.Services.Interfaces;
@@ -14,9 +15,28 @@ namespace TouristTourGuide.Services
         {
             _dbContext = dbContext;
         }
-        public Task<GuideUserFullInfoViewModel> GuidUserInfo()
+        public async Task<GuideUserFullInfoViewModel> GuidUserInfo(string guideUserId)
         {
-            throw new NotImplementedException();
+            //добавил съм го на 4/25/2024г
+            var guideUser = await _dbContext.GuideUsers.Where(x => x.Id.ToString() == guideUserId)
+                 .Select(x => new GuideUserFullInfoViewModel()
+                 {
+                     Id = x.Id.ToString(),
+                     Name = x.Name,
+                     AboutTheActivityProvider = x.AboutTheActivityProvider,
+                     ValueAddedTaxIdentificationNumber = x.ValueAddedTaxIdentificationNumber,
+                     RegisteredAddress = x.RegisteredAddress,
+                     Email=x.Email,
+                     CompanyRegistrationNumber = x.CompanyRegistrationNumber,
+                     PhoneNumber = x.PhoneNumber
+                 }).FirstOrDefaultAsync();
+
+            if (guideUser==null)
+            {
+                throw new NullReferenceException("Something get wrong");
+            }
+            return guideUser;
+            
         }
 
         public string GuidUserId(string applicationUserId)
@@ -45,8 +65,7 @@ namespace TouristTourGuide.Services
                 CompanyRegistrationNumber = viewModel.CompanyRegistrationNumber,
                 PhoneNumber = viewModel.PhoneNumber,
                 ValueAddedTaxIdentificationNumber = viewModel.ValueAddedTaxIdentificationNumber,
-                Email = viewModel.Email
-
+                Email = viewModel.Email               
             };
 
             await _dbContext.GuideUsers.AddAsync(guideUser);

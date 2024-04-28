@@ -1,4 +1,5 @@
 ﻿using Azure.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services.Interfaces;
@@ -35,7 +36,36 @@ namespace TouristTourGuideWebApp.Controllers
             this._bookingService = bookingService;
 
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete(string tourId) 
+        {
+            //добавил съм го на 4/26/2024
+            if (!_tourService.IsTourExist(tourId))
+            {
+                return StatusCode(404,"This tour deosnt exist");
+            }
+           List<string> listOfImagesName = await _imageServie.GetAllTourUniqNameImages(tourId);
+            _imageServie.DeleteManyTourImageFileMongoDb(listOfImagesName);
 
+            var isHaveComments = await _commentsService.GetAllComentAsync(tourId);
+            if (isHaveComments!=null)
+            {
+                _commentsService.DeleteTourComments(tourId);
+            }
+            if (_tourService.isHavePictures(tourId))
+            {
+                _imageServie.DeleteTourImagesSql(tourId);
+            }
+            int votess = await _voteService.CountVoteByTourIdAsync(tourId);
+            if (votess!=0)
+            {
+                _voteService.DeleteAllTourVote(tourId);
+            }
+          
+            await _tourService.Delete(tourId);
+
+            return  RedirectToAction("All","TouristTour");
+        }
         public async Task<IActionResult> All([FromQuery] AllToursQueryViewModel queryModel)
         {
             
@@ -110,6 +140,7 @@ namespace TouristTourGuideWebApp.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Details(string id) 
         {
             if (!_tourService.IsTourExist(id))
@@ -169,7 +200,9 @@ namespace TouristTourGuideWebApp.Controllers
             {
                 Id = tourId,
                 TourName = name,                
-                TourBookings = getBookings
+                TourBookings = getBookings,
+                
+                
             };
 
 

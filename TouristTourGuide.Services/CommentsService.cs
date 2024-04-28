@@ -30,6 +30,15 @@ namespace TouristTourGuide.Services
             await _db.SaveChangesAsync();
 
         }
+        //add 4/27/2024
+        public void DeleteTourComments(string tourId)
+        {
+            var getComments = _db.Comments.Where(x => x.TouristTourId.ToString() == tourId)
+                 .ToList();
+
+            _db.RemoveRange(getComments);
+            _db.SaveChanges();
+        }
 
         public async Task<List<AllComentsViewModels>> GetAllComentAsync(string tourId)
         {

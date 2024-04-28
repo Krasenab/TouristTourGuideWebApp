@@ -6,7 +6,7 @@ namespace TouristTourGuide.Services.Interfaces
     public interface ITourService
     {      
         Task<decimal> GetTourPricePerPerson(string tourId);
-        Task Delete(string tourId,string ownerId);
+        Task Delete(string tourId);
         Task<AllToursFilteredAndPagedServiceModel> AllAsync(AllToursQueryViewModel viewModel);
         void CreateTouristTour(TouristTourCreateViewModel viewModel,string guidUserId);
         Task<bool> IsTourOwner(string guideId,string tourId);

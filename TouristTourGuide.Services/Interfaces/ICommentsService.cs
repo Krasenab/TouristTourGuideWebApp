@@ -13,5 +13,9 @@ namespace TouristTourGuide.Services.Interfaces
         Task<CommentResponseViewModel> GetLatestCommentsAsync(string userId);
         Task Create(string tourId,string content,string appUserId);
         Task<List<AllComentsViewModels>> GetAllComentAsync(string tourId);
+
+        //добавил съм го на 4/27/2024
+        void DeleteTourComments(string tourId);
+
     }
 }

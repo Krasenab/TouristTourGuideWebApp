@@ -9,9 +9,13 @@ namespace TouristTourGuide.Services.Interfaces
 {
     public interface IBookingService
     {
-        Task CreateBooking(CreateBookingViewModel viewModel,string tourId);
+        Task CreateBooking(CreateBookingViewModel viewModel);
         Task<List<BookingDetailsViewModel>> BookingsDetails(string tourId);
         Task AcceptBooking(string bookingId);
+        // Add Refu method on 4/24/2024
+        Task<List<AcceptOrRefuseViewModel>> GetAcceptedTourBookings(string userGuideId);
+        Task RefuseBooking(string bookingId);
+        
      
     }
 }

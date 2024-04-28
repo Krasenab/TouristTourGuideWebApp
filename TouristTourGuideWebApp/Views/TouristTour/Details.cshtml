@@ -1,10 +1,29 @@
-﻿@model DetailsViewModel;
+﻿@model DetailsViewModel
+@using TouristTourGuide.Services.Interfaces;
+@using TouristTourGuide.Infrastrucutre;
+@inject ITourService tService
+@inject IGuideUserService gSerive
 
+@{
+    //4/24/2024 add @{}
+    var currentUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+    bool isUserGuide = gSerive.isUserGuide(currentUser);
+    bool isOwner = false;
+    if (isUserGuide)
+    {
+        string guserID = gSerive.GuidUserId(currentUser);
+        if (await tService.IsTourOwner(guserID, Model.Id))
+        {
+            isOwner = true;
+        }
+    }
+
+}
 <head>
     <title>@Model.TourName</title>
     <link rel="stylesheet" href="~/css/gallerypictures.css" style="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <link rel="stylesheet" href="~/css/votestartstyle.css" style="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">  
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
         .text-truncate {
@@ -15,6 +34,51 @@
             width: 100%;
             cursor: help;
         }
+
+        .custom-container {
+            overflow: hidden;
+        }
+
+        .custom-row {
+            margin-bottom: 10px;
+        }
+
+        .custom-form-group {
+            margin-bottom: 10px;
+        }
+
+        .custom-row input[type="file"],
+        .custom-row button {
+            width: 75%;
+            box-sizing: border-box;
+        }
+
+        .ratings {
+            display: flex;
+            list-style-type: none;
+            margin: 1em 0; 
+            padding: 0; 
+            justify-content: center; 
+        }
+
+        .star {
+            cursor: pointer;
+            line-height: 1; 
+            font-size: 40px;
+            color: #ebebeb; 
+            transition: color 0.2s ease; 
+        }
+
+            .star:hover,
+            .star:hover ~ .star { 
+                color: #ffc107; 
+            }
+
+            .star.active {
+                color: #ffc107; 
+            }
+
+   
     </style>
 
 </head>
@@ -42,7 +106,7 @@
                                  alt="" class="img-fluid">
                         </a>
                     </figure>
-                   
+
                 }
                 else if (i == 1)
                 {
@@ -103,18 +167,18 @@ else
 {
     <div class="alert alert-warning">No images available for this tour.</div>
 }
-<div class="container-info overflow-hidden">
- 
+
+<div class="container-info overflow-hidden" style="padding: 1em;">
+
+
     <div class="row mb-5">
         <div class="col-md-3">
-            <strong>
-                <span class="material-symbols-outlined">payments</span>Price Per Person
-            </strong> <span>@Model.PricePerPerson</span>
+            <span class="material-symbols-outlined">payments</span>
+            <strong>Price Per Person:</strong> <span>@Model.PricePerPerson</span>
         </div>
         <div class="col-md-3">
-            <strong>
-                <span class="material-symbols-outlined">av_timer</span>Duration - 
-            </strong>@Model.Duaration
+            <span class="material-symbols-outlined">av_timer</span>
+            <strong>Duration:</strong> <span>@Model.Duaration</span>
         </div>
         <div class="col-md-3">
             <span class="material-symbols-outlined">public</span>
@@ -126,98 +190,87 @@ else
         </div>
     </div>
 
-   
     <div class="row mb-5">
         <div class="col-md-6">
             <strong>Meeting Point:</strong> <span class="text-truncate" title="@Model.MeetingPoint">@Model.MeetingPoint</span>
         </div>
-        <div class="col-md-6">
-        <strong>See on Google Map:</strong> <a href="@Model.MeetingPointMapUrl" style="cursor:pointer">Map Link</a>
-    </div>
+        <div class="col-md-6 overflow-hidden">
+            <strong>See on Google Map:</strong> <a href="@Model.MeetingPointMapUrl" style="cursor:pointer">Map Link</a>
+        </div>
     </div>
 
-    
-    
-    <div class="row mb-5" <span class="material-symbols-outlined">info</span>
-        
-        <div class="col-xxl-1">
-            <strong>Know Before You Go:</strong> <span class="text-truncate" title="@Model.KnowBeforeYouGo">@Model.KnowBeforeYouGo</span>
-        </div>        
-    </div>
 
     <div class="row mb-5">
-        <div class="col-xxl-1">
+        <div class="col-lg-6 overflow-hidden">
+            <span class="material-symbols-outlined">info</span>
+            <strong>Know Before You Go:</strong> <span class="text-truncate" title="@Model.KnowBeforeYouGo">@Model.KnowBeforeYouGo</span>
+        </div>
+        <div class="col-lg-6 overflow-hidden">
             <strong>Not Suitable For:</strong> <span>@Model.NotSuitableFor</span>
         </div>
     </div>
 
+
     <div class="row mb-5">
-        <div class="col-lg-5">
+        <div class="col-lg-6">
             <strong>What to Bring:</strong> <span class="text-truncate" title="@Model.WhatToBring">@Model.WhatToBring</span>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-6 overflow-hidden">
             <strong>Includes:</strong> <span>@Model.Includes</span>
         </div>
-        
     </div>
+
     <div class="row mb-5">
-        <div class="col-md-5">
+        <div class="col-md-12">
             <strong>Full Description:</strong> <span class="text-truncate" title="@Model.FullDescription">@Model.FullDescription</span>
         </div>
     </div>
-    
-   
 </div>
-
-<div class="row mb-auto">
-       
-        <div>
-            <form asp-controller="TouristTour" asp-action="DeleteTour" asp-route-tourId="@Model.Id" method="post" class="d-inline ml-2">
-                <button type="submit" class="btn btn-danger">DeleteTour</button>
-            </form>
-
-            <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.Id" class="btn btn-success d-inline ml-3">Tour bookings</a>
-        </div>
-    
-
-
-</div>
-
-<a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id"  class="btn btn-success d-inline ml-3 ">Create book</a>
-
-@*TODO hide div for regulate users*@
-<div class="row mt-5">
-    <div class="col-lg-12" onclick="">
-        <h4>Add a new image to your tour:</h4>
-        <form method="post" enctype="multipart/form-data" asp-action="AddImage" asp-controller="TouristTour">
-            <input type="hidden" name="tourId" value="@Model.Id" />
-            <div class="form-group">
-                <input type="file" name="imageFile" required class="form-control mb-3" />
-                <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+<div class="custom-container">
+    <div class="custom-row">
+        @if (isOwner)
+        {
+            <div>
+                <form asp-controller="TouristTour" asp-action="Delete" asp-route-tourId="@Model.Id" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Delete Tour</button>
+                </form>
+                <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.Id" class="btn btn-success d-inline">Tour bookings</a>
             </div>
-        </form>
+        }
+    </div>
+
+    <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
+
+    <div class="custom-row">
+        <div class="col-lg-12">
+            <h4>Add a new image to your tour:</h4>
+            <form method="post" enctype="multipart/form-data" asp-action="AddImage" asp-controller="TouristTour">
+                <input type="hidden" name="tourId" value="@Model.Id" />
+                <div class="custom-form-group">
+                    <input type="file" name="imageFile" required class="form-control" />
+                    <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="star-rating">
+        <ul class="ratings">
+            <li class="star" onclick="sendVote('@Model.Id',1)"></li>
+            <li class="star" onclick="sendVote('@Model.Id',2)"></li>
+            <li class="star" onclick="sendVote('@Model.Id',3)"></li>
+            <li class="star" onclick="sendVote('@Model.Id',4)"></li>
+            <li class="star" onclick="sendVote('@Model.Id',5)"></li>
+        </ul>
+    </div>
+
+    <div class="custom-row justify-content-center">
+        <div class="col">
+            <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2") / Based on : ### voted users</p>
+        </div>
     </div>
 </div>
 
-
-
-<div class="star-rating">
-    <ul class="ratings">
-        <li class="star" onclick="sendVote('@Model.Id',1)"></li>
-        <li class="star" onclick="sendVote('@Model.Id',2)"></li>
-        <li class="star" onclick="sendVote('@Model.Id',3)"></li>
-        <li class="star" onclick="sendVote('@Model.Id',4)"></li>
-        <li class="star" onclick="sendVote('@Model.Id',5)"></li>
-    </ul>
-</div>
-
-
-
-<div class="row" style="padding-top:0.1em">
-    <div class="col">
-        <p id="ratingDisplay">@Model.TourRatign.ToString("f2")</p>
-    </div>
-</div>
 
 
 
@@ -250,11 +303,12 @@ else
                         }
                         @if (Model.Comments.Count > 5)
                         {
-                            <button id="readMoreBtn" class="btn btn-primary">Прочети повече коментари</button>
+                            @*сменям на 4/27/2024 големината на бутона*@
+                            <button id="readMoreBtn" class="btn-sm btn-primary ">See more comment</button>
                         }
                     </div>
-
-                    <button id="showFormBtn" class="btn btn-primary">Покажи формуляра</button>
+                    @*сменям на 4/27/2024 големината на бутона*@
+                    <button id="showFormBtn" class="btn btn-primary btn-sm">Add comment</button>
                     <form id="commentForm" style="display:none;">
                         <div class="card-footer py-3 border-2 justify-content-start" style="background-color: #f8f9fa;">
                             <div class="d-flex flex-start w-100">
@@ -271,7 +325,7 @@ else
                                 <button type="button" for="Content"
                                         id="postCommentBtn"
                                         data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-sm">
-                                    Post comment
+                                    Post your comment
                                 </button>
                             </div>
                         </div>
@@ -325,7 +379,7 @@ else
                 data: JSON.stringify({ Content: content, TourId: tourId }),
                 success: function (response) {
                     alert('Comment posted successfully');
-                    $('#Content').val(''); 
+                    $('#Content').val('');
                     var newCommentHtml = '<div class="card-body">' +
                         '<div class="d-flex flex-start align-items-center">' +
                         '<img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60" height="60" />' +
@@ -357,7 +411,14 @@ else
     function sendVote(tourId, starValue) {
         var json = { tourId: tourId, starValue: starValue };
 
-
+        var stars = document.querySelectorAll('.star');
+        stars.forEach(function (star, index) {
+            if (index < starValue) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
+        });
         $.ajax({
             url: "/api/vote",
             type: "POST",
@@ -396,7 +457,7 @@ else
             }).then(response => response.text()).then(data => {
                 if (data === 'success') {
                     alert('Image deleted successfully');
-                   
+
                 }
                 else {
                     alert('Failed to delete image');
@@ -406,5 +467,6 @@ else
     }
 
 </script>
+
 
 

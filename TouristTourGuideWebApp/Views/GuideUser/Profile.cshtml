@@ -1,0 +1,126 @@
+﻿@using TouristTourGuide.ViewModels.UserGuideViewModels;
+@model GuideUserFullInfoViewModel
+@*
+ добавено на 4/26/2024
+*@
+
+@{
+
+}
+<head>
+    <style>
+        .card-body {
+            background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+        }
+    </style>
+</head>
+
+<section class="profile-section">
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                         class="rounded-circle img-fluid" style="width: 150px;">
+                       @*TODO: Add file from for picure*@
+                    <h5 class="my-3">@Model.Name</h5>
+                    <p class="text-muted mb-1">@Model.Email</p>
+                    <p class="text-muted mb-4">@Model.PhoneNumber</p>
+                    <div class="d-flex justify-content-center mb-2">
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Follow</button>
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Message</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4 mb-lg-0">
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush rounded-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <i class="fas fa-globe fa-lg text-warning"></i>
+                            <p class="mb-0">Find</p>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                            <p class="mb-0">add prop</p>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                            <p class="mb-0">add prop</p>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                            <p class="mb-0">add prop</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">       
+                            <p class="mb-0">First/full name</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.Name</p>
+                        </div>
+                    </div>
+                    <hr>
+                    @* <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Email</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">example@example.com</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Phone</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">(097) 234-5678</p>
+                        </div>
+                    </div> *@
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Mobile</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.PhoneNumber</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Registered firm address</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.RegisteredAddress</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <p>@Model.AboutTheActivityProvider</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <input type="hidden" class="form-control" asp-for="@Model.Id"/>
+
+                <a asp-controller="Booking" asp-action="AcceptedBookings" asp-route-guideUserId="@Model.Id">
+                    Accepted Bookings Work Sheet
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</section>
+

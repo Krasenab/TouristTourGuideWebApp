@@ -76,7 +76,14 @@ namespace TouristTourGuide.Services
             return voteCount;
         }
 
-       
+        public void DeleteAllTourVote(string tourId)
+        {
+            var getTourVotes = _dbContext.Votes.Where(x => x.TouristTourId.ToString() == tourId)
+                 .ToList();
+            
+            _dbContext.RemoveRange(getTourVotes);
+            _dbContext.SaveChanges();
+        }
 
         public async Task<int> GetUserCurrentVote(string applicationUserId, string tourId)
         {

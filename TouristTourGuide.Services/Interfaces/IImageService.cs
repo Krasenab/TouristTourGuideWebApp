@@ -13,6 +13,11 @@ namespace TouristTourGuide.Services.Interfaces
         bool IsFileExtensionValid(IFormFile imageFile);
         List<AppImagesViewModel> GetImagesFilesMongoDb(string uniqueFileName);
         Task<string> TourImageUniqueName(string tourId);
+        //add on 4/27/2024
+        Task<List<string>> GetAllTourUniqNameImages(string tourId);
+        void DeleteManyTourImageFileMongoDb(List<string> fileUniqNames);
+
+        void DeleteTourImagesSql(string tourId);
 
     }
 }

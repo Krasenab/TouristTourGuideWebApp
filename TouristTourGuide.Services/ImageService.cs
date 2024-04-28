@@ -62,10 +62,36 @@ namespace TouristTourGuide.Services
  
         }
 
+        public void DeleteTourImagesSql(string tourId)
+        {
+            var getAppImageMetaData = _dbContext.AppImages.Where(x => x.TouristTourId.ToString() == tourId)
+                  .ToList();
+
+            _dbContext.RemoveRange(getAppImageMetaData);
+            _dbContext.SaveChanges();
+        }
+
+        public void DeleteManyTourImageFileMongoDb(List<string> fileUniqNames)
+        {
+            foreach (string fileName in fileUniqNames)
+            {
+                var filterFile = Builders<AppImageFile>.Filter.Eq("UniqueFileName", fileName);
+                _appImageFileCollectionMDB.DeleteOneAsync(filterFile);
+
+            }         
+        }
+
+        public async Task<List<string>> GetAllTourUniqNameImages(string tourId)
+        {
+            List<string> names = await _dbContext.AppImages.Where(x=>x.TouristTourId.ToString()==tourId)
+                .Select(x=>x.UniqueFileName).ToListAsync();
+
+            return names;
+        }
+
         public byte[] GetImageBytesMongoDb(string uqnicName)
         {
-            int i = 1;
-            
+                 
             var fileObject = _appImageFileCollectionMDB.Find(x=>x.UniqueFileName==uqnicName)
                 .Project(x => new AppImagesViewModel()
                 {
@@ -73,12 +99,6 @@ namespace TouristTourGuide.Services
                 }).FirstOrDefault();
 
             return fileObject.FileData;
-            
-            
-           
-            
-            
-          
         }
 
         public List<AppImagesViewModel> GetImagesFilesMongoDb(string uniqueFileName)

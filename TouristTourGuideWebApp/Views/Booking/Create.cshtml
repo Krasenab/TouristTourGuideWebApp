@@ -51,13 +51,14 @@
 <div class="container">
     <div class="booking-form">
         <h2>Book your tour now</h2>
-        
-        <form asp-action="Create" asp-controller="Booking" asp-route-id="@Model.TouristTourId" method="post">
-            <input type="hidden"  name="TouristTourId" value="@Model.TouristTourId">
+
+        <form asp-action="Create" asp-controller="Booking"  ethod="post">
+
 
             <div class="form-group">
                 <label for="Email">Email</label>
                 <input type="text" class="form-control" asp-for="Email" placeholder="Enter your email" />
+                <span asp-validation-for="Email"></span>
             </div>
 
             <div class="form-group">
@@ -74,13 +75,20 @@
                 <label for="CountOfPeople">Number of Persons</label>
                 <input type="number" class="form-control" asp-for="CountOfPeople" required min="1" />
             </div>
-            <div class="form-group">
-                <label asp-for="TotalPrice">Total Price</label>
-                <input type="number" class="form-control" asp-for="TotalPrice"  />
-            </div>
+
+            @*4/24/2024 removed add divclass from-fgrup бях забравил и това да добавя за това не работише преди 4/24/2024*@
+             <div class="form-group">
+                <input type="hidden" class="form-control" asp-for="TouristTourId" />
+            </div> 
+
+
+            @*   <div class="form-group">
+            <label asp-for="TotalPrice">Total Price</label>
+            <input type="number" class="form-control" asp-for="TotalPrice"  />
+            </div> *@
 
             <div class="form-group mt-4">
-                <button type="submit"  class="btn">Submit  request</button>
+                <button type="submit" asp-action="Create" class="btn">Submit  request</button>
             </div>
         </form>
     </div>

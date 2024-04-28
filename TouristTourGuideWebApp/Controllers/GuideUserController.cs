@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services.Interfaces;
@@ -7,6 +8,8 @@ using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 
 namespace TouristTourGuideWebApp.Controllers
 {
+    //add 4/24/2024
+    [Authorize]
     public class GuideUserController : Controller
     {
         private IGuideUserService _guideUserService;
@@ -32,15 +35,27 @@ namespace TouristTourGuideWebApp.Controllers
         }
 
         [HttpPost]
+        
         public async Task<IActionResult> BecomeGuide(BecomeGuideUserViewModel viewModel)
-        {
-            
-
-
+        {            
             string getUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
             await _guideUserService.CreateGuide(viewModel, getUser);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        //добавил съм го на 4/26/2024
+        [HttpGet]
+        public async Task<IActionResult> Profile(string guideUserId) 
+        {
+          
+            string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+            string userGuideId =  _guideUserService.GuidUserId(userId);
+            var view = await _guideUserService.GuidUserInfo(userGuideId);
+
+            return View(view);
+
+
         }
     }
 }
