@@ -156,6 +156,7 @@ namespace TouristTourGuideWebApp.Controllers
             
                 detailsViewModel.TourRatign = await _voteService.CalculateRatingAsync(id);                 
                 detailsViewModel.Comments = await _commentsService.GetAllComentAsync(id);
+                detailsViewModel.VoteCount = await _voteService.CountVoteByTourIdAsync(id);
             
           
             return View(detailsViewModel);

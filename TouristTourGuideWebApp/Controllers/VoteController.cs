@@ -24,12 +24,13 @@ namespace TouristTourGuideWebApp.Controllers
             int valueOfStarRating = voteInputViewModel.StarValue;
 
             await _voteService.AddVoteAsync(tourId,appUserId,valueOfStarRating);
-
+            int votesCount = await _voteService.CountVoteByTourIdAsync(tourId);
             double newRatingValue = await _voteService.CalculateRatingAsync(tourId);
 
             VoteResponseViewModel responseValue = new VoteResponseViewModel()
             {
-                RatingResultAfretVote = newRatingValue
+                RatingResultAfretVote = newRatingValue,
+                VotesCount = votesCount
             };
             return responseValue;
         }

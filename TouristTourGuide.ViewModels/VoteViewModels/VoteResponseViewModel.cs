@@ -10,5 +10,7 @@ namespace TouristTourGuide.ViewModels.VoteViewModels
     {
         public double RatingResultAfretVote { get; set; }
 
+        public int VotesCount { get; set; }
+
     }
 }

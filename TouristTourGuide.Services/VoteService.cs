@@ -13,6 +13,8 @@ namespace TouristTourGuide.Services
                 _dbContext = dbContext;
         }
 
+        
+
         public async Task AddVoteAsync(string tourId, string applicationUserId, int starValue)
         {
             bool userAlreadyVoted = await _dbContext.Votes.AnyAsync(x => x.TouristTourId.ToString() == tourId 
@@ -28,7 +30,7 @@ namespace TouristTourGuide.Services
                 };
 
                 await _dbContext.Votes.AddAsync(v);
-
+                             
             }
             else
             {
@@ -39,7 +41,6 @@ namespace TouristTourGuide.Services
                    .FirstAsync();
 
                     getCurrentUserVote.VoteValue = starValue;
-                                      
                 }
                 catch (Exception)
                 {
@@ -92,5 +93,7 @@ namespace TouristTourGuide.Services
 
             return currentValue;
         }
+
+       
     }
 }

@@ -7,6 +7,7 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
     public class DetailsViewModel
     {
         public string Id { get; set; }
+        public int VoteCount { get; set; }
         public string TourName { get; set; }
         public string Duaration { get; set; }
         public decimal PricePerPerson { get; set; }
@@ -23,7 +24,7 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         public string LocationCity { get; set; }
         public string GuideUserId { get; set; }
         public string Category { get; set; }
-        public double TourRatign { get; set; }
+        public double TourRatign { get; set; }        
         public List<AllComentsViewModels> Comments { get; set; } = new List<AllComentsViewModels>();
         public List<AppImagesViewModel> AllTourApplicationImages { get; set; } = new List<AppImagesViewModel>();
     }

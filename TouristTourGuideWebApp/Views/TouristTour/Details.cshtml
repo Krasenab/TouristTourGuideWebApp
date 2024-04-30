@@ -5,7 +5,7 @@
 @inject IGuideUserService gSerive
 
 @{
-    //4/24/2024 add @{}
+
     var currentUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
     bool isUserGuide = gSerive.isUserGuide(currentUser);
     bool isOwner = false;
@@ -200,6 +200,8 @@ else
         </div>
     </div>
 </div>
+
+
 <div class="custom-container">
     <div class="custom-row">
         @if (isOwner)
@@ -208,53 +210,58 @@ else
                 <form asp-controller="TouristTour" asp-action="Delete" asp-route-tourId="@Model.Id" method="post" class="d-inline">
                     <button type="submit" class="btn btn-danger">Delete Tour</button>
                 </form>
-                <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.Id" class="btn btn-success d-inline">Tour bookings</a>
+               
             </div>
         }
     </div>
 
-    <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
-
-    <div class="custom-row">
-        <div class="col-lg-12">
-            <h4>Add a new image to your tour:</h4>
-            <form method="post" enctype="multipart/form-data" asp-action="AddImage" asp-controller="TouristTour">
-                <input type="hidden" name="tourId" value="@Model.Id" />
-                <div class="custom-form-group">
-                    <input type="file" name="imageFile" required class="form-control" />
-                    <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+  
+    @if (isOwner)
+    {
+        <div class="custom-row">
+            <button id="showUplFormBtn" class="btn btn-primary btn-sm bg-opacity-25 border-1" style="border-radius:0.5em">Add pictures to your tour</button>
+            <div id="hideElement" style="display:none;">
+                <div class="col-lg-12" style="padding-top:1em;">
+                    <h4>Add a new image to your tour:</h4>
+                    <form method="post" enctype="multipart/form-data" asp-action="AddImage" asp-controller="TouristTour">
+                        <input type="hidden" name="tourId" value="@Model.Id" />
+                        <div class="custom-form-group" style="padding-top:1em;">
+                            <input type="file" name="imageFile" required class="form-control" />
+                            <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+
+    }
+    <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
+    <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.Id" class="btn btn-success d-inline">Tour bookings</a>
 
 
 </div>
 
-@* <ul class="ratings">
-    // излагането със звездите беше поради липсващият код междъ <li></li> <li>&#9733;</li>
-    <li class="star" onclick="sendVote('@Model.Id',1)"></li>
-    <li class="star" onclick="sendVote('@Model.Id',2)"></li>
-    <li class="star" onclick="sendVote('@Model.Id',3)"></li>
-    <li class="star" onclick="sendVote('@Model.Id',4)"></li>
-    <li class="star" onclick="sendVote('@Model.Id',5)"></li>
-</ul> *@
+
 
 
 
 <div class="custom-row" style="text-align:center">
     <div class="col">
-        <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2") / Based on : ### voted users</p>
+        <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2")</p>
+        <p id="voteBasedOn">Rating is based on @Model.VoteCount users votes</p>
     </div>
 </div>
 
-<div class="star-rating" style="text-align:center; font-size:30px;">
-    <span class="star" onclick="sendVote('@Model.Id',1)">&#9733;</span>
-    <span class="star" onclick="sendVote('@Model.Id',2)">&#9733;</span>
-    <span class="star" onclick="sendVote('@Model.Id',3)">&#9733;</span>
-    <span class="star" onclick="sendVote('@Model.Id',4)">&#9733;</span>
-    <span class="star" onclick="sendVote('@Model.Id',5)">&#9733;</span>
-</div>
+
+    <ul class="ratings">
+
+        <li class="star" onclick="sendVote('@Model.Id',1)"></li>
+        <li class="star" onclick="sendVote('@Model.Id',2)"></li>
+        <li class="star" onclick="sendVote('@Model.Id',3)"></li>
+        <li class="star" onclick="sendVote('@Model.Id',4)"></li>
+        <li class="star" onclick="sendVote('@Model.Id',5)"></li>
+    </ul>
+
 
 <section style="background-color:#fff;">
     <div class="container ">
@@ -326,6 +333,18 @@ else
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+
+    $('#showUplFormBtn').click(function () {
+        var form = $('#hideElement');
+        if (form.css('display') === 'none') {
+            form.show();
+        } else {
+            form.hide();
+        }
+    });
+
+</script>
 
 <script>
     $(document).ready(function () {
@@ -390,24 +409,7 @@ else
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var stars = document.querySelectorAll('.star');
-        stars.forEach(function (star, index) {
-            star.addEventListener('click', function () {
-                updateStars(index + 1);
-                sendVote('@Model.Id', index + 1);
-            });
-        });
-        function updateStars(rating) {
-            stars.forEach(function (star, idx) {
-                if (idx < rating) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
-                }
-            });
-        }
-    });
+    
     function sendVote(tourId, starValue) {
         var json = { tourId: tourId, starValue: starValue };
 
@@ -421,15 +423,16 @@ else
             success: function (response) {
                 console.log(response);
                 var newRatingValue = response.ratingResultAfretVote;
+                var newVoteCount = response.VotesCount;
                 $('#ratingDisplay').text(newRatingValue.toFixed(2));
+                $('#voteBasedOn').text('Rating is based on ' + newVoteCount + ' users votes');
             }
+            
         });
 
     }
 
 </script>
-
-
 
 
 <script>
