@@ -15,6 +15,7 @@ namespace TouristTourGuide.ViewModels.UserGuideViewModels
         public string RegisteredAddress { get; set; }
         public string ApplicationUserId { get; set; }
         public string AboutTheActivityProvider { get; set; }
+       public byte[]? ImageFileData { get; set; }
     
     }
 }

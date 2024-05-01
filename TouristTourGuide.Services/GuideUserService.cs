@@ -28,7 +28,8 @@ namespace TouristTourGuide.Services
                      RegisteredAddress = x.RegisteredAddress,
                      Email=x.Email,
                      CompanyRegistrationNumber = x.CompanyRegistrationNumber,
-                     PhoneNumber = x.PhoneNumber
+                     PhoneNumber = x.PhoneNumber,
+                     ApplicationUserId = x.ApplicationUserId.ToString()
                  }).FirstOrDefaultAsync();
 
             if (guideUser==null)

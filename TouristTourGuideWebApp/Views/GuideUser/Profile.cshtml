@@ -17,13 +17,27 @@
 
 <section class="profile-section">
 
+    <button id="showUplFormBtn" class="btn btn-primary btn-sm bg-opacity-25 border-1" style="border-radius:0.5em">Add pictures to your tour</button>
+    <div id="hideElement" style="display:none; padding-bottom:1em;">
+        <div class="col-lg-12 small" style="padding-top:1em;">
+            <h4>Add profile image</h4>
+            <form method="post" enctype="multipart/form-data" asp-action="AddPicture" asp-controller="GuideUser">
+                <input type="hidden" name="userAppId" value="@Model.ApplicationUserId" />
+                <div class="custom-form-group" style="padding-top:1em;">
+                    <input type="file" name="pictureFile" required class="form-control" />
+                    <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-4">
             <div class="card mb-4">
                 <div class="card-body text-center">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                    <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.ImageFileData))"  alt="avatar"
                          class="rounded-circle img-fluid" style="width: 150px;">
-                       @*TODO: Add file from for picure*@
+                    @*TODO: Add file from for picure*@
+
                     <h5 class="my-3">@Model.Name</h5>
                     <p class="text-muted mb-1">@Model.Email</p>
                     <p class="text-muted mb-4">@Model.PhoneNumber</p>
@@ -60,7 +74,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-3">       
+                        <div class="col-sm-3">
                             <p class="mb-0">First/full name</p>
                         </div>
                         <div class="col-sm-9">
@@ -69,21 +83,21 @@
                     </div>
                     <hr>
                     @* <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Email</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">example@example.com</p>
-                        </div>
+                    <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                    </div>
+                    <div class="col-sm-9">
+                    <p class="text-muted mb-0">example@example.com</p>
+                    </div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Phone</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">(097) 234-5678</p>
-                        </div>
+                    <div class="col-sm-3">
+                    <p class="mb-0">Phone</p>
+                    </div>
+                    <div class="col-sm-9">
+                    <p class="text-muted mb-0">(097) 234-5678</p>
+                    </div>
                     </div> *@
                     <hr>
                     <div class="row">
@@ -113,14 +127,31 @@
                 </div>
             </div>
             <div class="row mb-4">
-                <input type="hidden" class="form-control" asp-for="@Model.Id"/>
+                <input type="hidden" class="form-control" asp-for="@Model.Id" />
 
                 <a asp-controller="Booking" asp-action="AcceptedBookings" asp-route-guideUserId="@Model.Id">
                     Accepted Bookings Work Sheet
                 </a>
             </div>
         </div>
-        
+
     </div>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
+<script>
+    $('#showUplFormBtn').click(function () {
+        var form = $('#hideElement');
+        if (form.css('display') === 'none') {
+            form.show();
+        }
+        else {
+            form.hide();
+        }
+
+    });
+
+       
+
+</script>

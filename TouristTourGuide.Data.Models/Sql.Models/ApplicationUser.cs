@@ -10,6 +10,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
             this.UserToursBookings = new List<TouristTourBooking>();
             this.AppImages = new List<AppImages>();
         }
+      
 
         [MaxLength(FirstNameMaxLength)]
         public string? FirstName { get; set; }

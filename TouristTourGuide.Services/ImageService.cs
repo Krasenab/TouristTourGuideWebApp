@@ -27,10 +27,10 @@ namespace TouristTourGuide.Services
         {
             _dbContext = dbContext;
             _appImageFileCollectionMDB = mongoClient.GetDatabase("TouristTourGuideWebAppMDB").GetCollection<AppImageFile>("TouristTourGuideWebAppImages");
-        
+
         }
 
-      
+
         public async Task AddImageFileToMongoDb(IFormFile imageFile, string uniqueFileName)
         {
             await using (MemoryStream memoryStream = new MemoryStream())
@@ -59,7 +59,7 @@ namespace TouristTourGuide.Services
             };
             await _dbContext.AppImages.AddAsync(img);
             await _dbContext.SaveChangesAsync();
- 
+
         }
 
         public void DeleteTourImagesSql(string tourId)
@@ -78,21 +78,21 @@ namespace TouristTourGuide.Services
                 var filterFile = Builders<AppImageFile>.Filter.Eq("UniqueFileName", fileName);
                 _appImageFileCollectionMDB.DeleteOneAsync(filterFile);
 
-            }         
+            }
         }
 
         public async Task<List<string>> GetAllTourUniqNameImages(string tourId)
         {
-            List<string> names = await _dbContext.AppImages.Where(x=>x.TouristTourId.ToString()==tourId)
-                .Select(x=>x.UniqueFileName).ToListAsync();
+            List<string> names = await _dbContext.AppImages.Where(x => x.TouristTourId.ToString() == tourId)
+                .Select(x => x.UniqueFileName).ToListAsync();
 
             return names;
         }
 
         public byte[] GetImageBytesMongoDb(string uqnicName)
         {
-                 
-            var fileObject = _appImageFileCollectionMDB.Find(x=>x.UniqueFileName==uqnicName)
+
+            var fileObject = _appImageFileCollectionMDB.Find(x => x.UniqueFileName == uqnicName)
                 .Project(x => new AppImagesViewModel()
                 {
                     FileData = x.FileData
@@ -123,8 +123,8 @@ namespace TouristTourGuide.Services
             return true;
         }
 
-        
-       
+
+
         public async Task<string> TourImageUniqueName(string tourId)
         {
             string fileName = await _dbContext.AppImages.Where(x => x.TouristTourId == Guid.Parse(tourId))
@@ -139,6 +139,40 @@ namespace TouristTourGuide.Services
             return fileName;
         }
 
-     
+        public void AddProfilePicture(IFormFile profilePicture, string applicationUserId)
+        {
+            string uniqueName = GenerateUnicFileName(profilePicture.FileName);
+            string id = applicationUserId;
+            AppImages newProfilePicture = new AppImages()
+            {
+                ApplicationUserId = Guid.Parse(applicationUserId),
+                UniqueFileName = uniqueName
+            };
+            _dbContext.AppImages.Add(newProfilePicture);
+            _dbContext.SaveChanges();
+
+        }
+
+        public async Task<string> GetImageUniqueName(string uniqueName)
+        {
+            return await _dbContext.AppImages.Where(x => x.ApplicationUserId.ToString() == uniqueName && x.TouristTourId == null)
+          .Select(x => x.UniqueFileName)
+          .FirstOrDefaultAsync();
+        }
+
+        public bool IsAppImageExist(string applicationUserId)
+        {
+            return _dbContext.AppImages.Any(x => x.ApplicationUserId.ToString() == applicationUserId);
+        }
+
+        public async Task<string> GetAppUserImageFileUniqueNameSQL(string appUserId)
+        {
+            string name = await _dbContext.AppImages.Where(x => x.ApplicationUserId.ToString() == appUserId && x.TouristTourId==null)
+              .Select(n => n.UniqueFileName)
+              .FirstOrDefaultAsync();
+
+            string s = null;
+            return name;
+        }
     }
 }

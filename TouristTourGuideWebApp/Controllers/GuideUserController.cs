@@ -13,9 +13,11 @@ namespace TouristTourGuideWebApp.Controllers
     public class GuideUserController : Controller
     {
         private IGuideUserService _guideUserService;
-        public GuideUserController(IGuideUserService guideUserService)
+        private IImageService _imageService;
+        public GuideUserController(IGuideUserService guideUserService,IImageService imageService)
         {
             _guideUserService = guideUserService;
+            _imageService = imageService;
         }
 
         [HttpGet]
@@ -35,9 +37,9 @@ namespace TouristTourGuideWebApp.Controllers
         }
 
         [HttpPost]
-        
+
         public async Task<IActionResult> BecomeGuide(BecomeGuideUserViewModel viewModel)
-        {            
+        {
             string getUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
             await _guideUserService.CreateGuide(viewModel, getUser);
 
@@ -46,14 +48,40 @@ namespace TouristTourGuideWebApp.Controllers
 
         //добавил съм го на 4/26/2024
         [HttpGet]
-        public async Task<IActionResult> Profile(string guideUserId) 
+        public async Task<IActionResult> Profile(string guideUserId)
         {
-          
+
             string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
-            string userGuideId =  _guideUserService.GuidUserId(userId);
+            string userGuideId = _guideUserService.GuidUserId(userId);
             var view = await _guideUserService.GuidUserInfo(userGuideId);
+            if (_imageService.IsAppImageExist(userId))
+            {
+                string fileName = await _imageService.GetAppUserImageFileUniqueNameSQL(userId);
+                byte[] filedata = _imageService.GetImageBytesMongoDb(fileName);
+                view.ImageFileData = filedata;
+
+            }    
+          
 
             return View(view);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPicture(IFormFile pictureFile, string userAppId)
+        {
+            bool isUserExist = _guideUserService.isUserGuide(userAppId);
+            if (!isUserExist)
+            {
+                return StatusCode(404);
+            }
+
+            string id = userAppId;
+             _imageService.AddProfilePicture(pictureFile, userAppId);
+            string name = await _imageService.GetImageUniqueName(userAppId);
+           await _imageService.AddImageFileToMongoDb(pictureFile, name);
+            string guideUserId = _guideUserService.GuidUserId(userAppId);
+            
+            return RedirectToAction("Profile", "GuideUser", new { guideUserId = guideUserId });
         }
     }
 }
