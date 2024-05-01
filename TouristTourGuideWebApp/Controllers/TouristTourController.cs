@@ -34,7 +34,17 @@ namespace TouristTourGuideWebApp.Controllers
             this._voteService = voteService;
             this._commentsService = commentsService;
             this._bookingService = bookingService;
+                }
+        [HttpPost]
+        public async Task<IActionResult> DeletePicture(string uniqueName) 
+        {
+            var metadataImage = await _imageServie.AppImageInfo(uniqueName);
+            await _imageServie.DelateImageByUniqName(metadataImage.FileName);
+            List<string> name = new List<string>();
+            name.Add(metadataImage.FileName);
+            _imageServie.DeleteManyTourImageFileMongoDb(name);
 
+            return RedirectToAction("Details", new { id = metadataImage.TouristTourId });
         }
         [HttpPost]
         public async Task<IActionResult> Delete(string tourId) 
@@ -201,14 +211,14 @@ namespace TouristTourGuideWebApp.Controllers
             {
                 Id = tourId,
                 TourName = name,                
-                TourBookings = getBookings,
-                
-                
+                TourBookings = getBookings                
             };
 
 
             return View(viewModel);
         }
+
+     
 
     }
 }

@@ -142,7 +142,6 @@ namespace TouristTourGuide.Services
         public void AddProfilePicture(IFormFile profilePicture, string applicationUserId)
         {
             string uniqueName = GenerateUnicFileName(profilePicture.FileName);
-            string id = applicationUserId;
             AppImages newProfilePicture = new AppImages()
             {
                 ApplicationUserId = Guid.Parse(applicationUserId),
@@ -171,8 +170,48 @@ namespace TouristTourGuide.Services
               .Select(n => n.UniqueFileName)
               .FirstOrDefaultAsync();
 
-            string s = null;
             return name;
+        }
+
+        public async Task DelateImageByUniqName(string name)
+        {
+           var picture = await _dbContext.AppImages.Where(x=>x.UniqueFileName==name)
+                .FirstOrDefaultAsync();
+            _dbContext.AppImages.Remove(picture);
+            await _dbContext.SaveChangesAsync();
+           
+        }
+
+        public async Task<AppImageSqlMetaDataViewModel> AppImageInfo(string uniqueName)
+        {
+            AppImageSqlMetaDataViewModel ?appImages = await _dbContext.AppImages.Where(x => x.UniqueFileName == uniqueName)
+                 .Select(x => new AppImageSqlMetaDataViewModel()
+                 {
+                     ApplicationUserId = x.ApplicationUserId.ToString(),
+                     FileName = x.UniqueFileName,
+                     TouristTourId = x.TouristTourId.ToString()
+
+                 }).FirstOrDefaultAsync();
+            if (appImages==null)
+            {
+                throw new ArgumentNullException("name is not null");
+            }
+
+            return appImages;   
+        }
+
+        public Task<List<AppImagesViewModel>> GetAllTourImagesSqlMetaInfo(string tourId)
+        {
+           return _dbContext.AppImages.Where(x=>x.TouristTourId.ToString()==tourId)
+                .Select(d=>new AppImagesViewModel() 
+                {
+                    Id = d.Id,
+                    ApplicationUserId = d.ApplicationUserId.ToString(),
+                    TouristTourId = d.TouristTourId.ToString(),
+                    UniqueFileName = d.UniqueFileName,
+                    FileName = d.UniqueFileName,
+                    
+                }).ToListAsync();
         }
     }
 }

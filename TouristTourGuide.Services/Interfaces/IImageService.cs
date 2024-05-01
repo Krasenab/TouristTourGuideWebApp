@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Security;
+using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.ViewModels.AppImageViewModels;
 using TouristTourGuide.ViewModels.ApplicationImageViewModels;
 
@@ -19,11 +21,12 @@ namespace TouristTourGuide.Services.Interfaces
         void DeleteTourImagesSql(string tourId);
         void AddProfilePicture(IFormFile profilePicture, string applicationUserId);
         Task<string> GetImageUniqueName(string uniqueName);
-
+        //add afet 24
         bool IsAppImageExist(string applicationUserId);
-
         Task<string> GetAppUserImageFileUniqueNameSQL(string appUserId);
-
+        Task DelateImageByUniqName(string name);
+        Task<List<AppImagesViewModel>> GetAllTourImagesSqlMetaInfo(string tourId);
+        Task<AppImageSqlMetaDataViewModel> AppImageInfo(string uniqueName);
 
     }
 }
