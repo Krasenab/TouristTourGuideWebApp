@@ -106,14 +106,14 @@ namespace TouristTourGuideWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(TouristTourCreateViewModel model)
+        public async Task<IActionResult> Create(TouristTourCreateViewModel model)
         {
 
             string userId = this.User.GetCurrentUserId();
             string guideUserId = _guideUserService.GuidUserId(userId);
 
             _locationService.CreateCityCountry(model.LocationId, model.LocationCity);
-            _tourService.CreateTouristTour(model, guideUserId);
+           await _tourService.CreateTouristTour(model, guideUserId);
 
             return RedirectToAction("Index", "Home");
         }
@@ -160,8 +160,10 @@ namespace TouristTourGuideWebApp.Controllers
             var detailsViewModel = await _tourService.TourById(id);
             if (_tourService.isHavePictures(id))
             {
-                var uniqFileName = await _imageServie.TourImageUniqueName(id);
-                detailsViewModel.AllTourApplicationImages = _imageServie.GetImagesFilesMongoDb(uniqFileName);
+                //var uniqFileName = await _imageServie.TourImageUniqueName(id);
+                //detailsViewModel.AllTourApplicationImages = _imageServie.GetImagesFilesMongoDb(uniqFileName);
+               var names = await _imageServie.GetAllTourUniqNameImages(id);
+                detailsViewModel.AllTourApplicationImages = _imageServie.GetAllImagesFileByListOfUniqueName(names); 
             }
             
                 detailsViewModel.TourRatign = await _voteService.CalculateRatingAsync(id);                 
@@ -188,9 +190,8 @@ namespace TouristTourGuideWebApp.Controllers
                 return Ok();
             }
 
-            await _imageServie.AddTourImage(tourId, imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User));
-            string uniqueFileName = await _imageServie.TourImageUniqueName(tourId);
-            await _imageServie.AddImageFileToMongoDb(imageFile,uniqueFileName);
+           string filename = await _imageServie.AddTourImage(tourId, imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User));
+            await _imageServie.AddImageFileToMongoDb(imageFile,filename);
             
 
             return RedirectToAction("Details", "TouristTour", new {id=tourId });

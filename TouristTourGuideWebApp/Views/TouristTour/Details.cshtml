@@ -129,9 +129,7 @@
                              alt="" class="img-fluid">
                        
                     </a>
-                    
-                    
-                  
+                                                          
                 }
               
             }
@@ -213,6 +211,11 @@ else
                     <button type="submit" class="btn btn-danger">Delete Tour</button>
                 </form>
                
+            </div>
+            <div>
+                <a asp-controller="AppImage" asp-action="EditTourAlbum" asp-route-tourId="@Model.Id"
+                  class="btn-lg btn-info">Edit tour album</a>
+
             </div>
         }
     </div>

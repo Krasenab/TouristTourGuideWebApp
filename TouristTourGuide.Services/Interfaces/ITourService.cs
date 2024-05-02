@@ -8,7 +8,7 @@ namespace TouristTourGuide.Services.Interfaces
         Task<decimal> GetTourPricePerPerson(string tourId);
         Task Delete(string tourId);
         Task<AllToursFilteredAndPagedServiceModel> AllAsync(AllToursQueryViewModel viewModel);
-        void CreateTouristTour(TouristTourCreateViewModel viewModel,string guidUserId);
+       Task CreateTouristTour(TouristTourCreateViewModel viewModel,string guidUserId);
         Task<bool> IsTourOwner(string guideId,string tourId);
         Task<EditViewModel> GetTourForEdit(string tourId);
         void EditTour(EditViewModel editViewModel);

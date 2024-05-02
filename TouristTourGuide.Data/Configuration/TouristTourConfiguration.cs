@@ -40,7 +40,7 @@ namespace TouristTourGuide.Data.Configuration
         //        Highlights = "Discover where The Beatles recorded, lived, and socialized in 1960s London and many others",
         //        FullDescription = "Experience the London of The Beatles with Richard Porter, author of the book Guide to the Beatles London." +
         //        "Discover the locations and landmarks where The Fab Four recorded, lived, and socialized in London during the Swinging Sixties.",
-        //        GuideUserId = Guid.Parse("9A4399F1-422B-4911-BCCB-F3F01004235A"),
+        //        GuideUserId = Guid.Parse("0670C8A6-6A85-4E6C-815C-08DC6A24181E"),
         //        MeetingPoint = "Meet Richard outside Exit 1 of Tottenham Court Road Station. He will be holding 'Beatles Walks' leaflets and wearing a Beatles shirt or hat.",
         //        CategoryId = 1,
         //        LocationId = 1
@@ -50,7 +50,7 @@ namespace TouristTourGuide.Data.Configuration
 
         //    return touristTours;
 
-        //  }
+        //}
 
 
     }

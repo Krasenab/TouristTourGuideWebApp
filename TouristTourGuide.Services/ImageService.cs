@@ -47,7 +47,7 @@ namespace TouristTourGuide.Services
 
             }
         }
-        public async Task AddTourImage(string tourId, IFormFile imageFile, string userId)
+        public async Task<string> AddTourImage(string tourId, IFormFile imageFile, string userId)
         {
             string generateFileNewFileName = GenerateUnicFileName(imageFile.FileName);
 
@@ -59,7 +59,7 @@ namespace TouristTourGuide.Services
             };
             await _dbContext.AppImages.AddAsync(img);
             await _dbContext.SaveChangesAsync();
-
+            return img.UniqueFileName;
         }
 
         public void DeleteTourImagesSql(string tourId)
@@ -200,18 +200,31 @@ namespace TouristTourGuide.Services
             return appImages;   
         }
 
-        public Task<List<AppImagesViewModel>> GetAllTourImagesSqlMetaInfo(string tourId)
+        public List<AppImagesViewModel> GetAllImagesFileByListOfUniqueName(List<string> names)
         {
-           return _dbContext.AppImages.Where(x=>x.TouristTourId.ToString()==tourId)
-                .Select(d=>new AppImagesViewModel() 
-                {
-                    Id = d.Id,
-                    ApplicationUserId = d.ApplicationUserId.ToString(),
-                    TouristTourId = d.TouristTourId.ToString(),
-                    UniqueFileName = d.UniqueFileName,
-                    FileName = d.UniqueFileName,
-                    
-                }).ToListAsync();
+            List<AppImagesViewModel> imagesFilesAndUniqueNameMDB = new List<AppImagesViewModel>();
+            foreach (var name in names)
+            {
+                AppImagesViewModel data = _appImageFileCollectionMDB.Find(x => x.UniqueFileName == name)
+                    .Project(x => new AppImagesViewModel()
+                    {
+                        FileName = x.UniqueFileName,
+                        UniqueFileName = x.UniqueFileName,
+                        FileData = x.FileData
+                    }).FirstOrDefault();
+                imagesFilesAndUniqueNameMDB.Add(data);
+            }
+            return imagesFilesAndUniqueNameMDB;
         }
+
+        //public  AppImagesViewModel GetOneImageMongoDb(string uniqueName)
+        //{
+        //    return  _appImageFileCollectionMDB.Find(x=>x.UniqueFileName==uniqueName)
+        //        .Project(x=>new AppImagesViewModel() 
+        //        {
+        //            FileData = x.FileData,
+        //            UniqueFileName = x.UniqueFileName
+        //        }).First();
+        //}
     }
 }

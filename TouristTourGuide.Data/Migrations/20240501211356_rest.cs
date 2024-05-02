@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TouristTourGuide.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class migapp : Migration
+    public partial class rest : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,7 @@ namespace TouristTourGuide.Data.Migrations
                 table: "TouristsTours",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2024, 5, 1, 16, 20, 52, 337, DateTimeKind.Utc).AddTicks(9055),
+                defaultValue: new DateTime(2024, 5, 1, 21, 13, 55, 185, DateTimeKind.Utc).AddTicks(4336),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
                 oldDefaultValue: new DateTime(2024, 4, 22, 23, 41, 25, 471, DateTimeKind.Utc).AddTicks(5625));
@@ -26,7 +26,7 @@ namespace TouristTourGuide.Data.Migrations
                 table: "Comments",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2024, 5, 1, 16, 20, 52, 336, DateTimeKind.Utc).AddTicks(2848),
+                defaultValue: new DateTime(2024, 5, 1, 21, 13, 55, 184, DateTimeKind.Utc).AddTicks(2623),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
                 oldDefaultValue: new DateTime(2024, 4, 22, 23, 41, 25, 470, DateTimeKind.Utc).AddTicks(756));
@@ -43,7 +43,7 @@ namespace TouristTourGuide.Data.Migrations
                 defaultValue: new DateTime(2024, 4, 22, 23, 41, 25, 471, DateTimeKind.Utc).AddTicks(5625),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2024, 5, 1, 16, 20, 52, 337, DateTimeKind.Utc).AddTicks(9055));
+                oldDefaultValue: new DateTime(2024, 5, 1, 21, 13, 55, 185, DateTimeKind.Utc).AddTicks(4336));
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedOn",
@@ -53,7 +53,7 @@ namespace TouristTourGuide.Data.Migrations
                 defaultValue: new DateTime(2024, 4, 22, 23, 41, 25, 470, DateTimeKind.Utc).AddTicks(756),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2024, 5, 1, 16, 20, 52, 336, DateTimeKind.Utc).AddTicks(2848));
+                oldDefaultValue: new DateTime(2024, 5, 1, 21, 13, 55, 184, DateTimeKind.Utc).AddTicks(2623));
         }
     }
 }

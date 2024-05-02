@@ -344,7 +344,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 1, 16, 20, 52, 336, DateTimeKind.Utc).AddTicks(2848));
+                        .HasDefaultValue(new DateTime(2024, 5, 1, 21, 13, 55, 184, DateTimeKind.Utc).AddTicks(2623));
 
                     b.Property<Guid>("TouristTourId")
                         .HasColumnType("uniqueidentifier");
@@ -1683,7 +1683,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 1, 16, 20, 52, 337, DateTimeKind.Utc).AddTicks(9055));
+                        .HasDefaultValue(new DateTime(2024, 5, 1, 21, 13, 55, 185, DateTimeKind.Utc).AddTicks(4336));
 
                     b.Property<string>("Duaration")
                         .IsRequired()

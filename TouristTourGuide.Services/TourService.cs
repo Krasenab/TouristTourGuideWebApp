@@ -74,7 +74,7 @@ namespace TouristTourGuide.Services
 
         }
 
-        public async void CreateTouristTour(TouristTourCreateViewModel viewModel, string guidUserId)
+        public async Task CreateTouristTour(TouristTourCreateViewModel viewModel, string guidUserId)
         {
             string userIdG = guidUserId;
 

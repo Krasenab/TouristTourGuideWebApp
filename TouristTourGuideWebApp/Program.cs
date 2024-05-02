@@ -6,6 +6,7 @@ using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services;
 using TouristTourGuide.Services.Interfaces;
+using static TouristTourGuide.Infrastrucutre.WebAppBuilderExtensions;
 namespace TouristTourGuideWebApp
 {
     public class Program
@@ -36,6 +37,8 @@ namespace TouristTourGuideWebApp
             builder.Services.AddApplicationServices(typeof(IGuideUserService));
             builder.Services.AddApplicationServices(typeof(IImageService));
             builder.Services.AddApplicationServices(typeof(ICommentsService));
+           
+          
 
 
             // MongoDB  
