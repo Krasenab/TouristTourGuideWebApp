@@ -1,45 +1,45 @@
 ﻿@using TouristTourGuide.ViewModels.ApplicationImageViewModels.EditTourAlbumViewModel
 @model EditTourAlbumViewModel
+@{
+    var UniqueFileName = "0";
+}
 <head>
     <style>
-        * {
-            box-sizing: border-box;
+        .mbody {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            margin:0;
+            max-height:100%;
+            width:100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
         }
 
         .mySlides {
-            display: none;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.5); /* White background with opacity */
         }
 
-        .cursor {
-            cursor: pointer;
-        }
-
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 40%;
-            width: auto;
-            padding: 8px;
-            margin-top: -25px;
+        .prev, .next{
+            position: relative;           
+            z-index: 1000; 
             color: white;
-            font-size: 24px;
-            border-radius: 50%;
+            font-size: 14px; 
+            border-radius: 10%;
+            padding: 8px;
+            text-decoration: none;
             background-color: rgba(0, 0, 0, 0.6);
             transition: background-color 0.3s ease;
-            text-decoration: none
         }
 
-        .prev {
-            left: 10px;
-        }
+       
 
-        .next {
-            right: 10px;
+        .mySlides {
+            display: none;
+            position: relative;
+            text-align: center;
         }
-
-            .prev:hover, .next:hover {
-                background-color: rgba(0, 0, 0, 0.8);
-            }
 
         .numbertext {
             color: #f2f2f2;
@@ -52,75 +52,47 @@
             border-radius: 8px;
         }
 
-        .column {
-            float: left;
-            width: 16.66%;
-            padding: 5px;
+        * {
+            box-sizing: border-box;
         }
-
-        .demo {
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-        }
-
-            .demo:hover, .active {
-                opacity: 1;
-            }
-
-
-        .btn-primary {
-            background-color: #007BFF;
-            border: none;
-        }
-
-            .btn-primary:hover {
-                background-color: #0056b3;
-            }
     </style>
 </head>
-@if (Model.TourImages != null && Model.TourImages.Count > 0)
-{
-    <div class="position-relative">
+<div class="mbody p-0">
+
+    @if (Model.TourImages != null && Model.TourImages.Count > 0)
+    {
         @for (var i = 0; i < Model.TourImages.Count; i++)
-        {
-            <div class="mySlides">
-                <div class="numbertext">@(i + 1) / @Model.TourImages.Count </div>
+       {
 
-                <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.TourImages[i].FileData))">
-                    <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.TourImages[i].FileData))" style="width:100%; max-height: 500px;">
-                </a>
+            <div class="position-relative">
 
+                <div class="mySlides">
+                    <div class="numbertext">@(i + 1) / @Model.TourImages.Count</div>
+                    <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.TourImages[i].FileData))" style="width:70%; max-height: 700px;">
 
-
-                <button onclick="deleteImage('@Model.TourImages[i].UniqueFileName', '@Model.TourId')" class="btn btn-danger delete-button">Delete</button>
+                </div>
 
 
             </div>
+            UniqueFileName = Model.TourImages[i].UniqueFileName;
         }
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <button onclick="deleteImage('@UniqueFileName', '@Model.TourId')" class="btn delete-button">Delete</button>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+           
+           
+        
+    }
+    else
+    {
+        <div class="alert alert-warning">No images available for this tour.</div>
+    }
+</div>
 
-        <div class="text-center mt-3">
-            @for (var i = 0; i < Model.TourImages.Count; i++)
-            {
-
-                <a style="display:none" href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.TourImages[i].FileData))">
-                    <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.TourImages[i].FileData))" style="width:100%; max-height: 500px;">
-                </a>
-
-                //бутон за тестване
-                //<button onclick="deleteImage('@Model.Images[i].FileName', '@Model.Id')" class="btn btn-danger">Delete</button>
-            }
-        </div>
-    </div>
-}
-else
-{
-    <div class="alert alert-warning">No images available for this tour.</div>
-}
 <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
-
 <script>
     let slideIndex = 1;
     showSlides(slideIndex);
@@ -129,34 +101,19 @@ else
         showSlides(slideIndex += n);
     }
 
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-    }
-
     function showSlides(n) {
-        let i;
         let slides = document.getElementsByClassName("mySlides");
-        let dots = document.getElementsByClassName("demo");
-        let captionText = document.getElementById("caption");
-        if (n > slides.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = slides.length }
-        for (i = 0; i < slides.length; i++) {
+        if (n > slides.length) { slideIndex = 1; }
+        if (n < 1) { slideIndex = slides.length; }
+        for (let i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
         }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
         slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-        if (captionText) {
-            captionText.innerHTML = dots[slideIndex - 1].alt;
-        }
     }
-</script>
-<script>
-    function deleteImage(UniqueFileName, tourId) {
+
+    function deleteImage(uniqueFileName, tourId) {
         if (confirm('Are you sure you want to delete this image?')) {
-            fetch(`/TouristTour/DeleteTourPicture?uniqueName=${UniqueFileName}&tourId=${tourId}`, { // Изправи името на параметъра тук
+            fetch(`/TouristTour/DeleteTourPicture?uniqueName=${uniqueFileName}&tourId=${tourId}`, {
                 method: 'POST'
             })
                 .then(response => response.text())
@@ -170,5 +127,5 @@ else
                 });
         }
     }
-
 </script>
+
