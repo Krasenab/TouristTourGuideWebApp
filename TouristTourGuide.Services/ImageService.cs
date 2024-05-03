@@ -166,7 +166,7 @@ namespace TouristTourGuide.Services
 
         public async Task<string> GetAppUserImageFileUniqueNameSQL(string appUserId)
         {
-            string name = await _dbContext.AppImages.Where(x => x.ApplicationUserId.ToString() == appUserId && x.TouristTourId==null)
+            string name = await _dbContext.AppImages.Where(x => x.ApplicationUserId.ToString() == appUserId && x.TouristTourId == null)
               .Select(n => n.UniqueFileName)
               .FirstOrDefaultAsync();
 
@@ -175,16 +175,16 @@ namespace TouristTourGuide.Services
 
         public async Task DelateImageByUniqName(string name)
         {
-           var picture = await _dbContext.AppImages.Where(x=>x.UniqueFileName==name)
-                .FirstOrDefaultAsync();
+            var picture = await _dbContext.AppImages.Where(x => x.UniqueFileName == name)
+                 .FirstOrDefaultAsync();
             _dbContext.AppImages.Remove(picture);
             await _dbContext.SaveChangesAsync();
-           
+
         }
 
         public async Task<AppImageSqlMetaDataViewModel> AppImageInfo(string uniqueName)
         {
-            AppImageSqlMetaDataViewModel ?appImages = await _dbContext.AppImages.Where(x => x.UniqueFileName == uniqueName)
+            AppImageSqlMetaDataViewModel? appImages = await _dbContext.AppImages.Where(x => x.UniqueFileName == uniqueName)
                  .Select(x => new AppImageSqlMetaDataViewModel()
                  {
                      ApplicationUserId = x.ApplicationUserId.ToString(),
@@ -192,12 +192,12 @@ namespace TouristTourGuide.Services
                      TouristTourId = x.TouristTourId.ToString()
 
                  }).FirstOrDefaultAsync();
-            if (appImages==null)
+            if (appImages == null)
             {
                 throw new ArgumentNullException("name is not null");
             }
 
-            return appImages;   
+            return appImages;
         }
 
         public List<AppImagesViewModel> GetAllImagesFileByListOfUniqueName(List<string> names)
@@ -215,6 +215,34 @@ namespace TouristTourGuide.Services
                 imagesFilesAndUniqueNameMDB.Add(data);
             }
             return imagesFilesAndUniqueNameMDB;
+        }
+
+        public string DeleteOneImageSql(string uniqueName, string tourId)
+        {
+            string returnUniqueName = null;
+            try
+            {
+                AppImages? img = _dbContext.AppImages.Where(x => x.UniqueFileName.ToString() == uniqueName &&
+                x.TouristTourId.ToString() == tourId)
+              .FirstOrDefault();
+
+                returnUniqueName = img.UniqueFileName;
+                _dbContext.AppImages.Remove(img);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw new NullReferenceException("Null images");
+            }
+
+            return uniqueName;
+        }
+
+        public void DeleteOneImageFileMDB(string uniqueName)
+        {
+            
+            _appImageFileCollectionMDB.FindOneAndDelete(x => x.UniqueFileName == uniqueName);
         }
 
         //public  AppImagesViewModel GetOneImageMongoDb(string uniqueName)

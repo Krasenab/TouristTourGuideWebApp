@@ -24,12 +24,11 @@ namespace TouristTourGuide.Services.Interfaces
         //add afet 24
         bool IsAppImageExist(string applicationUserId);
         Task<string> GetAppUserImageFileUniqueNameSQL(string appUserId);
-        Task DelateImageByUniqName(string name);
-       
+        Task DelateImageByUniqName(string name);       
         Task<AppImageSqlMetaDataViewModel> AppImageInfo(string uniqueName);
-
         List<AppImagesViewModel> GetAllImagesFileByListOfUniqueName(List<string> names);
-     
+        string DeleteOneImageSql(string uniqueName,string tourId);
+        void DeleteOneImageFileMDB(string uniqueName);    
         //AppImagesViewModel GetOneImageMongoDb(string uniqueName);
 
     }

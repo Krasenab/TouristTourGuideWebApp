@@ -219,7 +219,19 @@ namespace TouristTourGuideWebApp.Controllers
             return View(viewModel);
         }
 
-     
+        [HttpPost]
+        public IActionResult DeleteTourPicture(string uniqueName, string tourId) 
+        {
+            if (!_tourService.IsTourExist(tourId))
+            {
+                return   Content("Somehting get wrong!!");
+            }
+
+            string removedPictureName = _imageServie.DeleteOneImageSql(uniqueName, tourId);
+            _imageServie.DeleteOneImageFileMDB(removedPictureName);
+
+              return Content("success");
+        }
 
     }
 }
