@@ -26,6 +26,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
+        .containers {
+            background-color: #E0F3EF;
+        }
         .text-truncate {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -142,7 +145,7 @@ else
     <div class="alert alert-warning">No images available for this tour.</div>
 }
 
-<div class="container-info overflow-hidden" style="padding: 1em;">
+@* <div class="container-info overflow-hidden" style="padding: 1em;">
 
     <button class="delete-button btn btn-danger" asp-action="">Delete this picture</button>
     <div class="row mb-5">
@@ -199,6 +202,28 @@ else
             <strong>Full Description:</strong> <span class="text-truncate" title="@Model.FullDescription">@Model.FullDescription</span>
         </div>
     </div>
+</div> *@
+@* <div class="row mb-3 text-center">
+    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">payments</span>@Model.PricePerPerson</div>
+    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">av_timer</span>@Model.Duaration</div>
+    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">public</span>@Model.LocationCountry</div>
+</div> *@
+
+<div class="row mb-3 text-center" style="border:2px solid black">
+   
+    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">payments</span>@Model.PricePerPerson</div>
+    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">av_timer</span>@Model.Duaration</div>
+    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">public</span>@Model.LocationCountry</div>          
+  
+</div>
+<div class="row mb-5 text-start" style="border: 2px solid black">
+    <div class="col-md-8 themed-grid-col"><span class="material-symbols-outlined">info</span>@Model.KnowBeforeYouGo</div>
+</div>
+<div class="row mb-5 text-start" style="padding-top:1em; padding-left:0,5em; border: 2px solid black">
+    <div class="col-md-8 themed-grid-col">@Model.MeetingPoint</div>   
+</div>
+<div class="row mb-3" style="border: 2px solid black">
+    <div class="col-md-8 themed-grid-col"><a href="@Model.MeetingPointMapUrl">Look on google map</a></div>
 </div>
 
 
@@ -212,15 +237,26 @@ else
                 </form>
                
             </div>
-            <div>
-                <a asp-controller="AppImage" asp-action="EditTourAlbum" asp-route-tourId="@Model.Id"
-                  class="btn-lg btn-info">Edit tour album</a>
-
-            </div>
+           
         }
     </div>
+    @if(isOwner)
+    {
+        <div>
+            <a asp-controller="AppImage" asp-action="EditTourAlbum" asp-route-tourId="@Model.Id"
+               class="btn-lg btn-info">Edit tour album</a>
 
-  
+        </div>
+        <button id="calendar-btn" class="btn-sm btn-info">
+            Check Avalibity Date
+        </button>
+        <div id="calendar" style="display:none">
+            <div id="datepicker">
+
+            </div>
+        </div>
+    }
+
     @if (isOwner)
     {
         <div class="custom-row">

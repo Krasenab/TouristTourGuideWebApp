@@ -5,7 +5,6 @@ namespace TouristTourGuide.ViewModels.UserGuideViewModels
 {
     public class GuideUserFullInfoViewModel
     {
-
         public string Id { get; set; }
         public string Name { get; set; }
         public string? ValueAddedTaxIdentificationNumber { get; set; }

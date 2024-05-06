@@ -56,13 +56,15 @@ namespace TouristTourGuideWebApp.Controllers
             var view = await _guideUserService.GuidUserInfo(userGuideId);
             if (_imageService.IsAppImageExist(userId))
             {
-                string fileName = await _imageService.GetAppUserImageFileUniqueNameSQL(userId);
-                byte[] filedata = _imageService.GetImageBytesMongoDb(fileName);
-                view.ImageFileData = filedata;
-
+                if (await _imageService.GetAppUserImageFileUniqueNameSQL(userId)!=null)
+                {
+                    string fileName = await _imageService.GetAppUserImageFileUniqueNameSQL(userId);
+                    byte[] filedata = _imageService.GetImageBytesMongoDb(fileName);
+                    view.ImageFileData = filedata;
+                }
+               
             }    
           
-
             return View(view);
         }
 

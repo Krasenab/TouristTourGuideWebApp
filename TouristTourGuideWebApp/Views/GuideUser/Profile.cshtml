@@ -9,8 +9,14 @@
 }
 <head>
     <style>
+        .containerss{
+            background-color: linear-gradient(to top right, #DDBF68, #FFF2DC);
+
+        }
         .card-body {
-            background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+           
+           /*  background-color: #DDBF68; */
+          /*   background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1)); */
         }
     </style>
 </head>
@@ -34,9 +40,16 @@
         <div class="col-lg-4">
             <div class="card mb-4">
                 <div class="card-body text-center">
-                    <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.ImageFileData))"  alt="avatar"
-                         class="rounded-circle img-fluid" style="width: 150px;">
-                    @*TODO: Add file from for picure*@
+                    @if (Model.ImageFileData!=null)
+                    {
+                        <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.ImageFileData))" alt=""
+                        class="rounded-circle img-fluid" style="width: 150px;">
+                    }
+                    else
+                    {
+                        <img src="" alt="avatar"
+                             class="rounded-circle img-fluid" style="width: 150px;">
+                    }
 
                     <h5 class="my-3">@Model.Name</h5>
                     <p class="text-muted mb-1">@Model.Email</p>
