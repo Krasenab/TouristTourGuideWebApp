@@ -55,14 +55,14 @@ namespace TouristTourGuide.Services
 
         public async Task CreateBooking(CreateBookingViewModel viewModel)
         {            
+            
             TouristTourBooking b = new TouristTourBooking()
             {
                 CountOfPeople = viewModel.CountOfPeople,
                 ApplicationUserId = Guid.Parse(viewModel.ApplicationUserId),
                 TouristTourId = Guid.Parse(viewModel.TouristTourId),
                 Email = viewModel.Email,
-                PhoneNumber= viewModel.PhoneNumber,
-               
+                PhoneNumber= viewModel.PhoneNumber               
             };
 
             await _db.TouristTourBookings.AddAsync(b);

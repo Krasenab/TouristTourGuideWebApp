@@ -18,11 +18,13 @@ namespace TouristTourGuideWebApp.Controllers
             _tourService = tourServie;
         }
         [HttpGet]
-        public  IActionResult Create(string tourId)
+        public async  Task<IActionResult> Create(string tourId)
         {
             //add 4/25/2024 not woriking before this date: бях забравил да добавя string tourId и за това не разботише правилно :@ 
             CreateBookingViewModel bookingViewModel = new CreateBookingViewModel();
             bookingViewModel.TouristTourId = tourId;
+            //add 4/29/2024
+            bookingViewModel.PricePerPerson = await _tourService.GetTourPricePerPerson(tourId);
             return View(bookingViewModel);
         }
         [HttpPost]

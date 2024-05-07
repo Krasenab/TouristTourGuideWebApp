@@ -54,7 +54,6 @@
 
         <form asp-action="Create" asp-controller="Booking"  ethod="post">
 
-
             <div class="form-group">
                 <label for="Email">Email</label>
                 <input type="text" class="form-control" asp-for="Email" placeholder="Enter your email" />
@@ -67,13 +66,19 @@
             </div>
 
             <div class="form-group">
-                <label for="BookedDate">Date of booking</label>
-                <input type="date" class="form-control" asp-for="BookedDate" required min="@DateTime.UtcNow.ToString("yyyy-MM-dd")" placeholder="@DateTime.UtcNow.ToString("yyyy-MM-dd")" />
+                <label for="BookedDate">Visit date</label>
+                <input type="date" class="form-control" asp-for="BookedDate" required min="@DateTime.UtcNow" max="@DateTime.UtcNow" placeholder="@DateTime.UtcNow" />
             </div>
 
             <div class="form-group">
                 <label for="CountOfPeople">Number of Persons</label>
                 <input type="number" class="form-control" asp-for="CountOfPeople" required min="1" />
+            </div>
+
+
+            <div class="form-group">
+                <label for="TotalPrice">Total Price</label>
+                <input type="number" class="form-control" asp-for="TotalPrice" readonly   />
             </div>
 
             @*4/24/2024 removed add divclass from-fgrup бях забравил и това да добавя за това не работише преди 4/24/2024*@
@@ -82,10 +87,6 @@
             </div> 
 
 
-            @*   <div class="form-group">
-            <label asp-for="TotalPrice">Total Price</label>
-            <input type="number" class="form-control" asp-for="TotalPrice"  />
-            </div> *@
 
             <div class="form-group mt-4">
                 <button type="submit" asp-action="Create" class="btn">Submit  request</button>
@@ -93,3 +94,22 @@
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var countOfPeopleInput = document.querySelector('input[name="CountOfPeople"]');
+        var totalPriceInput = document.querySelector('input[name="TotalPrice"]');
+        var pricePerPerson = @Model.PricePerPerson;  // Използвайте тази стойност от вашата модел
+
+        function updateTotalPrice() {
+            var countOfPeople = parseInt(countOfPeopleInput.value) || 0;
+            var totalPrice = countOfPeople * pricePerPerson;
+            totalPriceInput.value = totalPrice.toFixed(2);  // Форматира цената до два знака след десетичната запетая
+        }
+
+        // Обновете цената при първоначалното зареждане на страницата
+        updateTotalPrice();
+
+        // Добавете слушател за събития на полето за брой хора, за да обновявате цената всяки път когато се промени
+        countOfPeopleInput.addEventListener('change', updateTotalPrice);
+    });
+</script>

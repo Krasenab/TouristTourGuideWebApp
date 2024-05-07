@@ -63,8 +63,7 @@ namespace TouristTourGuideWebApp.Controllers
                     view.ImageFileData = filedata;
                 }
                
-            }    
-          
+            }             
             return View(view);
         }
 

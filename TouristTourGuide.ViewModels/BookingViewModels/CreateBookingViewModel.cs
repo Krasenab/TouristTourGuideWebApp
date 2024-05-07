@@ -13,9 +13,7 @@ namespace TouristTourGuide.ViewModels.BookingViewModels
         [Required]
         [Range(countOfPeopleMin, countOfPeopleMax)]
         public int CountOfPeople { get; set; }
-
-        public decimal? TotalPrice { get; set; }
-
+       
         [Required]
         [EmailAddress]
         public string Email { get; set; }
@@ -25,6 +23,10 @@ namespace TouristTourGuide.ViewModels.BookingViewModels
 
         public string ApplicationUserId { get; set; }
 
-        public string TouristTourId { get; set; }
+        public string? TouristTourId { get; set; }
+
+        public decimal? PricePerPerson { get; set; }
+
+        public decimal? TotalPrice => this.PricePerPerson * this.CountOfPeople;
     }
 }

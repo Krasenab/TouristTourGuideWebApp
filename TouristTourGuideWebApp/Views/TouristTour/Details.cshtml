@@ -27,8 +27,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
         .containers {
-           /*  background-color: #E0F3EF; */
-            background-color: linear-gradient(to top right, #E0F3EF, #CDEFEF, #E0FFE8);
+             background-color: #E0F3EF; 
+           /*  background: linear-gradient(to left right, #E0F3EF, #FFFFFF); */
+        }
+        .span{
+            color:#FFD558;
         }
         .text-truncate {
             overflow: hidden;
@@ -146,86 +149,36 @@ else
     <div class="alert alert-warning">No images available for this tour.</div>
 }
 
-@* <div class="container-info overflow-hidden" style="padding: 1em;">
 
-    <button class="delete-button btn btn-danger" asp-action="">Delete this picture</button>
-    <div class="row mb-5">
-        <div class="col-md-3">
-            <span class="material-symbols-outlined">payments</span>
-            <strong>Price Per Person:</strong> <span>@Model.PricePerPerson</span>
-        </div>
-        <div class="col-md-3">
-            <span class="material-symbols-outlined">av_timer</span>
-            <strong>Duration:</strong> <span>@Model.Duaration</span>
-        </div>
-        <div class="col-md-3">
-            <span class="material-symbols-outlined">public</span>
-            <strong>Location:</strong> <span>@Model.LocationCity, @Model.LocationCountry</span>
-        </div>
-        <div class="col-md-3">
-            <span class="material-symbols-outlined">category</span>
-            <strong>Category:</strong> <span>@Model.Category</span>
-        </div>
+<section style="margin:0em; padding:0em; background-color:#ECE3E3;  border-radius:10px">
+    <div class="row mb-3 text-center" style="border:2px solid black">
+        <h5>General info</h5>
+        <div class="col-4 themed-grid-col text-lg"><span class="material-symbols-outlined" style="color:#FFD558">payments</span>@Model.PricePerPerson</div>
+        <div class="col-4 themed-grid-col"><span class="material-symbols-outlined" style="color:#FFD558">av_timer</span>@Model.Duaration</div>
+        <div class="col-4 themed-grid-col"><span class="material-symbols-outlined" style="color:#FFD558">public</span>@Model.LocationCountry</div>
+
+    </div>
+    <div class="row mb-3 text-start" style="border: 2px solid black">
+        
+        <div class="col-md-8 themed-grid-col"><span class="material-symbols-outlined" style="color:#FFD558">info</span>@Model.KnowBeforeYouGo</div>
+    </div>
+    <div class="row mb-3 text-start">
+        <h5>Where we can meet</h5>
+    </div>   
+    <div class="row mb-3 text-start" style=" padding-left:0,5em; border: 2px solid black">
+        
+        <div class="col-md-8 themed-grid-col">@Model.MeetingPoint</div>
+    </div>
+    <div class="row mb-3" style="border: 2px solid black">
+        <div class="col-md-8 themed-grid-col"><a href="@Model.MeetingPointMapUrl">Look on google map</a></div>
     </div>
 
-    <div class="row mb-5">
-        <div class="col-md-6">
-            <strong>Meeting Point:</strong> <span class="text-truncate" title="@Model.MeetingPoint">@Model.MeetingPoint</span>
-        </div>
-        <div class="col-md-6 overflow-hidden">
-            <strong>See on Google Map:</strong> <a href="@Model.MeetingPointMapUrl" style="cursor:pointer">Map Link</a>
-        </div>
+    <div class="row mb-5 text-start">
+        <h5>Full description</h5>
+        <p>@Model.FullDescription</p>
     </div>
+</section>
 
-
-    <div class="row mb-5">
-        <div class="col-lg-6 overflow-hidden">
-            <span class="material-symbols-outlined">info</span>
-            <strong>Know Before You Go:</strong> <span class="text-truncate" title="@Model.KnowBeforeYouGo">@Model.KnowBeforeYouGo</span>
-        </div>
-        <div class="col-lg-6 overflow-hidden">
-            <strong>Not Suitable For:</strong> <span>@Model.NotSuitableFor</span>
-        </div>
-    </div>
-
-
-    <div class="row mb-5">
-        <div class="col-lg-6">
-            <strong>What to Bring:</strong> <span class="text-truncate" title="@Model.WhatToBring">@Model.WhatToBring</span>
-        </div>
-        <div class="col-lg-6 overflow-hidden">
-            <strong>Includes:</strong> <span>@Model.Includes</span>
-        </div>
-    </div>
-
-    <div class="row mb-5">
-        <div class="col-md-12">
-            <strong>Full Description:</strong> <span class="text-truncate" title="@Model.FullDescription">@Model.FullDescription</span>
-        </div>
-    </div>
-</div> *@
-@* <div class="row mb-3 text-center">
-    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">payments</span>@Model.PricePerPerson</div>
-    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">av_timer</span>@Model.Duaration</div>
-    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">public</span>@Model.LocationCountry</div>
-</div> *@
-
-<div class="row mb-3 text-center" style="border:2px solid black">
-   
-    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">payments</span>@Model.PricePerPerson</div>
-    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">av_timer</span>@Model.Duaration</div>
-    <div class="col-4 themed-grid-col"><span class="material-symbols-outlined">public</span>@Model.LocationCountry</div>          
-  
-</div>
-<div class="row mb-5 text-start" style="border: 2px solid black">
-    <div class="col-md-8 themed-grid-col"><span class="material-symbols-outlined">info</span>@Model.KnowBeforeYouGo</div>
-</div>
-<div class="row mb-5 text-start" style="padding-top:1em; padding-left:0,5em; border: 2px solid black">
-    <div class="col-md-8 themed-grid-col">@Model.MeetingPoint</div>   
-</div>
-<div class="row mb-3" style="border: 2px solid black">
-    <div class="col-md-8 themed-grid-col"><a href="@Model.MeetingPointMapUrl">Look on google map</a></div>
-</div>
 
 
 <div class="custom-container">

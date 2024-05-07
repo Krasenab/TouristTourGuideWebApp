@@ -16,8 +16,7 @@ namespace TouristTourGuideWebApp.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> EditTourAlbum(string tourId)
-        {
-          
+        {          
             EditTourAlbumViewModel viewModel = new EditTourAlbumViewModel();
             viewModel.TourId = tourId;
             List<string> names = await _imageSerive.GetAllTourUniqNameImages(tourId);
