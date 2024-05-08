@@ -15,6 +15,8 @@ namespace TouristTourGuide.Services.Interfaces
         // Add Refu method on 4/24/2024
         Task<List<AcceptOrRefuseViewModel>> GetAcceptedTourBookings(string userGuideId);
         Task RefuseBooking(string bookingId);
+
+        Task<List<AllBookingViewModel>> GetAll(List<string> ToursIds);
         
      
     }

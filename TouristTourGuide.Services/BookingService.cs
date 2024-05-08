@@ -84,6 +84,17 @@ namespace TouristTourGuide.Services
 
             return tB;
         }
+
+        public Task<List<AllBookingViewModel>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<AllBookingViewModel>> GetAll(List<string> ToursIds)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task RefuseBooking(string bookingId)
         {
             var b = await _db.TouristTourBookings.Where(x=>x.Id.ToString()==bookingId)

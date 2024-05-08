@@ -67,7 +67,7 @@
 </head>
 
 
-<div class="text-center mb-5">
+<div class="text-center mb-5" style="padding-top:2em;">
     <h2>@Model.TourName</h2>
 </div>
 
@@ -150,26 +150,25 @@ else
 }
 
 
-<section style="margin:0em; padding:0em; background-color:#ECE3E3;  border-radius:10px">
-    <div class="row mb-3 text-center" style="border:2px solid black">
+<section style="margin:0em; padding:0em; background-color:#BEE4DE;  border-radius:35px">
+    <div class="row mb-3 text-center" style="padding-top:1em;" >
         <h5>General info</h5>
-        <div class="col-4 themed-grid-col text-lg"><span class="material-symbols-outlined" style="color:#FFD558">payments</span>@Model.PricePerPerson</div>
-        <div class="col-4 themed-grid-col"><span class="material-symbols-outlined" style="color:#FFD558">av_timer</span>@Model.Duaration</div>
-        <div class="col-4 themed-grid-col"><span class="material-symbols-outlined" style="color:#FFD558">public</span>@Model.LocationCountry</div>
+        <div class="col-4 themed-grid-col text-lg"><span class="material-symbols-outlined" style="color:black">payments</span>@Model.PricePerPerson</div>
+        <div class="col-4 themed-grid-col"><span class="material-symbols-outlined" style="color:black">av_timer</span>@Model.Duaration</div>
+        <div class="col-4 themed-grid-col"><span class="material-symbols-outlined" style="color:black">public</span>@Model.LocationCountry</div>
 
     </div>
-    <div class="row mb-3 text-start" style="border: 2px solid black">
-        
-        <div class="col-md-8 themed-grid-col"><span class="material-symbols-outlined" style="color:#FFD558">info</span>@Model.KnowBeforeYouGo</div>
+    <div class="row mb-3 text-start" style="padding-left:2em;" >        
+        <div class="col-md-8 themed-grid-col"><span class="material-symbols-outlined" style="color:black">info</span>@Model.KnowBeforeYouGo</div>
     </div>
-    <div class="row mb-3 text-start">
+    <div class="row mb-3 text-start" style="padding-left:2em;">
         <h5>Where we can meet</h5>
     </div>   
-    <div class="row mb-3 text-start" style=" padding-left:0,5em; border: 2px solid black">
+    <div class="row mb-3 text-start" style="padding-left:2em" >
         
         <div class="col-md-8 themed-grid-col">@Model.MeetingPoint</div>
     </div>
-    <div class="row mb-3" style="border: 2px solid black">
+    <div class="row mb-3" style="padding-left:2em;" >
         <div class="col-md-8 themed-grid-col"><a href="@Model.MeetingPointMapUrl">Look on google map</a></div>
     </div>
 
@@ -240,15 +239,15 @@ else
 
 
 
-<div class="custom-row" style="text-align:center">
+<div class="custom-row" style="text-align:center; padding-top:2em;">
     <div class="col">
         <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2")</p>
         <p id="voteBasedOn">Rating is based on @Model.VoteCount users votes</p>
     </div>
 </div>
+<div class="row mb-5" style="padding-top:2em;">
 
-
-    <ul class="ratings">
+    <ul class="ratings" style="text-align:center">
 
         <li class="star" onclick="sendVote('@Model.Id',1)"></li>
         <li class="star" onclick="sendVote('@Model.Id',2)"></li>
@@ -256,18 +255,21 @@ else
         <li class="star" onclick="sendVote('@Model.Id',4)"></li>
         <li class="star" onclick="sendVote('@Model.Id',5)"></li>
     </ul>
+</div>
+
+   
 
 
-<section style="background-color:#fff;">
-    <div class="container ">
+<section style="background-color:#BEE4DE;">
+    <div class="container">
         @*my-5 py-5*@
         <div class="row d-flex justify-content-center right-align-comments">
-            <div class="col-md-12 col-lg-10 col-xl-8 col-md-offset">
-                <div class="card">
+           @*  <div class="col-md-12 col-lg-10 col-xl-8 col-md-offset"> *@
+            <div class="card" style="background-color:#BEE4DE; border:none;">
                     <div class="comments-container">
                         @for (int i = 0; i < Model.Comments.Count; i++)
                         {
-                            <div class="card-body" style="display: @(i < 3 ? "block" : "none")">
+                            <div class="card-body" style="display: @(i < 3 ? "block" : "none"); padding-top:1em; padding-bottom:1em; border:2px solid black;">
                                 <div class="d-flex flex-start align-items-center">
                                     <img class="rounded-circle shadow-1-strong me-3"
                                          src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
@@ -294,7 +296,7 @@ else
                     </div>
                     @*сменям на 4/27/2024 големината на бутона*@
                     <button id="showFormBtn" class="btn btn-primary btn-sm">Add comment</button>
-                    <form id="commentForm" style="display:none;">
+                    <form id="commentForm" style="display:none; padding-top:1em;">
                         <div class="card-footer py-3 border-2 justify-content-start" style="background-color: #f8f9fa;">
                             <div class="d-flex flex-start w-100">
                                 <img class="rounded-circle shadow-1-strong me-3"
@@ -316,7 +318,7 @@ else
                         </div>
                     </form>
                 </div>
-            </div>
+            @* </div> *@
         </div>
     </div>
 </section>

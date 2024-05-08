@@ -126,6 +126,16 @@ namespace TouristTourGuide.Services
             _dbContext.SaveChanges();
         }
 
+        public async Task<List<string>> GetAllGuideUserToursId(string guideUserId)
+        {
+           List<string> toursId = new List<string>();
+
+            toursId = await _dbContext.TouristsTours.Where(x => x.GuideUserId.ToString() == guideUserId)
+                .Select(s=>s.Id.ToString()).ToListAsync();
+
+            return toursId;
+        }
+
         public async Task<EditViewModel> GetTourForEdit(string tourId)
         {
 

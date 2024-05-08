@@ -14,8 +14,8 @@ namespace TouristTourGuide.Services.Interfaces
         void EditTour(EditViewModel editViewModel);
         Task<DetailsViewModel> TourById(string id);
         bool isHavePictures(string tourId);
-
         bool IsTourExist(string tourId);
+        Task<List<string>> GetAllGuideUserToursId(string guideUserId);
         
     }
 }
