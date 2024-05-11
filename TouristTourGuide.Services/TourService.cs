@@ -6,6 +6,7 @@ using TouristTourGuide.ViewModels.LocationViewModels;
 using Microsoft.EntityFrameworkCore;
 using TouristTourGuide.ViewModels.EnumAppModels;
 using TouristTourGuide.ViewModels.AppImageViewModels;
+using TouristTourGuide.Infrastrucutre;
 
 namespace TouristTourGuide.Services
 {
@@ -21,6 +22,8 @@ namespace TouristTourGuide.Services
         {
             IQueryable<TouristTour> toursQuery =  this._dbContext.TouristsTours.AsQueryable();
 
+          
+
             if (!string.IsNullOrWhiteSpace(viewModel.Category))
             {
                 toursQuery =  toursQuery.Where(x => x.Category.Name == viewModel.Category);
@@ -33,7 +36,7 @@ namespace TouristTourGuide.Services
                                                    EF.Functions.Like(t.Duaration, wildCard) ||
                                                    EF.Functions.Like(t.Location.Country, wildCard) ||
                                                    EF.Functions.Like(t.Location.City,wildCard)||
-                                                   EF.Functions.Like(t.Location.Village, wildCard));
+                                                   EF.Functions.Like(t.Location.State, wildCard));
             }
 
             toursQuery = viewModel.TourSorting switch
@@ -91,7 +94,11 @@ namespace TouristTourGuide.Services
                 KnowBeforeYouGo = viewModel.KnowBeforeYouGo,
                 LocationId = viewModel.LocationId,
                 CategoryId = viewModel.CategoryId,
-                GuideUserId = Guid.Parse(guidUserId)
+               Includes = viewModel.Includes,
+               NotAllowed = viewModel.NotAllowed,
+               StartEndHouers = viewModel.StartEndHouers,
+               Highlights= viewModel.Highlights,    
+               GuideUserId = Guid.Parse(guidUserId)
             };
 
             await _dbContext.TouristsTours.AddAsync(tour);

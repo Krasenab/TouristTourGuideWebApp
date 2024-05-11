@@ -8,7 +8,7 @@ namespace TouristTourGuide.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<TouristTourDates> builder) 
         {
-            builder.HasKey(x => new { x.TouristTourId, x.DatesId });
+            builder.HasKey(x => new { x.TouristTourId, x.ClosedDatesId });
         }
     }
 }

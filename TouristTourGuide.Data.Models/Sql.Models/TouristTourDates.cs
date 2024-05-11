@@ -11,7 +11,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
     {
         public Guid TouristTourId { get; set; }
         public virtual TouristTour TouristTour { get; set; }
-        public int DatesId { get; set; }
-        public Dates Dates { get; set; }
+        public int ClosedDatesId { get; set; }
+        public Dates ClosedDates { get; set; }
     }
 }

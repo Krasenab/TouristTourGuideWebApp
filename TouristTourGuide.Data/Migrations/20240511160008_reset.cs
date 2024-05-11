@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TouristTourGuide.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class DbChanges : Migration
+    public partial class reset : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,7 +73,7 @@ namespace TouristTourGuide.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TouristTourReserveDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ClosedDates = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,7 +88,7 @@ namespace TouristTourGuide.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Country = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Village = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    State = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -207,6 +207,7 @@ namespace TouristTourGuide.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LegalFirmName = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     ValueAddedTaxIdentificationNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     CompanyRegistrationNumber = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
@@ -214,7 +215,7 @@ namespace TouristTourGuide.Data.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     RegisteredAddress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AboutTheActivityProvider = table.Column<string>(type: "nvarchar(max)", maxLength: 4500, nullable: false)
+                    AboutTheActivityProvider = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -234,17 +235,18 @@ namespace TouristTourGuide.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TourName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Duaration = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    startEndHouers = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PricePerPerson = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    Highlights = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NotSuitableFor = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
                     MeetingPoint = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MeetingPointMapUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Includes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    WhatToBring = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
+                    StartEndHouers = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Includes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NotSuitableFor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NotAllowed = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WhatToBring = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Highlights = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     KnowBeforeYouGo = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 4, 22, 23, 41, 25, 471, DateTimeKind.Utc).AddTicks(5625)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 5, 11, 16, 0, 7, 353, DateTimeKind.Utc).AddTicks(7814)),
                     LocationId = table.Column<int>(type: "int", nullable: true),
                     GuideUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -304,7 +306,7 @@ namespace TouristTourGuide.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 4, 22, 23, 41, 25, 470, DateTimeKind.Utc).AddTicks(756)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 5, 11, 16, 0, 7, 351, DateTimeKind.Utc).AddTicks(6362)),
                     TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -330,12 +332,12 @@ namespace TouristTourGuide.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BookedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BookQueryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CountOfPeople = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     isAccepted = table.Column<bool>(type: "bit", nullable: false),
+                    isRefusced = table.Column<bool>(type: "bit", nullable: false),
                     ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -360,14 +362,14 @@ namespace TouristTourGuide.Data.Migrations
                 columns: table => new
                 {
                     TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DatesId = table.Column<int>(type: "int", nullable: false)
+                    ClosedDatesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TouristTourDates", x => new { x.TouristTourId, x.DatesId });
+                    table.PrimaryKey("PK_TouristTourDates", x => new { x.TouristTourId, x.ClosedDatesId });
                     table.ForeignKey(
-                        name: "FK_TouristTourDates_Dates_DatesId",
-                        column: x => x.DatesId,
+                        name: "FK_TouristTourDates_Dates_ClosedDatesId",
+                        column: x => x.ClosedDatesId,
                         principalTable: "Dates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -425,7 +427,7 @@ namespace TouristTourGuide.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Locations",
-                columns: new[] { "Id", "City", "Country", "Village" },
+                columns: new[] { "Id", "City", "Country", "State" },
                 values: new object[,]
                 {
                     { 1, null, "Afghanistan", null },
@@ -763,9 +765,9 @@ namespace TouristTourGuide.Data.Migrations
                 column: "TouristTourId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TouristTourDates_DatesId",
+                name: "IX_TouristTourDates_ClosedDatesId",
                 table: "TouristTourDates",
-                column: "DatesId");
+                column: "ClosedDatesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Votes_ApplicationUserId",

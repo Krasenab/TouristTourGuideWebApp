@@ -16,6 +16,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         [Required]
         [MaxLength(NameMaxLength)]
         public string Name { get; set; } 
+        public string? LastName { get; set; }
 
         [Required]
         [MaxLength(LegalFirmNameMaxLength)]
@@ -45,7 +46,6 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         [Required]
-        [MaxLength(AboutMaxLength)]
         public string AboutTheActivityProvider { get; set; }
 
         public virtual List<TouristTour> MyTours { get; set; }

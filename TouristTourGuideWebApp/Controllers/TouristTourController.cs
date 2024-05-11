@@ -111,8 +111,8 @@ namespace TouristTourGuideWebApp.Controllers
 
             string userId = this.User.GetCurrentUserId();
             string guideUserId = _guideUserService.GuidUserId(userId);
-
-            _locationService.CreateCityCountry(model.LocationId, model.LocationCity);
+            int? locationId = model.LocationId;
+            _locationService.CreateCityCountry((int)locationId, model.LocationCity);
            await _tourService.CreateTouristTour(model, guideUserId);
 
             return RedirectToAction("Index", "Home");

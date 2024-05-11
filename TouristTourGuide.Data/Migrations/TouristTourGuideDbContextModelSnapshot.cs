@@ -344,7 +344,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 1, 21, 13, 55, 184, DateTimeKind.Utc).AddTicks(2623));
+                        .HasDefaultValue(new DateTime(2024, 5, 11, 16, 0, 7, 351, DateTimeKind.Utc).AddTicks(6362));
 
                     b.Property<Guid>("TouristTourId")
                         .HasColumnType("uniqueidentifier");
@@ -366,7 +366,7 @@ namespace TouristTourGuide.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("TouristTourReserveDate")
+                    b.Property<DateTime>("ClosedDates")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -382,7 +382,6 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.Property<string>("AboutTheActivityProvider")
                         .IsRequired()
-                        .HasMaxLength(4500)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ApplicationUserId")
@@ -395,6 +394,9 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LegalFirmName")
@@ -445,7 +447,7 @@ namespace TouristTourGuide.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Village")
+                    b.Property<string>("State")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -1683,7 +1685,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 1, 21, 13, 55, 185, DateTimeKind.Utc).AddTicks(4336));
+                        .HasDefaultValue(new DateTime(2024, 5, 11, 16, 0, 7, 353, DateTimeKind.Utc).AddTicks(7814));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -1701,8 +1703,7 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Includes")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KnowBeforeYouGo")
                         .HasMaxLength(5000)
@@ -1718,13 +1719,18 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<string>("MeetingPointMapUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NotAllowed")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NotSuitableFor")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PricePerPerson")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("StartEndHouers")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TourName")
                         .IsRequired()
@@ -1732,10 +1738,6 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("WhatToBring")
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("startEndHouers")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1757,9 +1759,6 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.Property<Guid>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("BookQueryDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("BookedDate")
                         .HasColumnType("datetime2");
@@ -1785,6 +1784,9 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<bool>("isAccepted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("isRefusced")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
@@ -1799,12 +1801,12 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<Guid>("TouristTourId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("DatesId")
+                    b.Property<int>("ClosedDatesId")
                         .HasColumnType("int");
 
-                    b.HasKey("TouristTourId", "DatesId");
+                    b.HasKey("TouristTourId", "ClosedDatesId");
 
-                    b.HasIndex("DatesId");
+                    b.HasIndex("ClosedDatesId");
 
                     b.ToTable("TouristTourDates");
                 });
@@ -1979,9 +1981,9 @@ namespace TouristTourGuide.Data.Migrations
 
             modelBuilder.Entity("TouristTourGuide.Data.Models.Sql.Models.TouristTourDates", b =>
                 {
-                    b.HasOne("TouristTourGuide.Data.Models.Sql.Models.Dates", "Dates")
+                    b.HasOne("TouristTourGuide.Data.Models.Sql.Models.Dates", "ClosedDates")
                         .WithMany("TouristTourDates")
-                        .HasForeignKey("DatesId")
+                        .HasForeignKey("ClosedDatesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1991,7 +1993,7 @@ namespace TouristTourGuide.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Dates");
+                    b.Navigation("ClosedDates");
 
                     b.Navigation("TouristTour");
                 });

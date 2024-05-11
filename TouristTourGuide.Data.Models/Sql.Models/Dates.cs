@@ -12,10 +12,8 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         }
         [Key]
         public int Id { get; set; }
-
         [Required]
-        public DateTime TouristTourReserveDate { get; set; }
-
+        public DateTime ClosedDates { get; set; }
         public List<TouristTourDates> TouristTourDates { get; set; }
     }
 }

@@ -56,10 +56,11 @@ namespace TouristTourGuide.Infrastrucutre
                 IdentityRole<Guid> role = new IdentityRole<Guid>("Administrator");
 
                 await roleM.CreateAsync(role);
-
                 ApplicationUser admin = await userManager.FindByEmailAsync(email);
+               
+                await userManager.AddToRoleAsync(admin, "Administrator");
+                
 
-                await userManager.AddToRoleAsync(admin, role.Name);
             }).GetAwaiter().GetResult(); // poslednite dva metoda mi gerantirat che sled prekluchvane na asinhrona shte produlji sinhroniq method 
 
             return app;

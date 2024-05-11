@@ -14,9 +14,6 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         public DateTime BookedDate { get; set; }
 
         [Required]
-        public DateTime BookQueryDate { get; set; }
-
-        [Required]
         [Range(countOfPeopleMin,countOfPeopleMax)]
         public int CountOfPeople { get; set; }
 
@@ -31,6 +28,8 @@ namespace TouristTourGuide.Data.Models.Sql.Models
 
         [DefaultValue(false)]
         public bool isAccepted { get; set; }
+        [DefaultValue(false)]
+        public bool isRefusced { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         public Guid ApplicationUserId { get; set; }

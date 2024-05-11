@@ -19,10 +19,8 @@ namespace TouristTourGuide.Data.Models.Sql.Models
 
         [MaxLength(LocationPlaceMaxLength)]
         public string? City  { get; set; }
-
         [MaxLength(LocationPlaceMaxLength)]
-        public string? Village { get; set; }
-
+        public string? State { get; set; }
         public virtual List<TouristTour> TouristTours { get; set; }
     }
 }

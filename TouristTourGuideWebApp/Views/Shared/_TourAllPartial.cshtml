@@ -10,8 +10,7 @@
 
 
     bool userIsGuide = ugs.isUserGuide(this.User.GetCurrentUserId());
-
-    
+    // bool isUserAdmin = ClaimPrincipalExtensions.IsAdmin(this.User);    
     if (userIsGuide)
     {
         string guideId = ugs.GuidUserId(this.User.GetCurrentUserId());
@@ -20,9 +19,6 @@
 
         
     }
-
-   
-
 
 }
 
@@ -50,22 +46,22 @@
                class="btn btn-success">Details</a>
             @*  @if (this.User.Identity.IsAuthenticated) *@
 
-            @if (userIsGuide)
+            @if (userIsGuide )
             {
-                @if (isCurrentUserOwner)
+                @if (isCurrentUserOwner )
                 {
                     <a asp-controller="TouristTour" asp-action="Edit" asp-route-id="@Model.Id"
                        class="btn btn-warning">Edit</a>
 
                     <a asp-controller="TouristTour" asp-action="Delete" asp-routeid="@Model.Id"
                        class="btn btn-danger">Delete</a>
-
                 }
+              @*   @if (!isUserAdmin)
+                {
+                    <p>For now the programer is stupied and u cant see delete and edit. We sorry</p>
+                } *@
 
             }
-
-            <p></p>
-
         </div>
     </div>
 </div>
