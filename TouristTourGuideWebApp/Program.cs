@@ -30,6 +30,7 @@ namespace TouristTourGuideWebApp
 
                }
             )
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<TouristTourGuideDbContext>();
 
             builder.Services.AddApplicationServices(typeof(ITourService));
@@ -67,9 +68,8 @@ namespace TouristTourGuideWebApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.SeedAdmin(email: "nomail@nomail.com"); // add constant
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
