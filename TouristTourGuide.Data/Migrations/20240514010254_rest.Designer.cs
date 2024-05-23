@@ -12,8 +12,8 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    [Migration("20240511160008_reset")]
-    partial class reset
+    [Migration("20240514010254_rest")]
+    partial class rest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -347,7 +347,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 11, 16, 0, 7, 351, DateTimeKind.Utc).AddTicks(6362));
+                        .HasDefaultValue(new DateTime(2024, 5, 14, 1, 2, 52, 673, DateTimeKind.Utc).AddTicks(462));
 
                     b.Property<Guid>("TouristTourId")
                         .HasColumnType("uniqueidentifier");
@@ -1688,7 +1688,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 11, 16, 0, 7, 353, DateTimeKind.Utc).AddTicks(7814));
+                        .HasDefaultValue(new DateTime(2024, 5, 14, 1, 2, 52, 675, DateTimeKind.Utc).AddTicks(4235));
 
                     b.Property<string>("Duaration")
                         .IsRequired()

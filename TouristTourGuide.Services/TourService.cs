@@ -44,9 +44,7 @@ namespace TouristTourGuide.Services
                 TourSorting.Newest => toursQuery.OrderBy(c => c.CreatedOn),
                 TourSorting.Oldest => toursQuery.OrderByDescending(c => c.CreatedOn),
                 TourSorting.PriceAscending => toursQuery.OrderBy(x => x.PricePerPerson),
-                TourSorting.PriceDescending => toursQuery.OrderByDescending(x => x.PricePerPerson),
-
-
+                TourSorting.PriceDescending => toursQuery.OrderByDescending(x => x.PricePerPerson)
             };
 
             

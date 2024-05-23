@@ -179,7 +179,6 @@ namespace TouristTourGuideWebApp.Controllers
         {
             bool isValid = _imageServie.IsFileExtensionValid(imageFile);
 
-
             if (!isValid)
             {
                 return BadRequest("Invalid image extension");

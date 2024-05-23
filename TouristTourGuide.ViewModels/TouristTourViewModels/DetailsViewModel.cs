@@ -27,5 +27,6 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         public double TourRatign { get; set; }        
         public List<AllComentsViewModels> Comments { get; set; } = new List<AllComentsViewModels>();
         public List<AppImagesViewModel> AllTourApplicationImages { get; set; } = new List<AppImagesViewModel>();
+        public List<string> ClosedDates { get; set; } = new List<string>();
     }
 }

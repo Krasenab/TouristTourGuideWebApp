@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="~/css/votestartstyle.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
     <style>
         .containers {
             background-color: #E0F3EF;
@@ -61,6 +62,95 @@
             box-sizing: border-box;
         }
 
+        .ui-datepicker {
+            width: 250px;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ui-datepicker-header {
+            background-color: whitesmoke;
+            color: white;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .ui-datepicker-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .ui-datepicker-prev,
+        .ui-datepicker-next {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            background-color: white;
+            color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+            .ui-datepicker-prev:hover,
+            .ui-datepicker-next:hover {
+                background-color: #ccc;
+                border-color: #ccc;
+            }
+
+        .ui-datepicker-calendar {
+            margin-top: 10px;
+        }
+
+        .ui-state-default {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            background-color: white;
+        }
+
+        .ui-state-active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .ui-datepicker-week-end {
+            color: black;
+            background-color: white;
+        }
+
+        .ui-datepicker-calendar .ui-state-disabled,
+        .ui-datepicker-calendar .ui-state-disabled.ui-state-default {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .ui-datepicker-calendar .unavailable-date span {
+            position: relative;
+        }
+
+            .ui-datepicker-calendar .unavailable-date span::before {
+                content: "";
+                position: absolute;
+                top: 12px;
+                left: 13px;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background-color: red;
+            }
     </style>
 
 </head>
@@ -149,7 +239,7 @@ else
 }
 
 
-<section style="margin:0em; padding:0em; background-color:#BEE4DE;  border-radius:35px">
+<section class="information-section-top" style="margin:0em; padding:0em; background-color:#BEE4DE;  border-radius:25px">
     <div class="row mb-5 text-center" style="padding-top:1em;">
         <h5>About this activity</h5>
     </div>
@@ -176,83 +266,118 @@ else
     <div class="row mb-3" style="padding-left:2em;">
         <div class="col-md-8 themed-grid-col"><a href="@Model.MeetingPointMapUrl">Look on google map</a></div>
     </div>
+    <div class="row mb-5 text-center">
+        <h5>Includes</h5>
+    </div>
+    <div class="row mb-5 text-start" style="padding-left:2em;">
+        <p>@Model.Includes</p>
+    </div>
+
+</section>
+
+<section class="date-card" style="padding-top:1em; padding-bottom:1em; justify-content:center">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Availability Tour Dates</h5>
+                    <p class="card-text">You can see closed and free dates for this tourist tour</p>
+
+                    <button id="availability-btn" class="btn btn-primary">Check Availability</button>
+                    <div id="availability-calendar" style="display: none;">
+                        <div id="datepicker"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="information-section" style="margin:0em; padding:0em; background-color:#BEE4DE;  border-radius:25px">
+    <div class="row mb-5 text-center">
+        <h5>Important information</h5>
+    </div>
+    <div class="row mb-5 text-start" style="padding-left:2em;">
+        <p>@Model.KnowBeforeYouGo</p>
+    </div>
+    <div class="row mb-5 text-start" style="padding-left:1em;">
+        <p>@Model.WhatToBring</p>
+    </div>
     <div class="row mb-5" style="padding-left:2em;">
         <h5>Full description</h5>
     </div>
+
     <div class="row mb-5 text-start" style="padding-left:2em;">
         <p>@Model.FullDescription</p>
     </div>
 </section>
 
 <section>
-    <div class="custom-container">
-        <div class="custom-row">
-            @if (isOwner)
-            {
-                <div class="row">
-                    <div class="col-sm-3" style="display:inline-block">
-                        <div class="row mb-0">
-                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                <form asp-controller="TouristTour" asp-action="Delete" asp-route-tourId="@Model.Id" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-danger"style="display:inline-block">Delete Tour</button>
-                                </form>
-                                <a asp-controller="AppImage" asp-action="EditTourAlbum" asp-route-tourId="@Model.Id" class="btn btn-warning">Edit tour album</a>
-                                <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.Id" class="btn btn-success d-inline">Tour bookings</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="custom-row">
-                    <button id="showUplFormBtn" class="btn btn-primary btn-sm bg-opacity-25 border-1" style="border-radius:0.5em">Add pictures to your tour</button>
-                    <div id="hideElement" style="display:none;">
-                        <div class="col-lg-12" style="padding-top:1em;">
-                            <h4>Add a new image to your tour:</h4>
-                            <form method="post" enctype="multipart/form-data" asp-action="AddImage" asp-controller="TouristTour">
-                                <input type="hidden" name="tourId" value="@Model.Id" />
-                                <div class="custom-form-group" style="padding-top:1em;">
-                                    <input type="file" name="imageFile" required class="form-control" />
-                                    <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
-                                </div>
-                            </form>
-                        </div>
+
+    @if (isOwner)
+    {
+        <div class="row">
+            <div class="col-sm-3" style="display:inline-block">
+                <div class="row mb-0">
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <form asp-controller="TouristTour" asp-action="Delete" asp-route-tourId="@Model.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger" style="display:inline-block">Delete Tour</button>
+                        </form>
+                        <a asp-controller="AppImage" asp-action="EditTourAlbum" asp-route-tourId="@Model.Id" class="btn btn-warning">Edit tour album</a>
+                        <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.Id" class="btn btn-success d-inline">Tour bookings</a>
                     </div>
-                </div>
-            }
-        </div>
-        @if (isOwner)
-        {
-            <button id="calendar-btn" class="btn-sm btn-info">
-                Check Avalibity Date
-            </button>
-            <div id="calendar" style="display:none">
-                <div id="datepicker">
                 </div>
             </div>
-        }
-        <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
+        </div>
+
+        <div class="custom-row">
+            <button id="showUplFormBtn" class="btn btn-primary btn-sm bg-opacity-25 border-1" style="border-radius:0.5em">Add pictures to your tour</button>
+            <div id="hideElement" style="display:none;">
+                <div class="col-lg-12" style="padding-top:1em;">
+                    <h4>Add a new image to your tour:</h4>
+                    <form method="post" enctype="multipart/form-data" asp-action="AddImage" asp-controller="TouristTour">
+                        <input type="hidden" name="tourId" value="@Model.Id" />
+                        <div class="custom-form-group" style="padding-top:1em;">
+                            <input type="file" name="imageFile" required class="form-control" />
+                            <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+                        </div>
+                    </form>
+                </div>
+            </div>          
+        </div>
+        
+    }
+
+
+    <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
+   
+</section>
+
+
+
+<section class="votes-section">
+    <div class="custom-row" style="text-align:center; padding-top:2em;">
+        <div class="col">
+            <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2")</p>
+            <p id="voteBasedOn">Rating is based on @Model.VoteCount users votes</p>
+        </div>
+    </div>
+    <div class="row mb-5" style="padding-top:2em;">
+
+        <ul class="ratings" style="text-align:center">
+
+            <li class="star" onclick="sendVote('@Model.Id',1)"></li>
+            <li class="star" onclick="sendVote('@Model.Id',2)"></li>
+            <li class="star" onclick="sendVote('@Model.Id',3)"></li>
+            <li class="star" onclick="sendVote('@Model.Id',4)"></li>
+            <li class="star" onclick="sendVote('@Model.Id',5)"></li>
+        </ul>
     </div>
 </section>
 
-<div class="custom-row" style="text-align:center; padding-top:2em;">
-    <div class="col">
-        <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2")</p>
-        <p id="voteBasedOn">Rating is based on @Model.VoteCount users votes</p>
-    </div>
-</div>
-<div class="row mb-5" style="padding-top:2em;">
 
-    <ul class="ratings" style="text-align:center">
-
-        <li class="star" onclick="sendVote('@Model.Id',1)"></li>
-        <li class="star" onclick="sendVote('@Model.Id',2)"></li>
-        <li class="star" onclick="sendVote('@Model.Id',3)"></li>
-        <li class="star" onclick="sendVote('@Model.Id',4)"></li>
-        <li class="star" onclick="sendVote('@Model.Id',5)"></li>
-    </ul>
-</div>
-
-<section style="background-color:#BEE4DE;">
+<section class="comments-section" style="background-color:#BEE4DE;">
     <div class="container">
         <div class="row d-flex justify-content-center right-align-comments">
             <div class="card" style="background-color:#BEE4DE; border:none;">
@@ -312,10 +437,14 @@ else
     </div>
 </section>
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+
 <script>
 
     $('#showUplFormBtn').click(function () {
