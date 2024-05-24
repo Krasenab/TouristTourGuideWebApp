@@ -9,5 +9,6 @@ namespace TouristTourGuide.Services.Interfaces
     public interface IDatesService
     {
         Task CreateTourClosedDate(string tourId,string dates);
+        Task<bool> IsDateClosed(string tourId,string date);
     }
 }

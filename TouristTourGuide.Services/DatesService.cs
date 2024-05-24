@@ -50,5 +50,29 @@ namespace TouristTourGuide.Services
            await _dbContext.TouristTourDates.AddAsync(toD);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> IsDateClosed(string tourId,string date)
+        {
+            bool isDateExist = await _dbContext.Dates.Where(x=>x.ClosedDates.ToString()==date).AnyAsync();
+
+            if (isDateExist)
+            {
+                bool isDateClosedForThisTour = await _dbContext.TouristTourDates.Where(td=>td.TouristTourId.ToString()==tourId 
+                && td.ClosedDates.ClosedDates.ToString()==date).AnyAsync();
+                if (isDateClosedForThisTour)
+                {
+                    return true;
+                }
+                else 
+                {
+                    return false;
+                }
+               
+            }
+            else 
+            {
+                return false;
+            }
+        }
     }
 }

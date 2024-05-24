@@ -1,0 +1,26 @@
+﻿@if (TempData[TouristTourGuide.Common.NotificationMessage.ErrorMassage] != null)
+{
+    <script>
+        $(function () { toastr.error('@TempData[TouristTourGuide.Common.NotificationMessage.ErrorMassage].ToString()'); });
+    </script>
+}
+
+@if (TempData[TouristTourGuide.Common.NotificationMessage.WarningMassage] != null)
+{
+    <script>
+        $(function () { toastr.warning('@TempData[TouristTourGuide.Common.NotificationMessage.WarningMassage].ToString()'); });
+    </script>
+}
+
+@if (TempData[TouristTourGuide.Common.NotificationMessage.SuccessMassage] != null)
+{
+    <script>
+        $(function () { toastr.success('@TempData[TouristTourGuide.Common.NotificationMessage.SuccessMassage].ToString()'); });
+    </script>
+}
+@if (TempData[TouristTourGuide.Common.NotificationMessage.InformationMassage] != null)
+{
+    <script>
+        $(function () { toastr.success('@TempData[TouristTourGuide.Common.NotificationMessage.InformationMassage].ToString()'); });
+    </script>
+}

@@ -282,11 +282,26 @@ else
                 <div class="card-body">
                     <h5 class="card-title">Availability Tour Dates</h5>
                     <p class="card-text">You can see closed and free dates for this tourist tour</p>
-
+                    <input type="hidden" id="modelId" value="@Model.Id">
+                    <input type="date" id="checkDate">
                     <button id="availability-btn" class="btn btn-primary">Check Availability</button>
-                    <div id="availability-calendar" style="display: none;">
-                        <div id="datepicker"></div>
-                    </div>
+                    <div id="messageBox" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalMessageBody">
+                    <!-- Message will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -318,15 +333,13 @@ else
     @if (isOwner)
     {
         <div class="row">
-            <div class="col-sm-3" style="display:inline-block">
-                <div class="row mb-0">
-                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <form asp-controller="TouristTour" asp-action="Delete" asp-route-tourId="@Model.Id" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-danger" style="display:inline-block">Delete Tour</button>
-                        </form>
-                        <a asp-controller="AppImage" asp-action="EditTourAlbum" asp-route-tourId="@Model.Id" class="btn btn-warning">Edit tour album</a>
-                        <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.Id" class="btn btn-success d-inline">Tour bookings</a>
-                    </div>
+            <div class="col">
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <form asp-controller="TouristTour" asp-action="Delete" asp-route-tourId="@Model.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete Tour</button>
+                    </form>
+                    <a asp-controller="AppImage" asp-action="EditTourAlbum" asp-route-tourId="@Model.Id" class="btn btn-warning">Edit tour album</a>
+                    <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.Id" class="btn btn-success d-inline">Tour bookings</a>
                 </div>
             </div>
         </div>
@@ -344,14 +357,14 @@ else
                         </div>
                     </form>
                 </div>
-            </div>          
+            </div>
         </div>
-        
+
     }
 
 
     <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
-   
+
 </section>
 
 
@@ -444,6 +457,29 @@ else
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $("#availability-btn").click(function () {
+            var passedDate = $("#checkDate").val();
+            var modelId = $("#modelId").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/Dates/checkdate",
+                contentType: "application/json",
+                data: JSON.stringify({ tourId: modelId, closedDate: passedDate }),
+                dataType: "json",
+                success: function (response) {
+                    $("#messageBox").html('<div class="alert alert-success">' + response.message + '</div>'); // Показване на съобщението при успех
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    $("#messageBox").html('<div class="alert alert-danger">' + response.message + '</div>'); // Показване на съобщението при грешка
+                }
+            });
+        });
+    });
+</script>
 
 <script>
 

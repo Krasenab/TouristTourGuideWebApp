@@ -100,29 +100,27 @@
 
 </script>
 <script>
-    $(document).ready(function () { 
-        
+    $(document).ready(function () {
+
         $("#addClosedDate").click(function () {
             var newClosedDateVar = $("#newClosedDate").val();
             var modelId = $("#modelId").val();
 
-            var jsonInput = {tourId: modelId, dates: newClosedDateVar }
+            var jsonInput = { tourId: modelId, dates: newClosedDateVar }
             $.ajax({
-              type:"POST",
-              url:"/api/Dates",
-              contentType:"application/json",
-              data:JSON.stringify(jsonInput),
-              dataType:"json",
-                success: function (response) 
-                {
+                type: "POST",
+                url: "/api/Dates",
+                contentType: "application/json",
+                data: JSON.stringify(jsonInput),
+                dataType: "json",
+                success: function (response) {
                     alert('Date added successfuly');
                 },
-                error: function() 
-                {
+                error: function () {
                     alert("Something get wrong with add closed date");
                 }
             });
         });
-    
+
     });
 </script>
