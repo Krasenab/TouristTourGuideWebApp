@@ -50,6 +50,7 @@ namespace TouristTourGuideWebApp.Controllers
             }
             else 
             {
+
                 var errorMessage = new { message = "Your date is free" };
                 return BadRequest(errorMessage);
               
