@@ -500,10 +500,17 @@ else
                 data: JSON.stringify({ tourId: modelId, closedDate: passedDate }),
                 dataType: "json",
                 success: function (response) {
-                    $("#modalMessageBody").text(response.message); // Вмъкване на съобщението при успех
-                    $('#messageModal').modal('show'); // Показване на модалния прозорец
+                    // $("#modalMessageBody").text(response.message); // Вмъкване на съобщението при успех
+                    // $('#messageModal').modal('show'); // Показване на модалния прозорец
+                    // setTimeout(function () {
+                    //     $('#messageModal').modal('hide'); // Затваряне на модалния прозорец след 5 секунди
+                    // }, 5000);
+                    var successMessage = '<div class="alert alert-success" id="successMessage">' + response.message + '</div>';
+                    $("#messageBox").html(successMessage); // Показване на съобщението при успех
                     setTimeout(function () {
-                        $('#messageModal').modal('hide'); // Затваряне на модалния прозорец след 5 секунди
+                        $('#successMessage').fadeOut('slow', function () {
+                            $(this).remove();
+                        }); // Скриване на съобщението след 5 секунди
                     }, 5000);
                 },
                 error: function (xhr) {

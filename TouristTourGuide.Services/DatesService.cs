@@ -19,7 +19,8 @@ namespace TouristTourGuide.Services
         }
         public async Task CreateTourClosedDate(string tourId, string dates)
         {
-            bool isDateExist = await _dbContext.Dates.Where(d => d.ClosedDates.ToString() == dates)
+            DateTime inputDateTime = DateTime.Parse(dates);
+            bool isDateExist = await _dbContext.Dates.Where(d => d.ClosedDates == inputDateTime)
                 .AnyAsync();
             int dateId = 0;
             if(!isDateExist) 
@@ -53,12 +54,22 @@ namespace TouristTourGuide.Services
 
         public async Task<bool> IsDateClosed(string tourId,string date)
         {
-            bool isDateExist = await _dbContext.Dates.Where(x=>x.ClosedDates.ToString()==date).AnyAsync();
+            DateTime inputDateTime = DateTime.Parse(date);
+           
+            DateTime dateFromDb = await _dbContext.Dates.Where(x => x.ClosedDates == inputDateTime)
+                .Select(x => x.ClosedDates).FirstOrDefaultAsync();
+
+            List<string> allDatesFromDb = await _dbContext.Dates
+                .Select(x=>x.ClosedDates.ToShortDateString())
+                .ToListAsync();
+            
+            string stop = "";
+            bool isDateExist = await _dbContext.Dates.Where(x=>x.ClosedDates==inputDateTime).AnyAsync();
 
             if (isDateExist)
             {
                 bool isDateClosedForThisTour = await _dbContext.TouristTourDates.Where(td=>td.TouristTourId.ToString()==tourId 
-                && td.ClosedDates.ClosedDates.ToString()==date).AnyAsync();
+                && td.ClosedDates.ClosedDates==inputDateTime).AnyAsync();
                 if (isDateClosedForThisTour)
                 {
                     return true;

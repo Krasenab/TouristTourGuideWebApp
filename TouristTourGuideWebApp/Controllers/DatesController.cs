@@ -46,13 +46,13 @@ namespace TouristTourGuideWebApp.Controllers
             if (isClosed)
             {
                 var successMessage = new { message = "Get another date for your vacation" };
-                return Ok(successMessage);
+                return BadRequest(successMessage);
             }
             else 
             {
 
                 var errorMessage = new { message = "Your date is free" };
-                return BadRequest(errorMessage);
+                return Ok(errorMessage);
               
             }
             
