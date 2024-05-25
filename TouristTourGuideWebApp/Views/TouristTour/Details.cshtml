@@ -456,7 +456,37 @@ else
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+@* 
+<script>
+    $(document).ready(function () {
+        $("#availability-btn").click(function () {
+            var passedDate = $("#checkDate").val();
+            var modelId = $("#modelId").val();
+          
 
+            $.ajax({
+                type: "POST",
+                url: "/api/Dates/checkdate",
+                contentType: "application/json",
+                data: JSON.stringify({ tourId: modelId, closedDate: passedDate }),
+                dataType: "json",
+                success: function (response) {
+                  //  $("#messageBox").html('<div class="alert alert-success">' + response.message + '</div>'); Показване на съобщението при успех
+                    $("#modalMessageBody").text(response.message); // Вмъкване на съобщението при успех
+                    $('#messageModal').modal('show'); // Показване на модалния прозорец
+                    setTimeout(function () {
+                        $('#messageModal').modal('hide'); // Затваряне на модалния прозорец след 10 секунди
+                    }, 10000);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    $("#messageBox").html('<div class="alert alert-danger">' + response.message + '</div>'); // Показване на съобщението при грешка
+                }
+            });
+        });
+    });
+</script> *@
 <script>
     $(document).ready(function () {
         $("#availability-btn").click(function () {
@@ -470,17 +500,26 @@ else
                 data: JSON.stringify({ tourId: modelId, closedDate: passedDate }),
                 dataType: "json",
                 success: function (response) {
-                    $("#messageBox").html('<div class="alert alert-success">' + response.message + '</div>'); // Показване на съобщението при успех
+                    $("#modalMessageBody").text(response.message); // Вмъкване на съобщението при успех
+                    $('#messageModal').modal('show'); // Показване на модалния прозорец
+                    setTimeout(function () {
+                        $('#messageModal').modal('hide'); // Затваряне на модалния прозорец след 5 секунди
+                    }, 5000);
                 },
                 error: function (xhr) {
                     var response = JSON.parse(xhr.responseText);
-                    $("#messageBox").html('<div class="alert alert-danger">' + response.message + '</div>'); // Показване на съобщението при грешка
+                    var errorMessage = '<div class="alert alert-danger" id="errorMessage">' + response.message + '</div>';
+                    $("#messageBox").html(errorMessage); // Показване на съобщението при грешка
+                    setTimeout(function () {
+                        $('#errorMessage').fadeOut('slow', function () {
+                            $(this).remove();
+                        }); // Скриване на съобщението след 5 секунди
+                    }, 5000);
                 }
             });
         });
     });
 </script>
-
 <script>
 
     $('#showUplFormBtn').click(function () {
