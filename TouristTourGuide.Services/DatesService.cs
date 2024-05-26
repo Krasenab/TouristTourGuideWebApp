@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,14 @@ namespace TouristTourGuide.Services
         }
         public async Task CreateTourClosedDate(string tourId, string dates)
         {
+            string dmy = dates;
             DateTime inputDateTime = DateTime.Parse(dates);
+            string s = "00:00:00.0000000";
+
             bool isDateExist = await _dbContext.Dates.Where(d => d.ClosedDates == inputDateTime)
                 .AnyAsync();
             int dateId = 0;
+            
             if(!isDateExist) 
             {
                 Dates d = new Dates()
@@ -37,19 +42,29 @@ namespace TouristTourGuide.Services
             }
             else
             {
-                dateId  = await _dbContext.Dates.Where(x=>x.ClosedDates.ToString() == dates)
+                dateId  = await _dbContext.Dates.Where(x=>x.ClosedDates == inputDateTime)
                     .Select(i=>i.Id)
                     .FirstOrDefaultAsync();
             }
 
-            TouristTourDates toD = new TouristTourDates()
+
+            bool isExsitTourAndDate = await _dbContext
+                .TouristTourDates.Where(dt => dt.TouristTourId.ToString() == tourId &&
+                dt.ClosedDatesId == dateId).AnyAsync();
+            if (!isExsitTourAndDate) 
             {
-                ClosedDatesId = dateId,
-                TouristTourId = Guid.Parse(tourId)
-            };
+                TouristTourDates toD = new TouristTourDates()
+                {
+                    ClosedDatesId = dateId,
+                    TouristTourId = Guid.Parse(tourId)
+                };
+
+                await _dbContext.TouristTourDates.AddAsync(toD);
+                await _dbContext.SaveChangesAsync();
+            }
+            
+
            
-           await _dbContext.TouristTourDates.AddAsync(toD);
-            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<bool> IsDateClosed(string tourId,string date)
@@ -57,13 +72,10 @@ namespace TouristTourGuide.Services
             DateTime inputDateTime = DateTime.Parse(date);
            
             DateTime dateFromDb = await _dbContext.Dates.Where(x => x.ClosedDates == inputDateTime)
-                .Select(x => x.ClosedDates).FirstOrDefaultAsync();
+                .Select(x => x.ClosedDates)
+                .FirstOrDefaultAsync();
 
-            List<string> allDatesFromDb = await _dbContext.Dates
-                .Select(x=>x.ClosedDates.ToShortDateString())
-                .ToListAsync();
-            
-            string stop = "";
+           
             bool isDateExist = await _dbContext.Dates.Where(x=>x.ClosedDates==inputDateTime).AnyAsync();
 
             if (isDateExist)
