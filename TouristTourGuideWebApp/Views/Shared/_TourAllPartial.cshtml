@@ -48,7 +48,7 @@
 
             @if (userIsGuide )
             {
-                @if (isCurrentUserOwner )
+                @if (isCurrentUserOwner||this.User.IsAdmin())
                 {
                     <a asp-controller="TouristTour" asp-action="Edit" asp-route-id="@Model.Id"
                        class="btn btn-warning">Edit</a>

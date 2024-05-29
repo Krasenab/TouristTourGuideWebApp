@@ -85,14 +85,36 @@ namespace TouristTourGuide.Services
             return tB;
         }
 
-        public Task<List<AllBookingViewModel>> GetAll()
+        public async Task<AllBookingFilteredAndPagedServiceViewModel> GetAll(AllBokingQueryViewModel queryViewModel)
         {
-            throw new NotImplementedException();
-        }
+           IQueryable<TouristTourBooking> query = _db.TouristTourBookings.AsQueryable();
+           
+            if (!string.IsNullOrEmpty(queryViewModel.SerchByString))
+            {
+                //generate wide card 
+                string wildCard = $"%{queryViewModel.SerchByString.ToLower()}%";
 
-        public Task<List<AllBookingViewModel>> GetAll(List<string> ToursIds)
-        {
-            throw new NotImplementedException();
+                query = query.Where(qb => EF.Functions.Like(qb.BookedDate.ToString(), queryViewModel.SerchByString)
+                || EF.Functions.Like(qb.CountOfPeople.ToString(),queryViewModel.CountOfPeople.ToString()));
+            }
+
+            List<AllBookingViewModel> allBokings = await query.Skip((queryViewModel.CurrentPage - 1) * queryViewModel.TourWithBookingPearPage).Take(queryViewModel.TourWithBookingPearPage)
+                .Select(x => new AllBookingViewModel()
+                {
+                    Id = x.Id.ToString(),
+                    BookingDate = x.BookedDate.ToString(),
+                    CountOfPeople = x.CountOfPeople,
+                    TourId = x.TouristTourId.ToString()
+                    
+
+                }).ToListAsync();
+            int totalBokings = allBokings.Count;
+
+            return new AllBookingFilteredAndPagedServiceViewModel
+            {
+                AllBokings = allBokings,
+                TotalBookingsCount = totalBokings
+            };
         }
 
         public async Task RefuseBooking(string bookingId)

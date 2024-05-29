@@ -4,6 +4,7 @@ using NuGet.Packaging.Signing;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services.Interfaces;
 using TouristTourGuide.ViewModels.BookingViewModels;
+using TouristTourGuide.ViewModels.TouristTourViewModels;
 using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 
 namespace TouristTourGuideWebApp.Controllers
@@ -13,11 +14,15 @@ namespace TouristTourGuideWebApp.Controllers
         private readonly IBookingService _bookingService;
         private readonly ITourService _tourService;
         private readonly IGuideUserService _guideUserService;
-        public BookingController(IBookingService bookingService, ITourService tourServie, IGuideUserService guideUserService)
+        private readonly IImageService _imageService;
+        public BookingController(IBookingService bookingService, ITourService tourServie, IGuideUserService guideUserService, IImageService imageService)
         {
             _bookingService = bookingService;
             _tourService = tourServie;
             _guideUserService = guideUserService;
+            _imageService = imageService;
+
+
         }
         [HttpGet]
         public async Task<IActionResult> Create(string tourId)
@@ -34,9 +39,20 @@ namespace TouristTourGuideWebApp.Controllers
         {
             string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
             bookingViewModel.ApplicationUserId = userId;
+           
             await _bookingService.CreateBooking(bookingViewModel);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> AllBokings([FromQuery] AllBokingQueryViewModel allBokingQueryModel) 
+        {
+          
+            AllBookingFilteredAndPagedServiceViewModel serviceModel = 
+                await _bookingService.GetAll(allBokingQueryModel);
+            allBokingQueryModel.AllToursWithBooking = serviceModel.AllBokings;
+
+            return View(allBokingQueryModel);
         }
 
         //добавям го на 4/25/2024 1:59

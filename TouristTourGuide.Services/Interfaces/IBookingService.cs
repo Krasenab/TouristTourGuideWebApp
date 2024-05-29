@@ -16,7 +16,7 @@ namespace TouristTourGuide.Services.Interfaces
         Task<List<AcceptOrRefuseViewModel>> GetAcceptedTourBookings(string userGuideId);
         Task RefuseBooking(string bookingId);
 
-        Task<List<AllBookingViewModel>> GetAll(List<string> ToursIds);
+        Task<AllBookingFilteredAndPagedServiceViewModel> GetAll(AllBokingQueryViewModel queryViewModel);
         
      
     }

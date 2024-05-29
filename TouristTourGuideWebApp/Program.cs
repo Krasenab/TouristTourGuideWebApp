@@ -69,7 +69,7 @@ namespace TouristTourGuideWebApp
 
             app.UseRouting();
             app.UseAuthorization();
-            app.SeedAdmin("admin@admin.com");
+           
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

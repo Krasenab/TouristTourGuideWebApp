@@ -12,8 +12,8 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    [Migration("20240514010254_rest")]
-    partial class rest
+    [Migration("20240529163654_addProperty")]
+    partial class addProperty
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -347,7 +347,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 14, 1, 2, 52, 673, DateTimeKind.Utc).AddTicks(462));
+                        .HasDefaultValue(new DateTime(2024, 5, 29, 16, 36, 53, 562, DateTimeKind.Utc).AddTicks(8625));
 
                     b.Property<Guid>("TouristTourId")
                         .HasColumnType("uniqueidentifier");
@@ -1688,7 +1688,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 14, 1, 2, 52, 675, DateTimeKind.Utc).AddTicks(4235));
+                        .HasDefaultValue(new DateTime(2024, 5, 29, 16, 36, 53, 564, DateTimeKind.Utc).AddTicks(1681));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -1771,6 +1771,9 @@ namespace TouristTourGuide.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GuideUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")

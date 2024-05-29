@@ -10,5 +10,7 @@ namespace TouristTourGuide.ViewModels.BookingViewModels
         public int CountOfPeople { get; set; }
         public decimal PricePerPerson { get; set; }
         public decimal TotalPrice => PricePerPerson * CountOfPeople;
+        public byte[]? TourPicutreData { get; set; }
+        public string GuideUserId { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using TouristTourGuide.Services.Interfaces;
 using TouristTourGuide.ViewModels.AppImageViewModels;
 using TouristTourGuide.ViewModels.TouristTourViewModels;
 using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
+using static TouristTourGuide.Common.NotificationMessage;
 
 
 namespace TouristTourGuideWebApp.Controllers
@@ -77,8 +78,7 @@ namespace TouristTourGuideWebApp.Controllers
             return  RedirectToAction("All","TouristTour");
         }
         public async Task<IActionResult> All([FromQuery] AllToursQueryViewModel queryModel)
-        {
-            
+        {            
             AllToursFilteredAndPagedServiceModel serviceModel = await _tourService.AllAsync(queryModel);
 
             queryModel.Tours = serviceModel.Tours;
@@ -94,6 +94,13 @@ namespace TouristTourGuideWebApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+            bool isUserGuide = _guideUserService.isUserGuide(userId);
+            if (!isUserGuide) 
+            {
+                this.TempData[ErrorMassage] = "You must become suplaier";
+                RedirectToAction("Become", "GuideUser");
+            }
 
             TouristTourCreateViewModel model = new TouristTourCreateViewModel()
             {
@@ -108,7 +115,6 @@ namespace TouristTourGuideWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(TouristTourCreateViewModel model)
         {
-
             string userId = this.User.GetCurrentUserId();
             string guideUserId = _guideUserService.GuidUserId(userId);
             int? locationId = model.LocationId;
@@ -125,6 +131,7 @@ namespace TouristTourGuideWebApp.Controllers
             {
                 return StatusCode(404);
             }
+
             var editViewModel = await _tourService.GetTourForEdit(Id);
             editViewModel.LocationCity = await _locationService.GetTourCity(Id);
             editViewModel.Categories = _categoryService.GetAllCategories();
@@ -155,7 +162,8 @@ namespace TouristTourGuideWebApp.Controllers
         {
             if (!_tourService.IsTourExist(id))
             {
-                return StatusCode(404);
+                this.TempData[WarningMassage] = "This tour does not exist or have been removed";
+                return RedirectToAction("All", "Tourist");
             }
             var detailsViewModel = await _tourService.TourById(id);
             if (_tourService.isHavePictures(id))
@@ -196,13 +204,14 @@ namespace TouristTourGuideWebApp.Controllers
             return RedirectToAction("Details", "TouristTour", new {id=tourId });
         }
 
-
+        [Authorize]
         public async Task<IActionResult> TourBookings(string tourId) 
         {
             if (!_tourService.IsTourExist(tourId))
             {
                 return StatusCode(404);
             }
+
             var tour = await _tourService.GetTourForEdit(tourId);
             string name = tour.TourName;
 

@@ -330,8 +330,8 @@ else
 <section>
 
 
-    @if (isOwner)
-    {
+    @if (isOwner || this.User.IsAdmin())
+    {  
         <div class="row">
             <div class="col">
                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
