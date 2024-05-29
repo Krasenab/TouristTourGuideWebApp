@@ -1,1 +1,66 @@
-﻿
+﻿@model AllBookingViewModel
+@using TouristTourGuide.Services.Interfaces
+@using TouristTourGuide.Infrastrucutre;
+@inject IGuideUserService ugs;
+@inject ITourService tourService;
+@inject IImageService imageService;
+
+@{
+    bool isCurrentUserOwner = false;
+    var getImage = imageService.GetImageBytesMongoDb(Model.TourPicutreUniqueName);
+
+    bool userIsGuide = ugs.isUserGuide(this.User.GetCurrentUserId());
+    // bool isUserAdmin = ClaimPrincipalExtensions.IsAdmin(this.User);
+    if (userIsGuide)
+    {
+        string guideId = ugs.GuidUserId(this.User.GetCurrentUserId());
+
+        isCurrentUserOwner = await tourService.IsTourOwner(guideId, Model.Id);
+
+
+    }
+
+}
+
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        @if ((getImage != null))
+        {
+
+            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(getImage))"
+                 alt="" class="img-fluid">
+
+        }
+        <div class="card-body text-center">
+            <h4>@Model.TourName</h4>
+
+            <h6>Tour: <b>@Model.BookingDate</b></h6>
+            <h6>
+               @Model.CountOfPeople
+            </h6>
+
+            <br />
+            <a asp-controller="TouristTour" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-success">Details</a>
+            @*  @if (this.User.Identity.IsAuthenticated) *@
+
+            @if (userIsGuide)
+            {
+                @if (isCurrentUserOwner || this.User.IsAdmin())
+                {
+                    <a asp-controller="TouristTour" asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-warning">Edit</a>
+
+                    <a asp-controller="TouristTour" asp-action="Delete" asp-routeid="@Model.Id"
+                       class="btn btn-danger">Delete</a>
+                }
+                @*   @if (!isUserAdmin)
+            {
+            <p>For now the programer is stupied and u cant see delete and edit. We sorry</p>
+            } *@
+
+            }
+        </div>
+    </div>
+</div>

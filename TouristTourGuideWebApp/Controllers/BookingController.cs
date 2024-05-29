@@ -38,20 +38,25 @@ namespace TouristTourGuideWebApp.Controllers
         public async Task<IActionResult> Create(CreateBookingViewModel bookingViewModel)
         {
             string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
-            bookingViewModel.ApplicationUserId = userId;
-           
+            bookingViewModel.ApplicationUserId = userId;  
+            string getOwnerId = await _tourService.GetTourOwnerIdByTourId(bookingViewModel.TouristTourId);
+            string tid = bookingViewModel.TouristTourId;
+            bookingViewModel.TourOwnerId = getOwnerId;
             await _bookingService.CreateBooking(bookingViewModel);
-
+           
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> AllBokings([FromQuery] AllBokingQueryViewModel allBokingQueryModel) 
+        public async Task<IActionResult> AllBookings([FromQuery] AllBokingQueryViewModel allBokingQueryModel) 
         {
-          
+            string appUserId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+            string getGuideUserId = _guideUserService.GuidUserId(appUserId);
+            allBokingQueryModel.GuideUserId = getGuideUserId;
+
             AllBookingFilteredAndPagedServiceViewModel serviceModel = 
                 await _bookingService.GetAll(allBokingQueryModel);
             allBokingQueryModel.AllToursWithBooking = serviceModel.AllBokings;
-
+           
             return View(allBokingQueryModel);
         }
 

@@ -168,6 +168,12 @@ namespace TouristTourGuide.Services
             return viewModel;
         }
 
+        public Task<string> GetTourOwnerIdByTourId(string tourId)
+        {
+            return _dbContext.TouristsTours.Where(x => x.Id.ToString() == tourId)
+                .Select(gU => gU.GuideUserId.ToString()).FirstOrDefaultAsync();
+        }
+
         public async Task<decimal> GetTourPricePerPerson(string tourId)
         {
             var price = await _dbContext.TouristsTours.Where(x=>x.Id.ToString()==tourId)

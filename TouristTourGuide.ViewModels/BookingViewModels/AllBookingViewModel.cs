@@ -1,4 +1,6 @@
 ﻿
+using TouristTourGuide.ViewModels.AppImageViewModels;
+
 namespace TouristTourGuide.ViewModels.BookingViewModels
 {
     public class AllBookingViewModel
@@ -10,7 +12,7 @@ namespace TouristTourGuide.ViewModels.BookingViewModels
         public int CountOfPeople { get; set; }
         public decimal PricePerPerson { get; set; }
         public decimal TotalPrice => PricePerPerson * CountOfPeople;
-        public byte[]? TourPicutreData { get; set; }
-        public string GuideUserId { get; set; }
+        public string? TourPicutreUniqueName { get; set; }
+ 
     }
 }

@@ -28,5 +28,7 @@ namespace TouristTourGuide.ViewModels.BookingViewModels
         public decimal? PricePerPerson { get; set; }
 
         public decimal? TotalPrice => this.PricePerPerson * this.CountOfPeople;
+
+        public string? TourOwnerId { get; set; }
     }
 }

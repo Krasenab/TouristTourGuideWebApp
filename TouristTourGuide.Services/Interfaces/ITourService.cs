@@ -16,6 +16,8 @@ namespace TouristTourGuide.Services.Interfaces
         bool isHavePictures(string tourId);
         bool IsTourExist(string tourId);
         Task<List<string>> GetAllGuideUserToursId(string guideUserId);
+
+        Task<string> GetTourOwnerIdByTourId(string tourId);
         
     }
 }

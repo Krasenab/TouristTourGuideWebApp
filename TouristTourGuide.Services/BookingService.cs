@@ -9,6 +9,7 @@ namespace TouristTourGuide.Services
     public class BookingService : IBookingService
     {
         private readonly TouristTourGuideDbContext _db;
+
         public BookingService(TouristTourGuideDbContext dbContext)
         {
             _db = dbContext;
@@ -62,7 +63,8 @@ namespace TouristTourGuide.Services
                 ApplicationUserId = Guid.Parse(viewModel.ApplicationUserId),
                 TouristTourId = Guid.Parse(viewModel.TouristTourId),
                 Email = viewModel.Email,
-                PhoneNumber= viewModel.PhoneNumber               
+                PhoneNumber= viewModel.PhoneNumber,
+                GuideUserId = viewModel.TourOwnerId
             };
 
             await _db.TouristTourBookings.AddAsync(b);
@@ -87,15 +89,16 @@ namespace TouristTourGuide.Services
 
         public async Task<AllBookingFilteredAndPagedServiceViewModel> GetAll(AllBokingQueryViewModel queryViewModel)
         {
-           IQueryable<TouristTourBooking> query = _db.TouristTourBookings.AsQueryable();
-           
+            IQueryable<TouristTourBooking> query = _db.TouristTourBookings.Where(gU => gU.GuideUserId == queryViewModel.GuideUserId).AsQueryable();
+
             if (!string.IsNullOrEmpty(queryViewModel.SerchByString))
             {
                 //generate wide card 
                 string wildCard = $"%{queryViewModel.SerchByString.ToLower()}%";
 
-                query = query.Where(qb => EF.Functions.Like(qb.BookedDate.ToString(), queryViewModel.SerchByString)
-                || EF.Functions.Like(qb.CountOfPeople.ToString(),queryViewModel.CountOfPeople.ToString()));
+                query = query.Where(qb => EF.Functions.Like(qb.BookedDate.ToString(), wildCard)
+                || EF.Functions.Like(qb.CountOfPeople.ToString(), wildCard)
+                );
             }
 
             List<AllBookingViewModel> allBokings = await query.Skip((queryViewModel.CurrentPage - 1) * queryViewModel.TourWithBookingPearPage).Take(queryViewModel.TourWithBookingPearPage)
@@ -104,9 +107,10 @@ namespace TouristTourGuide.Services
                     Id = x.Id.ToString(),
                     BookingDate = x.BookedDate.ToString(),
                     CountOfPeople = x.CountOfPeople,
-                    TourId = x.TouristTourId.ToString()
+                    TourId = x.TouristTourId.ToString(),
+                    TourName = x.TouristTour.TourName,
+                    TourPicutreUniqueName = x.TouristTour.TourImages.Select(n=>n.UniqueFileName).FirstOrDefault()
                     
-
                 }).ToListAsync();
             int totalBokings = allBokings.Count;
 

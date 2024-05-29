@@ -17,10 +17,9 @@ namespace TouristTourGuide.ViewModels.BookingViewModels
         public string SerchByString { get; set; }
         public int CountOfPeople { get; set; }
         public string TourName { get; set; }
-        public int CurrentPage { get; set; }
-
-        public int TourWithBookingPearPage { get; set; }
-
+        public int CurrentPage { get; set; } = 1;
+        public int TourWithBookingPearPage { get; set; } = 3;
+        public string? GuideUserId { get; set; }
         public List<AllBookingViewModel> AllToursWithBooking { get; set; }
     }
 }
