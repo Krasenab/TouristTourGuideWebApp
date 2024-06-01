@@ -9,18 +9,20 @@
   
 }
 
-@if (TempData[TouristTourGuide.Common.NotificationMessage.WarningMassage] != null)
+@if (TempData.ContainsKey(WarningMassage))
 {
-    <script>
+  @*   <script>
         $(function () { toastr.warning('@TempData[TouristTourGuide.Common.NotificationMessage.WarningMassage].ToString()'); });
-    </script>
+    </script> *@
+    <script>toastr.warning('@TempData[WarningMassage]')</script>
 }
 
-@if (TempData[TouristTourGuide.Common.NotificationMessage.SuccessMassage] != null)
+@if (TempData.ContainsKey(SuccessMassage))
 {
-    <script>
+    @* <script>
         $(function () { toastr.success('@TempData[TouristTourGuide.Common.NotificationMessage.SuccessMassage].ToString()'); });
-    </script>
+    </script> *@
+    <script>toastr.success('@TempData[SuccessMassage]')</script>
 }
 @if (TempData[TouristTourGuide.Common.NotificationMessage.InformationMassage] != null)
 {
