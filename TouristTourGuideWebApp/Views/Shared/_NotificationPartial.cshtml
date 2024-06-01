@@ -1,8 +1,12 @@
-﻿@if (TempData[TouristTourGuide.Common.NotificationMessage.ErrorMassage] != null)
+﻿@using static TouristTourGuide.Common.NotificationMessage;
+@if (TempData.ContainsKey(ErrorMassage))
 {
-    <script>
+   @*  <script>
         $(function () { toastr.error('@TempData[TouristTourGuide.Common.NotificationMessage.ErrorMassage].ToString()'); });
-    </script>
+        
+    </script> *@
+    <script>toastr.error('@TempData[ErrorMassage]');</script>
+  
 }
 
 @if (TempData[TouristTourGuide.Common.NotificationMessage.WarningMassage] != null)

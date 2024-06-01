@@ -7,6 +7,7 @@ using TouristTourGuide.ViewModels.AppImageViewModels;
 using TouristTourGuide.ViewModels.TouristTourViewModels;
 using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 using static TouristTourGuide.Common.NotificationMessage;
+using TouristTourGuide.Common;
 
 
 namespace TouristTourGuideWebApp.Controllers
@@ -24,7 +25,7 @@ namespace TouristTourGuideWebApp.Controllers
 
         public TouristTourController(ITourService tourService, ILocationService locationService
             , ICategoryService categoryService, IGuideUserService guideUserService, IImageService imageServie,
-            IVoteService voteService,ICommentsService commentsService,
+            IVoteService voteService, ICommentsService commentsService,
             IBookingService bookingService)
         {
             this._tourService = tourService;
@@ -35,9 +36,10 @@ namespace TouristTourGuideWebApp.Controllers
             this._voteService = voteService;
             this._commentsService = commentsService;
             this._bookingService = bookingService;
-                }
+        }
+
         [HttpPost]
-        public async Task<IActionResult> DeletePicture(string uniqueName) 
+        public async Task<IActionResult> DeletePicture(string uniqueName)
         {
             var metadataImage = await _imageServie.AppImageInfo(uniqueName);
             await _imageServie.DelateImageByUniqName(metadataImage.FileName);
@@ -48,18 +50,18 @@ namespace TouristTourGuideWebApp.Controllers
             return RedirectToAction("Details", new { id = metadataImage.TouristTourId });
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(string tourId) 
+        public async Task<IActionResult> Delete(string tourId)
         {
             //добавил съм го на 4/26/2024
             if (!_tourService.IsTourExist(tourId))
             {
-                return StatusCode(404,"This tour deosnt exist");
+                return StatusCode(404, "This tour deosnt exist");
             }
-           List<string> listOfImagesName = await _imageServie.GetAllTourUniqNameImages(tourId);
+            List<string> listOfImagesName = await _imageServie.GetAllTourUniqNameImages(tourId);
             _imageServie.DeleteManyTourImageFileMongoDb(listOfImagesName);
 
             var isHaveComments = await _commentsService.GetAllComentAsync(tourId);
-            if (isHaveComments!=null)
+            if (isHaveComments != null)
             {
                 _commentsService.DeleteTourComments(tourId);
             }
@@ -68,38 +70,40 @@ namespace TouristTourGuideWebApp.Controllers
                 _imageServie.DeleteTourImagesSql(tourId);
             }
             int votess = await _voteService.CountVoteByTourIdAsync(tourId);
-            if (votess!=0)
+            if (votess != 0)
             {
                 _voteService.DeleteAllTourVote(tourId);
             }
-          
+
             await _tourService.Delete(tourId);
 
-            return  RedirectToAction("All","TouristTour");
+            return RedirectToAction("All", "TouristTour");
         }
         public async Task<IActionResult> All([FromQuery] AllToursQueryViewModel queryModel)
-        {            
+        {
             AllToursFilteredAndPagedServiceModel serviceModel = await _tourService.AllAsync(queryModel);
 
             queryModel.Tours = serviceModel.Tours;
-            
-            var categories =  _categoryService.GetAllCategories();
-            var convertToString = categories.ConvertAll<string>(x => x.Name);            
+
+            var categories = _categoryService.GetAllCategories();
+            var convertToString = categories.ConvertAll<string>(x => x.Name);
             queryModel.Categories = convertToString;
-            
+
             return View(queryModel);
         }
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+
             bool isUserGuide = _guideUserService.isUserGuide(userId);
-            if (!isUserGuide) 
+            if (!isUserGuide)
             {
-                this.TempData[ErrorMassage] = "You must become suplaier";
-                RedirectToAction("Become", "GuideUser");
+                TempData[ErrorMassage] = "You must be suplaier to can create some tour";
+                return RedirectToAction("Index", "Home");
             }
 
             TouristTourCreateViewModel model = new TouristTourCreateViewModel()
@@ -119,7 +123,7 @@ namespace TouristTourGuideWebApp.Controllers
             string guideUserId = _guideUserService.GuidUserId(userId);
             int? locationId = model.LocationId;
             _locationService.CreateCityCountry((int)locationId, model.LocationCity);
-           await _tourService.CreateTouristTour(model, guideUserId);
+            await _tourService.CreateTouristTour(model, guideUserId);
 
             return RedirectToAction("Index", "Home");
         }
@@ -158,7 +162,7 @@ namespace TouristTourGuideWebApp.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Details(string id) 
+        public async Task<IActionResult> Details(string id)
         {
             if (!_tourService.IsTourExist(id))
             {
@@ -170,15 +174,15 @@ namespace TouristTourGuideWebApp.Controllers
             {
                 //var uniqFileName = await _imageServie.TourImageUniqueName(id);
                 //detailsViewModel.AllTourApplicationImages = _imageServie.GetImagesFilesMongoDb(uniqFileName);
-               var names = await _imageServie.GetAllTourUniqNameImages(id);
-                detailsViewModel.AllTourApplicationImages = _imageServie.GetAllImagesFileByListOfUniqueName(names); 
+                var names = await _imageServie.GetAllTourUniqNameImages(id);
+                detailsViewModel.AllTourApplicationImages = _imageServie.GetAllImagesFileByListOfUniqueName(names);
             }
-            
-                detailsViewModel.TourRatign = await _voteService.CalculateRatingAsync(id);                 
-                detailsViewModel.Comments = await _commentsService.GetAllComentAsync(id);
-                detailsViewModel.VoteCount = await _voteService.CountVoteByTourIdAsync(id);
-            
-          
+
+            detailsViewModel.TourRatign = await _voteService.CalculateRatingAsync(id);
+            detailsViewModel.Comments = await _commentsService.GetAllComentAsync(id);
+            detailsViewModel.VoteCount = await _voteService.CountVoteByTourIdAsync(id);
+
+
             return View(detailsViewModel);
         }
 
@@ -191,21 +195,21 @@ namespace TouristTourGuideWebApp.Controllers
             {
                 return BadRequest("Invalid image extension");
             }
-            if (imageFile ==null && imageFile.Length <=0) 
+            if (imageFile == null && imageFile.Length <= 0)
             {
                 //TODO: add toast message for invalid fail 
                 return Ok();
             }
 
-           string filename = await _imageServie.AddTourImage(tourId, imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User));
-            await _imageServie.AddImageFileToMongoDb(imageFile,filename);
-            
+            string filename = await _imageServie.AddTourImage(tourId, imageFile, ClaimPrincipalExtensions.GetCurrentUserId(this.User));
+            await _imageServie.AddImageFileToMongoDb(imageFile, filename);
 
-            return RedirectToAction("Details", "TouristTour", new {id=tourId });
+
+            return RedirectToAction("Details", "TouristTour", new { id = tourId });
         }
 
         [Authorize]
-        public async Task<IActionResult> TourBookings(string tourId) 
+        public async Task<IActionResult> TourBookings(string tourId)
         {
             if (!_tourService.IsTourExist(tourId))
             {
@@ -219,8 +223,8 @@ namespace TouristTourGuideWebApp.Controllers
             TourWithBookingsViewModel viewModel = new TourWithBookingsViewModel()
             {
                 Id = tourId,
-                TourName = name,                
-                TourBookings = getBookings                
+                TourName = name,
+                TourBookings = getBookings
             };
 
 
@@ -228,17 +232,17 @@ namespace TouristTourGuideWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteTourPicture(string uniqueName, string tourId) 
+        public IActionResult DeleteTourPicture(string uniqueName, string tourId)
         {
             if (!_tourService.IsTourExist(tourId))
             {
-                return   Content("Somehting get wrong!!");
+                return Content("Somehting get wrong!!");
             }
 
             string removedPictureName = _imageServie.DeleteOneImageSql(uniqueName, tourId);
             _imageServie.DeleteOneImageFileMDB(removedPictureName);
 
-              return Content("success");
+            return Content("success");
         }
 
     }

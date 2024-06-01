@@ -23,6 +23,7 @@
     <PackageReference Include="MongoDB.Driver.Core" Version="2.24.0" />
     <PackageReference Include="Nager.Country" Version="4.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
