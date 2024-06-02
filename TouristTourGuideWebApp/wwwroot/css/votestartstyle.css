@@ -27,5 +27,15 @@
     .star.full:before,
     .star.half:before,
     .star.hover:before {
-        color: black;
+        color: gold;
+    }
+    .star.full:before {
+        color: gold; /* Цветът на запълнените звезди */
+    }
+
+    .star.half:before {
+        color: gold; /* Цветът на половинчатите звезди */
+        position: absolute;
+        width: 25px; /* Половината от звездата */
+        overflow: hidden;
     }

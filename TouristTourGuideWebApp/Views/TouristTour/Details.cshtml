@@ -327,7 +327,7 @@ else
     </div>
 </section>
 
-<section>
+<section class="control-section" >
 
 
     @if (isOwner || this.User.IsAdmin())
@@ -457,6 +457,7 @@ else
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+@*скрипт за затваряне на датите*@
 @* 
 <script>
     $(document).ready(function () {
@@ -527,6 +528,8 @@ else
         });
     });
 </script>
+
+@*скрипт за затваряне и показване на формата за добавяне на коментари*@
 <script>
 
     $('#showUplFormBtn').click(function () {
@@ -540,6 +543,8 @@ else
 
 </script>
 
+
+@*скрипт за коментарите*@
 <script>
     $(document).ready(function () {
         $('#showFormBtn').click(function () {
@@ -601,8 +606,8 @@ else
     });
 </script>
 
-
-<script>
+@*скриптиове за рейтинга*@
+@* <script>
 
     function sendVote(tourId, starValue) {
         var json = { tourId: tourId, starValue: starValue };
@@ -626,9 +631,73 @@ else
 
     }
 
+</script> *@
+
+
+<script>
+    function sendVote(tourId, starValue) {
+        var json = { tourId: tourId, starValue: starValue };
+
+        $.ajax({
+            url: "/api/vote",
+            type: "POST",
+            data: JSON.stringify(json),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                var newRatingValue = response.ratingResultAfretVote;
+                var newVoteCount = response.VotesCount;
+                $('#ratingDisplay').text(newRatingValue.toFixed(2));
+                $('#voteBasedOn').text('Rating is based on ' + newVoteCount + ' users votes');
+
+                // Обновяване на визуализацията на звездите
+                var stars = $('.ratings .star');
+                stars.removeClass('full half');
+                var fullStars = Math.floor(newRatingValue);
+                var halfStar = (newRatingValue - fullStars >= 0.5) ? true : false;
+
+                for (var i = 0; i < fullStars; i++) {
+                    $(stars[i]).addClass('full');
+                }
+
+                if (halfStar) {
+                    $(stars[fullStars]).addClass('half');
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        // Вземаме текущата оценка
+        var rating = parseFloat($('#ratingDisplay').text());
+
+        // Броя на звездите
+        var stars = $('.ratings .star');
+
+        // Закръгляме до най-близката половинка
+        var fullStars = Math.floor(rating);
+        var halfStar = (rating - fullStars >= 0.5) ? true : false;
+
+        // Оцветяване на пълните звезди
+        for (var i = 0; i < fullStars; i++) {
+            $(stars[i]).addClass('full');
+        }
+
+        // Оцветяване на половинчата звезда, ако има
+        if (halfStar) {
+            $(stars[fullStars]).addClass('half');
+        }
+
+        // При клик на звезда, изпращаме нов глас
+        $('.star').click(function () {
+            var index = $(this).index() + 1;
+            sendVote('@Model.Id', index);
+        });
+    });
 </script>
 
-
+@*лайт бокс скрипт*@
 <script>
     lightbox.option({
         'resizeDuration': 200,
