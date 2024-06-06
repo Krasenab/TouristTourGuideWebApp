@@ -50,6 +50,10 @@ namespace TouristTourGuide.Services
         public async Task<string> AddTourImage(string tourId, IFormFile imageFile, string userId)
         {
             string generateFileNewFileName = GenerateUnicFileName(imageFile.FileName);
+            if (generateFileNewFileName==null || string.IsNullOrEmpty(generateFileNewFileName)) 
+            {
+                throw new NullReferenceException("Not a valid file extension");
+            }
 
             AppImages img = new AppImages()
             {
@@ -244,6 +248,8 @@ namespace TouristTourGuide.Services
             
             _appImageFileCollectionMDB.FindOneAndDelete(x => x.UniqueFileName == uniqueName);
         }
+
+       
 
         //public  AppImagesViewModel GetOneImageMongoDb(string uniqueName)
         //{

@@ -11,7 +11,7 @@ namespace TouristTourGuide.Services.Interfaces
     {
         byte[] GetImageBytesMongoDb (string uqnicName);
         Task<string> AddTourImage(string tourId, IFormFile imageFile, string userId);
-        Task AddImageFileToMongoDb(IFormFile imageFile,string uniqueFileName);
+        Task AddImageFileToMongoDb(IFormFile imageFile,string uniqueFileName);             
         bool IsFileExtensionValid(IFormFile imageFile);
         List<AppImagesViewModel> GetImagesFilesMongoDb(string uniqueFileName);
         Task<string> TourImageUniqueName(string tourId);
@@ -28,7 +28,8 @@ namespace TouristTourGuide.Services.Interfaces
         Task<AppImageSqlMetaDataViewModel> AppImageInfo(string uniqueName);
         List<AppImagesViewModel> GetAllImagesFileByListOfUniqueName(List<string> names);
         string DeleteOneImageSql(string uniqueName,string tourId);
-        void DeleteOneImageFileMDB(string uniqueName);    
+        void DeleteOneImageFileMDB(string uniqueName);
+               
         //AppImagesViewModel GetOneImageMongoDb(string uniqueName);
 
     }

@@ -24,5 +24,23 @@ namespace TouristTourGuideWebApp.Controllers
             viewModel.TourImages = isNull;
             return View(viewModel);
         }
+
+        [HttpGet]
+        public  IActionResult AddImageForDesign() 
+        {
+            ImagesViewModel viewModel = new ImagesViewModel();
+            return View(viewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddImageForDesign(ImagesViewModel model,IFormFile imageFile) 
+        {
+            string name = model.CustomUniqeFileName;
+
+            
+            
+            return Ok();
+        }
+
+
     }
 }

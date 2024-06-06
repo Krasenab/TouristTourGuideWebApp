@@ -1,0 +1,23 @@
+﻿@model ImagesViewModel
+<div class="row mb-5 text-center" >
+    <h1>Image manager</h1>
+</div>
+
+<section class="pictureAdd-form" style="justify-content:center;">
+    <div class="row">
+        <div class="col col-lg">
+            <form method="post" enctype="multipart/form-data" asp-action="AddImageForDesign" asp-controller="AppImage">
+                <div class="form-group mb-3">
+                    <label asp-for="CustomUniqeFileName">Name for your file</label>
+                    <input asp-for="CustomUniqeFileName" class="form-control" placeholder="">
+
+                </div>
+                <div class="custom-form-group" style="padding-top:1em;">
+                    <input type="file" name="imageFile" required class="form-control" />
+                    <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+                </div>
+            </form>
+        </div>       
+    </div>
+   
+</section>

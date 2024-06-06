@@ -5,7 +5,16 @@
        public static string[] allowedExtensions = new[] {".jpg",".png",".jpeg" };
         public static string GenerateUnicFileName(string fileName) 
         {
-            return $"{Guid.NewGuid()}{fileName}";
+             int indexOfDot = fileName.IndexOf('.');
+            string getSubString = fileName.Substring(indexOfDot);
+            if (allowedExtensions.Contains(getSubString))
+            {
+                return $"{Guid.NewGuid()}{fileName}";
+            }
+            else 
+            {
+                return "";
+            }
         } 
     }
 }

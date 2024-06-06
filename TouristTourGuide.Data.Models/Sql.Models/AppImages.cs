@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Amazon.SecurityToken.Model.Internal.MarshallTransformations;
 
 
 namespace TouristTourGuide.Data.Models.Sql.Models
@@ -15,7 +16,8 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         [ForeignKey(nameof(TouristTour))]
         public Guid? TouristTourId { get; set; }
         public TouristTour? TouristTour { get; set;}
-      
+
+
         [Required]
         [ForeignKey(nameof(ApplicationUserId))]
         public Guid ApplicationUserId { get; set; } 
