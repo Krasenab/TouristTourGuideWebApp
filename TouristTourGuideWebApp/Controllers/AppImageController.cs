@@ -34,12 +34,17 @@ namespace TouristTourGuideWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddImageForDesign(ImagesViewModel model,IFormFile imageFile) 
         {
+            //if (!ModelState.IsValid) 
+            //{
+            //    return RedirectToAction("AddImageForDesign", "AppImage");
+            //}
             string name = model.CustomUniqeFileName;
+            await _imageSerive.AddImageFileToMongoDb(imageFile, name);
 
-            
-            
-            return Ok();
+            return RedirectToAction("AddImageForDesign", "AppImage");
+
         }
+
 
 
     }
