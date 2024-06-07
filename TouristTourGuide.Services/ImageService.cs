@@ -29,7 +29,21 @@ namespace TouristTourGuide.Services
             _appImageFileCollectionMDB = mongoClient.GetDatabase("TouristTourGuideWebAppMDB").GetCollection<AppImageFile>("TouristTourGuideWebAppImages");
 
         }
+        public List<ImagesViewModel> GetIndexPageImageMongoDb()
+        {
 
+            var projection = Builders<AppImageFile>.Projection.Expression(ab => new ImagesViewModel
+            {
+                CustomUniqeFileName = ab.UniqueFileName,
+                FileData = ab.FileData
+            });
+
+            var colletionOfImages = _appImageFileCollectionMDB.Find(FilterDefinition<AppImageFile>.Empty)
+                .Project(projection)
+                .ToList();
+
+            return colletionOfImages;
+        }
 
         public async Task AddImageFileToMongoDb(IFormFile imageFile, string uniqueFileName)
         {
@@ -95,7 +109,6 @@ namespace TouristTourGuide.Services
 
         public byte[] GetImageBytesMongoDb(string uqnicName)
         {
-
             var fileObject = _appImageFileCollectionMDB.Find(x => x.UniqueFileName == uqnicName)
                 .Project(x => new AppImagesViewModel()
                 {
@@ -250,6 +263,8 @@ namespace TouristTourGuide.Services
         }
 
        
+
+
 
         //public  AppImagesViewModel GetOneImageMongoDb(string uniqueName)
         //{

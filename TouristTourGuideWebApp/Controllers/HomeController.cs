@@ -19,8 +19,12 @@ namespace TouristTourGuideWebApp.Controllers
         }
 
         public IActionResult Index()
-        {           
-            return View();
+        {
+            var pageImages = _imageService.GetIndexPageImageMongoDb();
+            PageImageViewModel pageImageViewModel = new PageImageViewModel();
+            pageImageViewModel.PageImages = pageImages.Where(x => x.CustomUniqeFileName == "Ahnali people" ||
+            x.CustomUniqeFileName == "safari" || x.CustomUniqeFileName == "look").ToList();
+            return View(pageImageViewModel);
         }      
         public IActionResult Privacy()
         {

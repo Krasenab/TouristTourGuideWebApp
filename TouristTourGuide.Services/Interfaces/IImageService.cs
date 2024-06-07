@@ -14,6 +14,7 @@ namespace TouristTourGuide.Services.Interfaces
         Task AddImageFileToMongoDb(IFormFile imageFile,string uniqueFileName);             
         bool IsFileExtensionValid(IFormFile imageFile);
         List<AppImagesViewModel> GetImagesFilesMongoDb(string uniqueFileName);
+        List<ImagesViewModel> GetIndexPageImageMongoDb();
         Task<string> TourImageUniqueName(string tourId);
         //add on 4/27/2024
         Task<List<string>> GetAllTourUniqNameImages(string tourId);
