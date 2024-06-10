@@ -4,10 +4,40 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IGuideUserService guideService
+
 @{
     bool isGuide = guideService.isUserGuide(UserManager.GetUserId(this.User));
 
 }
+<head>
+    <style>
+        .nav-item {
+            position: relative; /* Ако вече не е зададено */
+            padding: 5px 2.5px;
+            font-size: 16px;
+            letter-spacing: .05em;
+            font-family: "Montserrat", sans-serif, Arial, sans-serif;
+            color: #ffffff;
+            z-index: 1;
+        }
+
+            .nav-item::before {
+                content: '';
+                position: absolute;
+                top: 0; /* Позициониране в горната част на елемента */
+                left: 0; /* Позициониране в левия край на елемента */
+                width: 0; /* Начална ширина е 0 */
+                height: 3px; /* Височината на бордъра */
+                background: #FFD550; /* Цвета на бордъра */
+                transition: width 0.35s ease; /* Анимация на ширината */
+            }
+
+            .nav-item:hover::before {
+                width: 100%; /* При ховър ширината става 100% */
+            }
+
+    </style>
+ </head>
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
@@ -20,24 +50,24 @@
         else
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" title="Manage">Hello @User.Identity?.Name!</a>
+                <a class="nav-link text-white" title="Manage">Hello @User.Identity?.Name!</a>
             </li>
         }
 
 
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <button type="submit" class="nav-link btn btn-link text-white">Logout</button>
             </form>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
     }
 </ul>
