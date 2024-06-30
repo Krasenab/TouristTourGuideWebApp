@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TouristTourGuide.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class addProperty : Migration
+    public partial class _1milionresetDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -246,7 +246,7 @@ namespace TouristTourGuide.Data.Migrations
                     WhatToBring = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Highlights = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     KnowBeforeYouGo = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 5, 29, 16, 36, 53, 564, DateTimeKind.Utc).AddTicks(1681)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 6, 29, 16, 45, 10, 314, DateTimeKind.Utc).AddTicks(73)),
                     LocationId = table.Column<int>(type: "int", nullable: true),
                     GuideUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -306,7 +306,7 @@ namespace TouristTourGuide.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 5, 29, 16, 36, 53, 562, DateTimeKind.Utc).AddTicks(8625)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 6, 29, 16, 45, 10, 311, DateTimeKind.Utc).AddTicks(6925)),
                     TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -337,7 +337,6 @@ namespace TouristTourGuide.Data.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     isAccepted = table.Column<bool>(type: "bit", nullable: false),
-                    isRefusced = table.Column<bool>(type: "bit", nullable: false),
                     ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     GuideUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)

@@ -21,9 +21,7 @@ namespace TouristTourGuide.Services
         public async Task<AllToursFilteredAndPagedServiceModel> AllAsync(AllToursQueryViewModel viewModel)
         {
             IQueryable<TouristTour> toursQuery =  this._dbContext.TouristsTours.AsQueryable();
-
           
-
             if (!string.IsNullOrWhiteSpace(viewModel.Category))
             {
                 toursQuery =  toursQuery.Where(x => x.Category.Name == viewModel.Category);
@@ -72,12 +70,12 @@ namespace TouristTourGuide.Services
                 TotalTourCount = totalsTour,
                 Tours = allTour
             };
-
         }
 
         public async Task CreateTouristTour(TouristTourCreateViewModel viewModel, string guidUserId)
         {
             string userIdG = guidUserId;
+            string locationId = viewModel.LocationId.ToString();
 
             TouristTour tour = new TouristTour()
             {

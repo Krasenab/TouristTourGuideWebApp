@@ -39,6 +39,7 @@ namespace TouristTourGuideWebApp.Controllers
         }
 
         [HttpPost]
+        
         public async Task<IActionResult> DeletePicture(string uniqueName)
         {
             var metadataImage = await _imageServie.AppImageInfo(uniqueName);
@@ -50,13 +51,23 @@ namespace TouristTourGuideWebApp.Controllers
             return RedirectToAction("Details", new { id = metadataImage.TouristTourId });
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Delete(string tourId)
         {
             //добавил съм го на 4/26/2024
             if (!_tourService.IsTourExist(tourId))
             {
-                return StatusCode(404, "This tour deosnt exist");
+                TempData[ErrorMassage] = "Tour does not exist or has been removed";
+                RedirectToAction("All", "Tour");
             }
+
+            string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+            if (!_guideUserService.isUserGuide(userId) && !this.User.IsAdmin()) 
+            {
+                TempData[WarningMassage] = "You must be owner of the tour or Admin...Hmmm how you get here";
+                RedirectToAction("All", "TouristTour");
+            }
+           
             List<string> listOfImagesName = await _imageServie.GetAllTourUniqNameImages(tourId);
             _imageServie.DeleteManyTourImageFileMongoDb(listOfImagesName);
 
@@ -100,9 +111,10 @@ namespace TouristTourGuideWebApp.Controllers
             string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
 
             bool isUserGuide = _guideUserService.isUserGuide(userId);
-            if (!isUserGuide)
+            
+            if (!isUserGuide && !this.User.IsAdmin())
             {
-                TempData[ErrorMassage] = "You must be suplaier to can create some tour";
+                TempData[ErrorMassage] = "You must be supplier to can create some tour";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -119,6 +131,11 @@ namespace TouristTourGuideWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(TouristTourCreateViewModel model)
         {
+            
+            //if (!ModelState.IsValid) 
+            //{
+            //    return View(model);
+            //}
             string userId = this.User.GetCurrentUserId();
             string guideUserId = _guideUserService.GuidUserId(userId);
             int? locationId = model.LocationId;
@@ -133,7 +150,9 @@ namespace TouristTourGuideWebApp.Controllers
         {
             if (!_tourService.IsTourExist(Id))
             {
-                return StatusCode(404);
+
+                TempData[WarningMassage] = "This tour does not exist or has been removed";
+                return RedirectToAction("Index", "Home");
             }
 
             var editViewModel = await _tourService.GetTourForEdit(Id);

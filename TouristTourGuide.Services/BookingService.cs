@@ -16,22 +16,22 @@ namespace TouristTourGuide.Services
         }
 
         public async Task AcceptBooking(string bookingId)
-        {            
+        {
             var b = await _db.TouristTourBookings.Where(x => x.Id.ToString() == bookingId).FirstOrDefaultAsync();
             //add if(b!=null) on 4/25/2024 
-            if (b!=null)
+            if (b != null)
             {
-                if (b.isAccepted==true)
+                if (b.isAccepted == true)
                 {
                     b.isAccepted = false;
                 }
                 else
                 {
-                    b.isAccepted=true;
+                    b.isAccepted = true;
                 }
             }
             bool check = b.isAccepted;
-            
+
             await _db.SaveChangesAsync();
         }
 
@@ -55,16 +55,17 @@ namespace TouristTourGuide.Services
         }
 
         public async Task CreateBooking(CreateBookingViewModel viewModel)
-        {            
-            
+        {
             TouristTourBooking b = new TouristTourBooking()
             {
                 CountOfPeople = viewModel.CountOfPeople,
                 ApplicationUserId = Guid.Parse(viewModel.ApplicationUserId),
                 TouristTourId = Guid.Parse(viewModel.TouristTourId),
                 Email = viewModel.Email,
-                PhoneNumber= viewModel.PhoneNumber,
-                GuideUserId = viewModel.TourOwnerId
+                PhoneNumber = viewModel.PhoneNumber,
+                GuideUserId = viewModel.TourOwnerId,
+                BookedDate = viewModel.BookedDate
+                
             };
 
             await _db.TouristTourBookings.AddAsync(b);
@@ -80,25 +81,37 @@ namespace TouristTourGuide.Services
                 .Select(x => new AcceptOrRefuseViewModel()
                 {
                     TourName = x.TouristTour.TourName,
-                    
-                    
-                }).Distinct().ToListAsync();
+                }).ToListAsync();
 
             return tB;
         }
 
         public async Task<AllBookingFilteredAndPagedServiceViewModel> GetAll(AllBokingQueryViewModel queryViewModel)
         {
-            IQueryable<TouristTourBooking> query = _db.TouristTourBookings.Where(gU => gU.GuideUserId == queryViewModel.GuideUserId).AsQueryable();
+            IQueryable<TouristTourBooking> query = _db.TouristTourBookings
+                 .Include(b => b.TouristTour)
+                 .ThenInclude(t => t.TouristTourDates)
+                 .ThenInclude(td => td.ClosedDates)
+                .Where(gU => gU.GuideUserId == queryViewModel.GuideUserId)
+                .AsQueryable();
 
             if (!string.IsNullOrEmpty(queryViewModel.SerchByString))
             {
                 //generate wide card 
                 string wildCard = $"%{queryViewModel.SerchByString.ToLower()}%";
 
-                query = query.Where(qb => EF.Functions.Like(qb.BookedDate.ToString(), wildCard)
-                || EF.Functions.Like(qb.CountOfPeople.ToString(), wildCard)
-                );
+                query = query.Where(qb => EF.Functions.Like(qb.TouristTour.TourName, wildCard)||
+                                    EF.Functions.Like(qb.BookedDate.ToString(),wildCard)||
+                                    EF.Functions.Like(qb.CountOfPeople.ToString(),wildCard));
+            }
+            if (!string.IsNullOrEmpty(queryViewModel.SerchByClosedDate)) 
+            {
+                DateTime closedDates;
+                if (DateTime.TryParse(queryViewModel.SerchByClosedDate,out closedDates)) 
+                {
+                    query = query.Where(qb => qb.TouristTour.TouristTourDates.Any(td => td.ClosedDates.ClosedDates == closedDates));
+                }
+
             }
 
             List<AllBookingViewModel> allBokings = await query.Skip((queryViewModel.CurrentPage - 1) * queryViewModel.TourWithBookingPearPage).Take(queryViewModel.TourWithBookingPearPage)
@@ -109,8 +122,8 @@ namespace TouristTourGuide.Services
                     CountOfPeople = x.CountOfPeople,
                     TourId = x.TouristTourId.ToString(),
                     TourName = x.TouristTour.TourName,
-                    TourPicutreUniqueName = x.TouristTour.TourImages.Select(n=>n.UniqueFileName).FirstOrDefault()
-                    
+                    TourPicutreUniqueName = x.TouristTour.TourImages.Select(n => n.UniqueFileName).FirstOrDefault(),
+
                 }).ToListAsync();
             int totalBokings = allBokings.Count;
 
@@ -123,14 +136,13 @@ namespace TouristTourGuide.Services
 
         public async Task RefuseBooking(string bookingId)
         {
-            var b = await _db.TouristTourBookings.Where(x=>x.Id.ToString()==bookingId)
+            var b = await _db.TouristTourBookings.Where(x => x.Id.ToString() == bookingId)
                 .FirstOrDefaultAsync();
-            if (b==null)
+            if (b == null)
             {
                 throw new NullReferenceException("booking null");
             }
             b.isAccepted = false;
-            
         }
     }
 }

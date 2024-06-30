@@ -28,8 +28,6 @@ namespace TouristTourGuide.Data.Models.Sql.Models
 
         [DefaultValue(false)]
         public bool isAccepted { get; set; }
-        [DefaultValue(false)]
-        public bool isRefusced { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         public Guid ApplicationUserId { get; set; }

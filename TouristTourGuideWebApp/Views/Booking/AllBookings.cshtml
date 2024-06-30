@@ -1,15 +1,19 @@
 ﻿@model AllBokingQueryViewModel
 @{
-    ViewBag.Title = "All Tours";
+    ViewBag.Title = "All Bookings";
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 <form method="get">
-    <div class="row">
+    <div class="row" style="justify-content:center;">
 
-        <div class="form-group col-md-3">
-            <label asp-for="SerchByString"></label>
-            <input asp-for="SerchByString" class="form-control" placeholder="...">
+        <div class="form-group col-md-4">
+            <label asp-for="SerchByString">Serch by..</label>
+            <input asp-for="SerchByString" class="form-control" placeholder="Booked date,tour name or count of people">
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="SerchByClosedDate">Search by closed dates</label>
+            <input asp-for="SerchByClosedDate" type="date" class="form-control">
         </div>
 
         <div class="col-md-3">
@@ -59,7 +63,7 @@
 
 <div class="row">
 
-    @foreach (var book in Model.AllToursWithBooking)
+    @foreach (var book in Model.AllToursWithBooking.DistinctBy(x=>x.TourId))
     {
         <partial name="_BookingAllPartial" model="@book" />
     }

@@ -61,11 +61,10 @@ namespace TouristTourGuide.Services
 
                 await _dbContext.TouristTourDates.AddAsync(toD);
                 await _dbContext.SaveChangesAsync();
-            }
-            
-
-           
+            }                       
         }
+
+     
 
         public async Task<bool> IsDateClosed(string tourId,string date)
         {

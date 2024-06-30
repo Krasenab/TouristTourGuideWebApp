@@ -12,8 +12,8 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    [Migration("20240529163654_addProperty")]
-    partial class addProperty
+    [Migration("20240629164511_1milionresetDb")]
+    partial class _1milionresetDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -347,7 +347,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 29, 16, 36, 53, 562, DateTimeKind.Utc).AddTicks(8625));
+                        .HasDefaultValue(new DateTime(2024, 6, 29, 16, 45, 10, 311, DateTimeKind.Utc).AddTicks(6925));
 
                     b.Property<Guid>("TouristTourId")
                         .HasColumnType("uniqueidentifier");
@@ -1688,7 +1688,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 29, 16, 36, 53, 564, DateTimeKind.Utc).AddTicks(1681));
+                        .HasDefaultValue(new DateTime(2024, 6, 29, 16, 45, 10, 314, DateTimeKind.Utc).AddTicks(73));
 
                     b.Property<string>("Duaration")
                         .IsRequired()
@@ -1788,9 +1788,6 @@ namespace TouristTourGuide.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("isAccepted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("isRefusced")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");

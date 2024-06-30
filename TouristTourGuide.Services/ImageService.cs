@@ -109,11 +109,16 @@ namespace TouristTourGuide.Services
 
         public byte[] GetImageBytesMongoDb(string uqnicName)
         {
+           
             var fileObject = _appImageFileCollectionMDB.Find(x => x.UniqueFileName == uqnicName)
                 .Project(x => new AppImagesViewModel()
                 {
                     FileData = x.FileData
                 }).FirstOrDefault();
+            if (fileObject == null) 
+            {
+                return [];
+            }
 
             return fileObject.FileData;
         }

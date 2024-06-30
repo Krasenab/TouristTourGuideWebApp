@@ -10,5 +10,6 @@ namespace TouristTourGuide.Services.Interfaces
     {
         Task CreateTourClosedDate(string tourId,string dates);
         Task<bool> IsDateClosed(string tourId,string date);
+   
     }
 }

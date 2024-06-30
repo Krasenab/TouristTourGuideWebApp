@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TouristTourGuide.ViewModels.AppImageViewModels;
+using TouristTourGuide.ViewModels.DatesViewModels;
 
 namespace TouristTourGuide.ViewModels.TouristTourViewModels
 {
    public class AllViewModel
     {
+       
         public string Id { get; set; }
 
         [Display(Name = "Tour title")]
@@ -19,5 +21,6 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         [Display(Name = "City")]
         public string LocationCity { get; set; }
         public AppImagesViewModel TourImage { get; set; }
+        
     }
 }

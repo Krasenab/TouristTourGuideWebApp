@@ -25,12 +25,7 @@ a {
   border-color: #1861ac;
 }
 .nav-item {
-    position: relative; /* Ако вече не е зададено */
-    padding: 5px 2.5px;
-    font-size: 16px;
-    letter-spacing: .05em;
-    font-family: "Montserrat", sans-serif, Arial, sans-serif;
-    color: #ffffff;
+    position: relative; 
     z-index: 1;
 }
 

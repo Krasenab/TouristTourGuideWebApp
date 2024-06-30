@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using NuGet.Packaging.Signing;
+﻿using Microsoft.AspNetCore.Mvc;
 using TouristTourGuide.Infrastrucutre;
 using TouristTourGuide.Services.Interfaces;
 using TouristTourGuide.ViewModels.BookingViewModels;
-using TouristTourGuide.ViewModels.TouristTourViewModels;
-using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 
 namespace TouristTourGuideWebApp.Controllers
 {
@@ -52,11 +48,12 @@ namespace TouristTourGuideWebApp.Controllers
             string appUserId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
             string getGuideUserId = _guideUserService.GuidUserId(appUserId);
             allBokingQueryModel.GuideUserId = getGuideUserId;
-
+            
             AllBookingFilteredAndPagedServiceViewModel serviceModel = 
                 await _bookingService.GetAll(allBokingQueryModel);
+
             allBokingQueryModel.AllToursWithBooking = serviceModel.AllBokings;
-           
+             
             return View(allBokingQueryModel);
         }
 
@@ -89,6 +86,7 @@ namespace TouristTourGuideWebApp.Controllers
             string currentGuideUser = _guideUserService.GuidUserId(currentUser);
             List<string> toursIds = new List<string>();
             toursIds = await _tourService.GetAllGuideUserToursId(currentGuideUser);
+
             return View();
         }
 

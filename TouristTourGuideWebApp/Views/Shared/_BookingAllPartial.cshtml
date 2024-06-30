@@ -7,6 +7,7 @@
 
 @{
     bool isCurrentUserOwner = false;
+    bool isHavePicture = tourService.isHavePictures(Model.TourId);
     var getImage = imageService.GetImageBytesMongoDb(Model.TourPicutreUniqueName);
 
     bool userIsGuide = ugs.isUserGuide(this.User.GetCurrentUserId());
@@ -14,52 +15,30 @@
     if (userIsGuide)
     {
         string guideId = ugs.GuidUserId(this.User.GetCurrentUserId());
-
-        isCurrentUserOwner = await tourService.IsTourOwner(guideId, Model.Id);
-
-
+        isCurrentUserOwner = await tourService.IsTourOwner(guideId, Model.TourId);
     }
 
 }
-
-
 <div class="col-md-4">
     <div class="card mb-3">
-        @if ((getImage != null))
+        @if ((getImage.Length >0))
         {
-
             <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(getImage))"
                  alt="" class="img-fluid">
-
         }
         <div class="card-body text-center">
-            <h4>@Model.TourName</h4>
-
-            <h6>Tour: <b>@Model.BookingDate</b></h6>
-            <h6>
-               @Model.CountOfPeople
-            </h6>
-
+            <h4>Tour name: @Model.TourName</h4>
+            <h6>Booking date: <b>@Model.BookingDate</b></h6>
+            <h6> Count of people: @Model.CountOfPeople </h6>
             <br />
-            <a asp-controller="TouristTour" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Details</a>
             @*  @if (this.User.Identity.IsAuthenticated) *@
-
             @if (userIsGuide)
             {
-                @if (isCurrentUserOwner || this.User.IsAdmin())
+                @if (this.User.IsAdmin() || isCurrentUserOwner)
                 {
-                    <a asp-controller="TouristTour" asp-action="Edit" asp-route-id="@Model.Id"
-                       class="btn btn-warning">Edit</a>
-
-                    <a asp-controller="TouristTour" asp-action="Delete" asp-routeid="@Model.Id"
-                       class="btn btn-danger">Delete</a>
+                    <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.TourId"
+                    class="btn btn-info">Info Table</a>
                 }
-                @*   @if (!isUserAdmin)
-            {
-            <p>For now the programer is stupied and u cant see delete and edit. We sorry</p>
-            } *@
-
             }
         </div>
     </div>

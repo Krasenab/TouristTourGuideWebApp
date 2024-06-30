@@ -62,95 +62,7 @@
             box-sizing: border-box;
         }
 
-        .ui-datepicker {
-            width: 250px;
-            padding: 10px;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .ui-datepicker-header {
-            background-color: whitesmoke;
-            color: white;
-            border-bottom: 1px solid #ccc;
-            text-align: center;
-        }
-
-        .ui-datepicker-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .ui-datepicker-prev,
-        .ui-datepicker-next {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            cursor: pointer;
-            background-color: white;
-            color: white;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-            .ui-datepicker-prev:hover,
-            .ui-datepicker-next:hover {
-                background-color: #ccc;
-                border-color: #ccc;
-            }
-
-        .ui-datepicker-calendar {
-            margin-top: 10px;
-        }
-
-        .ui-state-default {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            background-color: white;
-        }
-
-        .ui-state-active {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .ui-datepicker-week-end {
-            color: black;
-            background-color: white;
-        }
-
-        .ui-datepicker-calendar .ui-state-disabled,
-        .ui-datepicker-calendar .ui-state-disabled.ui-state-default {
-            opacity: 0.5;
-            cursor: default;
-        }
-
-        .ui-datepicker-calendar .unavailable-date span {
-            position: relative;
-        }
-
-            .ui-datepicker-calendar .unavailable-date span::before {
-                content: "";
-                position: absolute;
-                top: 12px;
-                left: 13px;
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                background-color: red;
-            }
+       
     </style>
 
 </head>
@@ -238,6 +150,39 @@ else
     <div class="alert alert-warning">No images available for this tour.</div>
 }
 
+<section class="date-card" style="padding-top:1em; padding-bottom:1em; justify-content:end;">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Availability Tour Dates</h5>
+                    <p class="card-text">You can see closed and free dates for this tourist tour</p>
+                    <input type="hidden" id="modelId" value="@Model.Id">
+                    <input type="date" id="checkDate">
+                    <button id="availability-btn" class="btn btn-primary">Check Availability</button>
+                    <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
+                    <div id="messageBox" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalMessageBody">
+                    <!-- Message will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <section class="information-section-top" style="margin:0em; padding:0em; background-color:#BEE4DE;  border-radius:25px">
     <div class="row mb-5 text-center" style="padding-top:1em;">
@@ -273,39 +218,6 @@ else
         <p>@Model.Includes</p>
     </div>
 
-</section>
-
-<section class="date-card" style="padding-top:1em; padding-bottom:1em; justify-content:center">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Availability Tour Dates</h5>
-                    <p class="card-text">You can see closed and free dates for this tourist tour</p>
-                    <input type="hidden" id="modelId" value="@Model.Id">
-                    <input type="date" id="checkDate">
-                    <button id="availability-btn" class="btn btn-primary">Check Availability</button>
-                    <div id="messageBox" class="mt-3"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="messageModalLabel">Message</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modalMessageBody">
-                    <!-- Message will be inserted here -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </section>
 
 <section class="information-section" style="margin:0em; padding:0em; background-color:#BEE4DE;  border-radius:25px">
@@ -360,14 +272,8 @@ else
             </div>
         </div>
 
-    }
-
-
-    <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
-
+    } 
 </section>
-
-
 
 <section class="votes-section">
     <div class="custom-row" style="text-align:center; padding-top:2em;">
@@ -376,10 +282,8 @@ else
             <p id="voteBasedOn">Rating is based on @Model.VoteCount users votes</p>
         </div>
     </div>
-    <div class="row mb-5" style="padding-top:2em;">
-
-        <ul class="ratings" style="text-align:center">
-
+    <div class="row mb-5">
+        <ul class="ratings">
             <li class="star" onclick="sendVote('@Model.Id',1)"></li>
             <li class="star" onclick="sendVote('@Model.Id',2)"></li>
             <li class="star" onclick="sendVote('@Model.Id',3)"></li>
@@ -457,37 +361,8 @@ else
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-@*скрипт за затваряне на датите*@
-@* 
-<script>
-    $(document).ready(function () {
-        $("#availability-btn").click(function () {
-            var passedDate = $("#checkDate").val();
-            var modelId = $("#modelId").val();
-          
 
-            $.ajax({
-                type: "POST",
-                url: "/api/Dates/checkdate",
-                contentType: "application/json",
-                data: JSON.stringify({ tourId: modelId, closedDate: passedDate }),
-                dataType: "json",
-                success: function (response) {
-                  //  $("#messageBox").html('<div class="alert alert-success">' + response.message + '</div>'); Показване на съобщението при успех
-                    $("#modalMessageBody").text(response.message); // Вмъкване на съобщението при успех
-                    $('#messageModal').modal('show'); // Показване на модалния прозорец
-                    setTimeout(function () {
-                        $('#messageModal').modal('hide'); // Затваряне на модалния прозорец след 10 секунди
-                    }, 10000);
-                },
-                error: function (xhr) {
-                    var response = JSON.parse(xhr.responseText);
-                    $("#messageBox").html('<div class="alert alert-danger">' + response.message + '</div>'); // Показване на съобщението при грешка
-                }
-            });
-        });
-    });
-</script> *@
+
 <script>
     $(document).ready(function () {
         $("#availability-btn").click(function () {
@@ -542,7 +417,6 @@ else
     });
 
 </script>
-
 
 @*скрипт за коментарите*@
 <script>
@@ -606,33 +480,7 @@ else
     });
 </script>
 
-@*скриптиове за рейтинга*@
-@* <script>
-
-    function sendVote(tourId, starValue) {
-        var json = { tourId: tourId, starValue: starValue };
-
-
-        $.ajax({
-            url: "/api/vote",
-            type: "POST",
-            data: JSON.stringify(json),
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                console.log(response);
-                var newRatingValue = response.ratingResultAfretVote;
-                var newVoteCount = response.VotesCount;
-                $('#ratingDisplay').text(newRatingValue.toFixed(2));
-                $('#voteBasedOn').text('Rating is based on ' + newVoteCount + ' users votes');
-            }
-
-        });
-
-    }
-
-</script> *@
-
+@*скрипт за рейтинга*@
 
 <script>
     function sendVote(tourId, starValue) {

@@ -2,25 +2,28 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 100%;
-    text-align: left; /* Алайнмент на звездите отляво надясно */
+    display: flex; /* Подравняване в редица */
+    justify-content: center; /* Центриране на звездите */
 }
 
 .star {
     position: relative;
     line-height: 50px;
-    display: inline-block;
     transition: color 0.2s ease;
     color: #ebebeb; /* Цветът на неактивните звезди */
     cursor: pointer;
+    font-size: 50px; /* Размер на звездите */
+    width: 50px; /* Фиксирана ширина за звездите */
+    height: 50px; /* Фиксирана височина за звездите */
 }
 
     .star:before {
         content: '\2605'; /* Unicode символ за звезда */
-        width: 50px;
-        height: 50px;
-        font-size: 50px;
         display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 50px; /* Вертикално подравняване */
     }
 
     /* Цветът на звездите при ховър и за запълнените звезди */
@@ -29,6 +32,7 @@
     .star.hover:before {
         color: gold;
     }
+
     .star.full:before {
         color: gold; /* Цветът на запълнените звезди */
     }
@@ -38,4 +42,6 @@
         position: absolute;
         width: 25px; /* Половината от звездата */
         overflow: hidden;
+        text-align: center;
+        line-height: 50px; /* Вертикално подравняване */
     }

@@ -8,6 +8,6 @@
         }
         public int TotalBookingsCount { get; set; }
         public List<AllBookingViewModel> AllBokings { get; set; }
-
+               
     }
 }

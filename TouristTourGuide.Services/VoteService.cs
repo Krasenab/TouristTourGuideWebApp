@@ -93,7 +93,6 @@ namespace TouristTourGuide.Services
 
             return currentValue;
         }
-
        
     }
 }

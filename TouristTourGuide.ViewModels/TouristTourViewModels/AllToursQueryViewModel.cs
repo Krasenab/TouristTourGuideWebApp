@@ -22,6 +22,6 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         public int TourPerPage { get; set; } = 3;
         public int TourTotal { get; set; }
         public List<string> Categories { get; set; }
-        public List<AllViewModel> Tours { get; set; }
+        public List<AllViewModel> Tours { get; set; }       
     }
 }
