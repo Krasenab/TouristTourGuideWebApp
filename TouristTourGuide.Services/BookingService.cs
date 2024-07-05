@@ -140,7 +140,7 @@ namespace TouristTourGuide.Services
                 .FirstOrDefaultAsync();
             if (b == null)
             {
-                throw new NullReferenceException("booking null");
+                throw new NullReferenceException("Empty bookings");
             }
             b.isAccepted = false;
         }
