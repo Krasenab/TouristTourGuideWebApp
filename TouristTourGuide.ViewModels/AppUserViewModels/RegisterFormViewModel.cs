@@ -26,7 +26,13 @@ namespace TouristTourGuide.ViewModels.AppUserViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        [StringLength(20,MinimumLength =2)]
+        public string FirstName { get; set; }
 
+        [Required]
+        [StringLength(20,MinimumLength =1)]
+        public string LastName { get; set; }
 
     }
 }

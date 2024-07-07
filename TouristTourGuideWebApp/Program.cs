@@ -38,9 +38,11 @@ namespace TouristTourGuideWebApp
             builder.Services.AddApplicationServices(typeof(IGuideUserService));
             builder.Services.AddApplicationServices(typeof(IImageService));
             builder.Services.AddApplicationServices(typeof(ICommentsService));
-           
-          
 
+            builder.Services.ConfigureApplicationCookie(cfg => 
+            {
+                cfg.LoginPath = "/AppUser/LogIn";
+            });
 
             // MongoDB  
             var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDbConnection");

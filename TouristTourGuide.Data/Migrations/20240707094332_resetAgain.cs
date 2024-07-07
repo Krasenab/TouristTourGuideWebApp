@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TouristTourGuide.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class _1milionresetDb : Migration
+    public partial class resetAgain : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -246,7 +246,7 @@ namespace TouristTourGuide.Data.Migrations
                     WhatToBring = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Highlights = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     KnowBeforeYouGo = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 6, 29, 16, 45, 10, 314, DateTimeKind.Utc).AddTicks(73)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 7, 7, 9, 43, 32, 47, DateTimeKind.Utc).AddTicks(371)),
                     LocationId = table.Column<int>(type: "int", nullable: true),
                     GuideUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -306,7 +306,7 @@ namespace TouristTourGuide.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 6, 29, 16, 45, 10, 311, DateTimeKind.Utc).AddTicks(6925)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 7, 7, 9, 43, 32, 45, DateTimeKind.Utc).AddTicks(1443)),
                     TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
