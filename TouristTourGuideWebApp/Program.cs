@@ -71,10 +71,22 @@ namespace TouristTourGuideWebApp
 
             app.UseRouting();
             app.UseAuthorization();
-           // app.SeedAdmin("admin@admin.com");
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+          /// app.SeedAdmin("admin@admin.com");
+
+    
+            app.UseEndpoints(conf =>
+            {
+                conf.MapControllerRoute(
+                   name: "areas",
+                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                  );
+
+                conf.MapControllerRoute(
+                     name: "default",
+                     pattern: "{controller=Home}/{action=Index}/{id?}");
+              
+            });
+           
             app.MapRazorPages();
 
             app.Run();

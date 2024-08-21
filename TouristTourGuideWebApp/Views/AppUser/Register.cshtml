@@ -6,42 +6,68 @@
 
 <h1 class="text-center">@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4 offset-md-4">
-        <form id="registerForm"  method="post">
-            <h2>Create a new account.</h2>
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <form id="registerForm" method="post">    
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-2">
-                <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Email">Email</label>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-2">
-                <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Password">Password</label>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-2">
-                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-2">
-                <input asp-for="FirstName" class="form-control" aria-required="false" />
-                <label asp-for="FirstName">First Name</label>
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-2">
-                <input asp-for="LastName" class="form-control" aria-required="false" />
-                <label asp-for="LastName">Last Name</label>
-                <span asp-validation-for="LastName" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-2">
+                        <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                        <label asp-for="Email">Email</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                        <label asp-for="Password">Password</label>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                        <label asp-for="ConfirmPassword">Confirm Password</label>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input asp-for="FirstName" class="form-control" autocomplete="FirstName" aria-required="false" placeholder="First name" />
+                        <label asp-for="FirstName">First Name</label>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input asp-for="LastName" class="form-control" autocomplete="Last name" aria-required="false" placeholder="Last name" />
+                        <label asp-for="LastName">Last Name</label>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <textarea asp-for="AbaoutMe" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="About me"></textarea>
+                        <label asp-for="AbaoutMe">About me</label>
+                    </div>
+                </div>
+
+                <!-- Втора половина -->
+                <div class="col-md-6">
+                    <div class="form-floating mb-2">
+                        <input asp-for="FaceBookUrl" class="form-control" autocomplete="Facebook contact" aria-required="false" placeholder="Facebook contact" />
+                        <label asp-for="FaceBookUrl">Facebook contact</label>
+                        <span asp-validation-for="FaceBookUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input asp-for="TwitterUrl" class="form-control" autocomplate="Twitter contact" aria-required="false" placeholder="Twitter contact" />
+                        <label asp-for="TwitterUrl">Twitter contact</label>
+                        <span asp-validation-for="TwitterUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input asp-for="InstagramUrl" class="form-control" autocomplete="Instagram contact" aria-required="false" placeholder="Instagram contact" />
+                        <label asp-for="InstagramUrl">Instagram contact</label>
+                        <span asp-validation-for="InstagramUrl" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
 
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button id="registerSubmit" type="submit" class="w-30 btn btn-lg" style="background-color:#FFD558!important">Register</button>
         </form>
     </div>
-   
 </div>
 
 @section Scripts {

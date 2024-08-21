@@ -1,0 +1,103 @@
+﻿<head>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .admin-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            background-color: #1abc9c;
+        }
+
+        .sidebar-nav {
+            flex-grow: 1;
+        }
+
+        .sidebar-nav ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .sidebar-nav ul li {
+          padding: 15px 20px;
+        }
+
+         .sidebar-nav ul li a {
+             color: white;
+             text-decoration: none;
+             display: block;
+          }
+
+          .sidebar-nav ul li a:hover {
+             background-color: #1abc9c;
+             transition: 0.3s;
+          }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: white;
+            overflow-y: auto;
+        }
+
+        .main-header {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .content-section {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+
+<div class="admin-container">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin Panel</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Users</a></li>
+                <li><a href="/Admin/TouristTour/Mine">Mine</a></li>             
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <main class="main-content">
+        <header class="main-header">
+            <h1>Welcome, Admin</h1>
+        </header>
+        <section class="content-section">
+            <h2>Dashboard</h2>
+            <p>Here is the overview of your application's metrics and status.</p>
+            <!-- Additional content here -->
+        </section>
+    </main>
+</div>
+

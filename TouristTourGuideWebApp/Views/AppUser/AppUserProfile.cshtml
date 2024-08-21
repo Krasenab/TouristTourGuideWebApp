@@ -1,4 +1,6 @@
-﻿<head>
+﻿@using TouristTourGuide.ViewModels.AppUserViewModels
+@model ProfileViewModel
+<head>
     <style>
         .gradient-custom {
             /* fallback for old browsers */
@@ -11,56 +13,94 @@
     </style>
 </head>
 
-<section class="vh-100" style="background-color: #f4f5f7;">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-lg-6 mb-4 mb-lg-0">
-        <div class="card mb-3" style="border-radius: .5rem;">
-          <div class="row g-0">
-            <div class="col-md-4 gradient-custom text-center text-white"
-              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-              <h5>Marie Horwitz</h5>
-              <p>Web Designer</p>
-              <i class="far fa-edit mb-5"></i>
+<section class="" style="background-color: #f4f5f7;">
+
+
+    <div class="row d-flex justify-content-center align-items-center ">
+        <div class="col">
+            <div class="card" style="border-radius: .5rem;">
+                <div class="row g-0">
+                    <div class="col-md-4 gradient-custom text-center text-white"
+                         style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                         @if (Model.ImageByte != null)
+                        {
+                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.ImageByte))"
+                            alt="" class="img-fluid my-5" style="width: 80px;" />
+                        }else
+                        {
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                 alt="" class="img-fluid my-5" style="width: 80px;" />
+                        }
+
+                        <h5>@Model.Name</h5>
+                        <p>Tourist</p>
+                        <i class="far fa-edit mb-5"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-4">
+                            <h6>Information</h6>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1">
+                                <div class="col-6 mb-3">
+                                    <h6>Email</h6>
+                                    <p class="text-muted">@Model.Email</p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <h6>Phone</h6>
+                                    <p class="text-muted">@Model.Name</p>
+                                </div>
+                            </div>
+                            <h6>Projects</h6>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1">
+                                <div class="col-6 mb-3">
+                                    <h6>Recent</h6>
+                                    <p class="text-muted">Lorem ipsum</p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <h6>Most Viewed</h6>
+                                    <p class="text-muted">Dolor sit amet</p>
+                                </div>
+                            </div>
+                            <div class="row mb-3 mb-sm-0">
+                                <button id="showUplFormBtn" class="btn btn-primary btn-sm bg-opacity-25 border-1" style="border-radius:0.5em">Add pictures to your tour</button>
+                                <div id="hideElement" style="display:none; padding-bottom:1em;">
+                                    <div class="col-lg-12 small" style="padding-top:1em; padding-bottom:1em">
+                                        <h4>Add profile image</h4>
+                                        <form method="post" enctype="multipart/form-data" asp-action="AddAppUserProfilePicture" asp-controller="AppImage">
+                                            <input type="hidden" name="appUserId" value="@Model.AppUserId" />
+                                            <div class="custom-form-group" style="padding-top:1em; padding-bottom:1em;">
+                                                <input type="file" name="appUserPicture" required class="form-control" />
+                                                <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start">
+                                <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-8">
-              <div class="card-body p-4">
-                <h6>Information</h6>
-                <hr class="mt-0 mb-4">
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h6>Email</h6>
-                    <p class="text-muted">info@example.com</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h6>Phone</h6>
-                    <p class="text-muted">123 456 789</p>
-                  </div>
-                </div>
-                <h6>Projects</h6>
-                <hr class="mt-0 mb-4">
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h6>Recent</h6>
-                    <p class="text-muted">Lorem ipsum</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h6>Most Viewed</h6>
-                    <p class="text-muted">Dolor sit amet</p>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-start">
-                  <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                  <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                  <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+
 </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
+<script>
+    $('#showUplFormBtn').click(function () {
+        var form = $('#hideElement');
+        if (form.css('display') === 'none') {
+            form.show();
+        }
+        else {
+            form.hide();
+        }
+
+    });
+</script>

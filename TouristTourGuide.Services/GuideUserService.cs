@@ -43,7 +43,11 @@ namespace TouristTourGuide.Services
         public string GuidUserId(string applicationUserId)
         {
             var getGuide = _dbContext.GuideUsers.Where(x => x.ApplicationUserId.ToString() == applicationUserId).FirstOrDefault();
+            if (getGuide == null)
+            {
+                return String.Empty;
 
+            }
             var guideId = getGuide.Id;
             return guideId.ToString();
         }

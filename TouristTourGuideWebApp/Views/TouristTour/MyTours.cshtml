@@ -1,0 +1,21 @@
+﻿@model AllMyToursVIewModel
+
+@{
+    ViewBag.Title = "My Tours";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr/>
+
+@if (!Model.MyTours.Any())
+{
+    <h2 class="text-center">You probably have no added tours yet! Man just go аdd some tours ;)</h2>
+}
+
+<div class="row">
+    @foreach (var tour in Model.MyTours)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_TourAllPartial.cshtml", tour);
+    }
+</div>
+

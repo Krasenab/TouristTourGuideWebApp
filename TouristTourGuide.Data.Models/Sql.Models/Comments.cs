@@ -21,5 +21,6 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         [ForeignKey(nameof(ApplicationUserId))]
         public Guid ApplicationUserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
+       
     }
 }

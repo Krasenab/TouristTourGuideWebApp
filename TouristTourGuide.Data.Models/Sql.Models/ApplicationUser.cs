@@ -17,7 +17,10 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         
         [MaxLength(LastNameMaxLength)]
         public string? LastName { get; set; }
-
+        public string? FaceBookUrl { get; set; }
+        public string? InstagramUrl { get; set; }
+        public string? TwitterUrl { get; set; }
+        public string? AbaoutMe { get; set; }
         public List<TouristTourBooking> UserToursBookings { get; set; }
         public List<AppImages> AppImages {  get; set; } 
     }

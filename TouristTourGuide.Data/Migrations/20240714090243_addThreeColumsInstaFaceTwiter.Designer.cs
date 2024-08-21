@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TouristTourGuide.Data;
 
@@ -11,9 +12,11 @@ using TouristTourGuide.Data;
 namespace TouristTourGuide.Data.Migrations
 {
     [DbContext(typeof(TouristTourGuideDbContext))]
-    partial class TouristTourGuideDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240714090243_addThreeColumsInstaFaceTwiter")]
+    partial class addThreeColumsInstaFaceTwiter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,9 +193,6 @@ namespace TouristTourGuide.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AbaoutMe")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
@@ -247,7 +247,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TwitterUrl")
+                    b.Property<string>("TwiterUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -356,7 +356,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 7, 14, 10, 40, 37, 283, DateTimeKind.Utc).AddTicks(6678));
+                        .HasDefaultValue(new DateTime(2024, 7, 14, 9, 2, 42, 544, DateTimeKind.Utc).AddTicks(7103));
 
                     b.Property<Guid>("TouristTourId")
                         .HasColumnType("uniqueidentifier");
@@ -1697,7 +1697,7 @@ namespace TouristTourGuide.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 7, 14, 10, 40, 37, 285, DateTimeKind.Utc).AddTicks(9256));
+                        .HasDefaultValue(new DateTime(2024, 7, 14, 9, 2, 42, 547, DateTimeKind.Utc).AddTicks(1058));
 
                     b.Property<string>("Duaration")
                         .IsRequired()

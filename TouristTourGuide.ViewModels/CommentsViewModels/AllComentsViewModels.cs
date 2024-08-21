@@ -12,6 +12,8 @@ namespace TouristTourGuide.ViewModels.CommentsViewModels
         public int Id { get; set; }
         public string TourId { get; set; }
         public string Content { get; set; }
-        public string AppUserName { get; set; }
+        public string AppUserName { get; set; }    
+        public string AppUserId { get; set; }
+        public byte[]? AppUserProfilePicture { get; set; }
     }
 }

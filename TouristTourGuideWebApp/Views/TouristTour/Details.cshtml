@@ -62,7 +62,6 @@
             box-sizing: border-box;
         }
 
-       
     </style>
 
 </head>
@@ -150,7 +149,7 @@ else
     <div class="alert alert-warning">No images available for this tour.</div>
 }
 
-<section class="date-card" style="padding-top:1em; padding-bottom:1em; justify-content:end;">
+@* <section class="date-card" style="padding-top:1em; padding-bottom:1em; justify-content:end;">
     <div class="row">
         <div class="col-sm-6">
             <div class="card">
@@ -182,68 +181,173 @@ else
             </div>
         </div>
     </div>
+</section> *@
+
+
+<section class="information-section-top p-4 bg-white rounded shadow-sm mb-4">
+    <div class="text-center mb-4">
+        <h5 class="text-primary">General information</h5>
+    </div>
+    <div class="row text-center mb-3">
+        <div class="col-md-4">
+            <div class="card border-0">
+                <div class="card-body">
+                    <span class="material-symbols-outlined text-dark">payments</span>
+                    <p class="mt-2">@Model.PricePerPerson</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0">
+                <div class="card-body">
+                    <span class="material-symbols-outlined text-dark">av_timer</span>
+                    <p class="mt-2">@Model.Duaration</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0">
+                <div class="card-body">
+                    <span class="material-symbols-outlined text-dark">public</span>
+                    <p class="mt-2">@Model.LocationCountry</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="date-card" style="padding-top:1em; padding-bottom:1em; justify-content:end;">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Availability Tour Dates</h5>
+                        <p class="card-text">You can see closed and free dates for this tourist tour</p>
+                        <input type="hidden" id="modelId" value="@Model.Id">
+                        <input type="date" id="checkDate">
+                        <button id="availability-btn" class="btn btn-primary">Check Availability</button>
+                        <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
+                        <div id="messageBox" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalMessageBody">
+                        <!-- Message will be inserted here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </section>
 
-<section class="information-section-top" style="margin:0em; padding:0em; background-color:#BEE4DE;  border-radius:25px">
-    <div class="row mb-5 text-center" style="padding-top:1em;">
-        <h5>About this activity</h5>
-    </div>
-    <div class="row mb-3 text-center">
 
-        <div class="col-4 themed-grid-col text-lg"><span class="material-symbols-outlined" style="color:black">payments</span>@Model.PricePerPerson</div>
-        <div class="col-4 themed-grid-col"><span class="material-symbols-outlined" style="color:black">av_timer</span>@Model.Duaration</div>
-        <div class="col-4 themed-grid-col"><span class="material-symbols-outlined" style="color:black">public</span>@Model.LocationCountry</div>
-
-    </div>
-    <div class="row mb-5 text-center">
-        <h5>Experience</h5>
-    </div>
-    <div class="row mb-3 text-start" style="padding-left:2em;">
-        <div class="col-md-8 themed-grid-col"><span class="material-symbols-outlined" style="color:black">info</span>@Model.KnowBeforeYouGo</div>
-    </div>
-    <div class="row mb-3 text-start" style="padding-left:2em;">
-        <h5>Meeting point </h5>
-    </div>
-    <div class="row mb-3 text-start" style="padding-left:2em">
-
-        <div class="col-md-8 themed-grid-col">@Model.MeetingPoint</div>
-    </div>
-    <div class="row mb-3" style="padding-left:2em;">
-        <div class="col-md-8 themed-grid-col"><a href="@Model.MeetingPointMapUrl">Look on google map</a></div>
-    </div>
-    <div class="row mb-5 text-center">
-        <h5>Includes</h5>
-    </div>
-    <div class="row mb-5 text-start" style="padding-left:2em;">
-        <p>@Model.Includes</p>
+<section class="information-section p-4 bg-white rounded shadow-sm mb-4">
+    <div class="mb-4">
+        <h5 class="text-primary">Experience</h5>
+        <div class="row">
+            <div class="col-md-2">
+                <p><strong>Highlights</strong></p>
+            </div>
+            <div class="col-md-10">
+                <ul class="list-unstyled">
+                    @foreach (var highlight in (Model.Highlights ?? string.Empty).Split(new[] { '\n', ',', ';' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <li>• @highlight</li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
 
+    <div class="mb-4">
+        <div class="row">
+            <div class="col-md-2">
+                <p><strong>Full description</strong></p>
+            </div>
+            <div class="col-md-10">
+                <p>@Model.FullDescription</p>
+                <a href="#" class="text-info">See more</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <div class="row">
+            <div class="col-md-2">
+                <p><strong>Includes</strong></p>
+            </div>
+            <div class="col-md-10">
+                <ul class="list-unstyled">
+                    @foreach (var include in (Model.Includes ?? string.Empty).Split(new[] { '\n', ',', ';' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <li class="text-success">✓ @include</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <div class="row">
+            <div class="col-md-2">
+                <p><strong>Meeting point</strong></p>
+            </div>
+            <div class="col-md-10">
+                <p>@Model.MeetingPoint</p>
+                <a href="@Model.MeetingPointMapUrl" class="text-info">Open in Google Maps →</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <div class="row">
+            <div class="col-md-2">
+                <p><strong>Important information</strong></p>
+            </div>
+            <div class="col-md-10">
+                <p><strong>Know before you go</strong></p>
+                <ul class="list-unstyled">
+                    @foreach (var info in (Model.KnowBeforeYouGo ?? string.Empty).Split(new[] { '\n', ',', ';' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <li>• @info</li>
+                    }
+                </ul>
+                @if (Model.WhatToBring != null)
+                {
+
+                    <p><strong>What to bring</strong></p>
+                    <p>@Model.WhatToBring</p>
+
+                }
+                @if (Model.NotSuitableFor != null)
+                {
+
+                    <p><strong>This tour is not suitable for</strong></p>
+                    <p>@Model.NotSuitableFor</p>
+                }
+            </div>
+
+        </div>
+    </div>
 </section>
 
-<section class="information-section" style="margin:0em; padding:0em; background-color:#BEE4DE;  border-radius:25px">
-    <div class="row mb-5 text-center">
-        <h5>Important information</h5>
-    </div>
-    <div class="row mb-5 text-start" style="padding-left:2em;">
-        <p>@Model.KnowBeforeYouGo</p>
-    </div>
-    <div class="row mb-5 text-start" style="padding-left:1em;">
-        <p>@Model.WhatToBring</p>
-    </div>
-    <div class="row mb-5" style="padding-left:2em;">
-        <h5>Full description</h5>
-    </div>
 
-    <div class="row mb-5 text-start" style="padding-left:2em;">
-        <p>@Model.FullDescription</p>
-    </div>
-</section>
 
-<section class="control-section" >
+<section class="control-section">
 
 
     @if (isOwner || this.User.IsAdmin())
-    {  
+    {
         <div class="row">
             <div class="col">
                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
@@ -272,13 +376,13 @@ else
             </div>
         </div>
 
-    } 
+    }
 </section>
 
 <section class="votes-section">
     <div class="custom-row" style="text-align:center; padding-top:2em;">
         <div class="col">
-            <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2")</p>
+            <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2") / 5.00</p>
             <p id="voteBasedOn">Rating is based on @Model.VoteCount users votes</p>
         </div>
     </div>
@@ -303,9 +407,19 @@ else
                     {
                         <div class="card-body" style="display: @(i < 3 ? "block" : "none"); padding-top:1em; padding-bottom:1em; border:2px solid black;">
                             <div class="d-flex flex-start align-items-center">
-                                <img class="rounded-circle shadow-1-strong me-3"
-                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
-                                     height="60" />
+                                @if (Model.Comments[i].AppUserProfilePicture != null)
+                                {
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                         src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.Comments[i].AppUserProfilePicture) )" 
+                                    height="60" />
+                                }
+                                else
+                                {
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                         src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
+                                         height="60" />
+                                }
+                               
                                 <div>
                                     <h6 class="fw-bold text-primary mb-1">
                                         @Model.Comments[i].AppUserName
@@ -483,6 +597,31 @@ else
 @*скрипт за рейтинга*@
 
 <script>
+    // Глобална променлива за текущия рейтинг
+    var currentRating;
+
+    // Глобална функция за актуализиране на звездите
+    function updateStars(rating) {
+        console.log('Updating stars with rating:', rating);
+        var stars = $('.ratings .star');
+        var fullStars = Math.floor(rating); // Закръгляме надолу, за да получим броя на пълните звезди
+        var halfStar = (rating - fullStars >= 0.5); // Проверка за половин звезда
+
+        // Премахваме всички предишни класове
+        stars.removeClass('full half');
+
+        // Запълваме пълните звезди
+        for (var i = 0; i < fullStars; i++) {
+            $(stars[i]).addClass('full');
+        }
+
+        // Запълваме половинчата звезда, ако има такава
+        if (halfStar && fullStars < stars.length) {
+            $(stars[fullStars]).addClass('half');
+        }
+    }
+
+    // Функция за изпращане на вота чрез AJAX
     function sendVote(tourId, starValue) {
         var json = { tourId: tourId, starValue: starValue };
 
@@ -496,52 +635,50 @@ else
                 console.log(response);
                 var newRatingValue = response.ratingResultAfretVote;
                 var newVoteCount = response.VotesCount;
-                $('#ratingDisplay').text(newRatingValue.toFixed(2));
+                $('#ratingDisplay').text(newRatingValue.toFixed(2) + ' / ' + '5.00');
                 $('#voteBasedOn').text('Rating is based on ' + newVoteCount + ' users votes');
 
-                // Обновяване на визуализацията на звездите
-                var stars = $('.ratings .star');
-                stars.removeClass('full half');
-                var fullStars = Math.floor(newRatingValue);
-                var halfStar = (newRatingValue - fullStars >= 0.5) ? true : false;
+                // Обновяване на глобалната променлива currentRating с новия рейтинг
+                currentRating = newRatingValue;
 
-                for (var i = 0; i < fullStars; i++) {
-                    $(stars[i]).addClass('full');
-                }
-
-                if (halfStar) {
-                    $(stars[fullStars]).addClass('half');
-                }
+                // Обновяване на звездите с новия рейтинг
+                updateStars(newRatingValue);
             }
         });
     }
 
     $(document).ready(function () {
-        // Вземаме текущата оценка
-        var rating = parseFloat($('#ratingDisplay').text());
-
-        // Броя на звездите
         var stars = $('.ratings .star');
+        currentRating = parseFloat($('#ratingDisplay').text()); // Инициално задаване на текущия рейтинг
 
-        // Закръгляме до най-близката половинка
-        var fullStars = Math.floor(rating);
-        var halfStar = (rating - fullStars >= 0.5) ? true : false;
+        // Функция за добавяне на ховър ефект
+        stars.on('mouseenter', function () {
+            var index = $(this).index(); // Вземаме индекса на текущата звезда
 
-        // Оцветяване на пълните звезди
-        for (var i = 0; i < fullStars; i++) {
-            $(stars[i]).addClass('full');
-        }
-
-        // Оцветяване на половинчата звезда, ако има
-        if (halfStar) {
-            $(stars[fullStars]).addClass('half');
-        }
-
-        // При клик на звезда, изпращаме нов глас
-        $('.star').click(function () {
-            var index = $(this).index() + 1;
-            sendVote('@Model.Id', index);
+            // Запълваме всички звезди до тази, над която е курсорът
+            stars.each(function (i) {
+                if (i <= index) {
+                    $(this).addClass('hover').removeClass('full half');
+                } else {
+                    $(this).removeClass('hover full half'); // Премахваме запълването на звездите след тази, върху която е курсорът
+                }
+            });
         });
+
+        // Функция за премахване на ховър ефект и възстановяване на текущата оценка
+        stars.on('mouseleave', function () {
+            stars.removeClass('hover');
+            updateStars(currentRating); // Възстановяваме звездите според актуализирания текущ рейтинг
+        });
+
+        // Функция за обработка на клик върху звезда и изпращане на вота
+        stars.on('click', function () {
+            var index = $(this).index() + 1; // Индексът на избраната звезда + 1
+            sendVote('@Model.Id', index); // Изпращаме гласа
+        });
+
+        // Инициално задаване на звездите според текущата оценка
+        updateStars(currentRating);
     });
 </script>
 

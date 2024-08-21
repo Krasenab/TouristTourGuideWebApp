@@ -50,6 +50,7 @@ namespace TouristTourGuide.Services
                
             }
             await _dbContext.SaveChangesAsync();
+           
         }
 
         public async Task<double> CalculateRatingAsync(string tourId)
@@ -71,8 +72,9 @@ namespace TouristTourGuide.Services
 
         public async Task<int> CountVoteByTourIdAsync(string tourId)
         {
+            // само тази промяна направих от предложените и проработи , а именно добавянето на Distinct
             int voteCount = await _dbContext.Votes.Where(x=>x.TouristTourId.ToString()==tourId)
-                .Select(x=>x.VoteValue).CountAsync();
+                .Select(x=>x.VoteValue).Distinct().CountAsync();
 
             return voteCount;
         }

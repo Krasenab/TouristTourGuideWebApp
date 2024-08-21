@@ -20,10 +20,13 @@ namespace TouristTourGuideWebApp.Controllers
 
         public IActionResult Index()
         {
+            if (this.User.IsInRole("Administrator"))
+            {
+               return  RedirectToAction("Index", "Home", new { Area = "Admin" });
+            }
             var pageImages = _imageService.GetIndexPageImageMongoDb();
             PageImageViewModel pageImageViewModel = new PageImageViewModel();
-            pageImageViewModel.PageImages = pageImages.Where(x => x.CustomUniqeFileName == "Ahnali people" ||
-            x.CustomUniqeFileName == "safari" || x.CustomUniqeFileName == "look").ToList();
+            pageImageViewModel.PageImages = pageImages.Where(x => x.CustomUniqeFileName == "Ahnali people" || x.CustomUniqeFileName == "streetIndexView" ||x.CustomUniqeFileName== "beatefulPlace" || String.IsNullOrEmpty(x.CustomUniqeFileName)).ToList();
             return View(pageImageViewModel);
         }      
         public IActionResult Privacy()

@@ -1,0 +1,23 @@
+﻿@using TouristTourGuideWebApp.Areas.Admin.ViewModel
+@model MyToursViewModel
+
+@{
+    ViewBag.Title = "My Tours";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr/>
+
+<h4>My Added Tours</h4>
+
+@if (!Model.ExistingTours.Any())
+{
+    <h2 class="text-center">You probably have no added tours yet! Man go адд some tours</h2>
+}
+
+<div class="row">
+    @foreach (var tour in Model.ExistingTours)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_TourAllPartial.cshtml",tour);
+    }
+</div>

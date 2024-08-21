@@ -139,6 +139,21 @@ namespace TouristTourGuide.Services
             return toursId;
         }
 
+        public async Task<List<AllViewModel>> GetAllToursByGuideId(string guideId)
+        {
+            List<AllViewModel> model = await _dbContext.TouristsTours
+                .Where(g => g.GuideUserId.ToString() == guideId)
+                .Select(t => new AllViewModel()
+                {
+                    Id = t.Id.ToString(),
+                    Title = t.TourName,
+                    PricePerPerson = t.PricePerPerson,
+                    LocationCity = t.Location.City
+                }).ToListAsync();
+
+            return model;
+        }
+
         public async Task<EditViewModel> GetTourForEdit(string tourId)
         {
 

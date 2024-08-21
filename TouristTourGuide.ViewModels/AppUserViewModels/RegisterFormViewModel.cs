@@ -28,11 +28,25 @@ namespace TouristTourGuide.ViewModels.AppUserViewModels
 
         [Required]
         [StringLength(20,MinimumLength =2)]
+        [Display(Name ="First name")]
         public string FirstName { get; set; }
 
         [Required]
         [StringLength(20,MinimumLength =1)]
+        [Display(Name ="Last name")]
         public string LastName { get; set; }
+        
+        [Display(Name = "Facebook contact")]
+        public string FaceBookUrl { get; set; }
+
+        [Display(Name = "Instagram contact")]
+        public string InstagramUrl { get; set; }
+
+        [Display(Name = "Twitter contact")]
+        public string TwitterUrl { get; set; }
+
+        [Display(Name = "Abaout Me")]
+        public string AbaoutMe { get; set; }
 
     }
 }

@@ -262,19 +262,18 @@ namespace TouristTourGuide.Services
         }
 
         public void DeleteOneImageFileMDB(string uniqueName)
-        {
-            
+        {            
             _appImageFileCollectionMDB.FindOneAndDelete(x => x.UniqueFileName == uniqueName);
         }
 
-       
 
 
 
-        //public  AppImagesViewModel GetOneImageMongoDb(string uniqueName)
+
+        //public AppImagesViewModel GetOneImageMongoDb(string uniqueName)
         //{
-        //    return  _appImageFileCollectionMDB.Find(x=>x.UniqueFileName==uniqueName)
-        //        .Project(x=>new AppImagesViewModel() 
+        //    return _appImageFileCollectionMDB.Find(x => x.UniqueFileName == uniqueName)
+        //        .Project(x => new AppImagesViewModel()
         //        {
         //            FileData = x.FileData,
         //            UniqueFileName = x.UniqueFileName

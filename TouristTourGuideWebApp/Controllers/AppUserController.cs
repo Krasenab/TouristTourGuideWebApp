@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TouristTourGuide.Data.Models.Sql.Models;
+using TouristTourGuide.Infrastrucutre;
+using TouristTourGuide.Services.Interfaces;
 using TouristTourGuide.ViewModels.AppUserViewModels;
 using static TouristTourGuide.Common.NotificationMessage;
+using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 namespace TouristTourGuideWebApp.Controllers
 {
     public class AppUserController : Controller
@@ -12,12 +15,18 @@ namespace TouristTourGuideWebApp.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IImageService _imageService;
+        private readonly IAppUserService _appUserService;
 
-        public AppUserController(SignInManager<ApplicationUser> sM,UserManager<ApplicationUser> usM,IUserStore<ApplicationUser>uS)
+        public AppUserController(SignInManager<ApplicationUser> sM,UserManager<ApplicationUser> usM,IUserStore<ApplicationUser>uS,
+                                 IImageService imageService, IAppUserService appUserService)
         {
             this._userManager = usM;
             this._signInManager  = sM;
-            this._userStore = uS;    
+            this._userStore = uS;
+            this._imageService = imageService;
+            this._appUserService = appUserService;
+            
         }
         public IActionResult Register()
         {
@@ -81,6 +90,25 @@ namespace TouristTourGuideWebApp.Controllers
             }
             return Redirect(loginForm.ReturnUrl ?? "/Home/Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AppUserProfile() 
+        {
+            string getUserId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+            var model = await _appUserService.GetAppUserPrfileInfo(getUserId);
+
+            string uniqueName = await _imageService.GetAppUserImageFileUniqueNameSQL(getUserId);
+            if (_imageService.IsAppImageExist(getUserId)) 
+            {
+                byte[]? Img =   _imageService.GetImageBytesMongoDb(uniqueName);
+
+                model.ImageByte = Img;
+            }
+            
+            return View(model);
+        }
+
+        
         
     }
 }

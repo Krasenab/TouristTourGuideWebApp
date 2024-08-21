@@ -42,7 +42,7 @@
             </h6>
 
             <br />
-            <a asp-controller="TouristTour" asp-action="Details" asp-route-id="@Model.Id"
+            <a asp-area="" asp-controller="TouristTour" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-success">Details</a>
             @*  @if (this.User.Identity.IsAuthenticated) *@
 
@@ -50,10 +50,10 @@
             {
                 @if (isCurrentUserOwner||this.User.IsAdmin())
                 {
-                    <a asp-controller="TouristTour" asp-action="Edit" asp-route-id="@Model.Id"
+                    <a asp-area="" asp-controller="TouristTour" asp-action="Edit" asp-route-id="@Model.Id"
                        class="btn btn-warning">Edit</a>
 
-                    <a asp-controller="TouristTour" asp-action="Delete" asp-routeid="@Model.Id"
+                    <a asp-area="" asp-controller="TouristTour" asp-action="Delete" asp-routeid="@Model.Id"
                        class="btn btn-danger">Delete</a>
                 }
               @*   @if (!isUserAdmin)

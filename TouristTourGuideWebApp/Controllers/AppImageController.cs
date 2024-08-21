@@ -45,7 +45,17 @@ namespace TouristTourGuideWebApp.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddAppUserProfilePicture(IFormFile appUserPicture,string appUserId) 
+        {
+            string a = appUserId;
+            IFormFile f = appUserPicture;
+            _imageSerive.AddProfilePicture(appUserPicture, appUserId);
+            string uniqueFileNameForProfilePicture = await _imageSerive.GetAppUserImageFileUniqueNameSQL(appUserId);
+            _imageSerive.AddImageFileToMongoDb(appUserPicture, uniqueFileNameForProfilePicture);
 
+            return RedirectToAction("AppUserProfile", "AppUserControler");
+        }
 
     }
 }

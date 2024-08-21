@@ -15,9 +15,7 @@ namespace TouristTourGuide.ViewModels.AppUserViewModels
         }
 
         public string UserName { get; set; }
-
         public string LastName { get; set; }
-
-        public AppImagesViewModel AppUserPicute { get; set; }
+        public byte[] AppUserPicute { get; set; }
     }
 }

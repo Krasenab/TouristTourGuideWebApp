@@ -199,6 +199,12 @@ namespace TouristTourGuideWebApp.Controllers
 
             detailsViewModel.TourRatign = await _voteService.CalculateRatingAsync(id);
             detailsViewModel.Comments = await _commentsService.GetAllComentAsync(id);
+            foreach (var singleComment in detailsViewModel.Comments)
+            {
+                string appUserId = singleComment.AppUserId;
+                var imageData = await _imageServie.GetAppUserImageFileUniqueNameSQL(appUserId);
+                singleComment.AppUserProfilePicture =  _imageServie.GetImageBytesMongoDb(imageData);
+            }
             detailsViewModel.VoteCount = await _voteService.CountVoteByTourIdAsync(id);
 
 
@@ -262,6 +268,23 @@ namespace TouristTourGuideWebApp.Controllers
             _imageServie.DeleteOneImageFileMDB(removedPictureName);
 
             return Content("success");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyTours() 
+        {
+            string thisUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);           
+            string guideUserId = _guideUserService.GuidUserId(thisUser);
+            if (guideUserId ==null) 
+            {
+                this.TempData[WarningMassage] = "You must be tour guide";
+                return RedirectToAction("Index", "Home");
+            }
+            AllMyToursVIewModel model = new AllMyToursVIewModel()
+            {
+                MyTours = await _tourService.GetAllToursByGuideId(guideUserId)
+            };
+            return View(model);
         }
 
     }
