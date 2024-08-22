@@ -20,6 +20,7 @@ namespace TouristTourGuide.Services
             bool userAlreadyVoted = await _dbContext.Votes.AnyAsync(x => x.TouristTourId.ToString() == tourId 
             && x.ApplicationUserId.ToString() == applicationUserId);
 
+           
             if (!userAlreadyVoted) 
             {
                 Vote v = new Vote()

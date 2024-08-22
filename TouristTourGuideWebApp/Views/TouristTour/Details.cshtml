@@ -3,11 +3,16 @@
 @using TouristTourGuide.Infrastrucutre;
 @inject ITourService tService
 @inject IGuideUserService gSerive
+@inject IImageService imgService
+
 @{
 
     var currentUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
     bool isUserGuide = gSerive.isUserGuide(currentUser);
     bool isOwner = false;
+    string sqlImageDataUniqueName = await imgService.GetAppUserImageFileUniqueNameSQL(currentUser);
+    
+    byte[]? currentUserProfilePicture = imgService.GetImageBytesMongoDb(sqlImageDataUniqueName);
     if (isUserGuide)
     {
         string guserID = gSerive.GuidUserId(currentUser);
@@ -445,9 +450,18 @@ else
                 <form id="commentForm" style="display:none; padding-top:1em;">
                     <div class="card-footer py-3 border-2 justify-content-start" style="background-color: #f8f9fa;">
                         <div class="d-flex flex-start w-100">
-                            <img class="rounded-circle shadow-1-strong me-3"
-                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
-                                 height="40" />
+                            @if (currentUserProfilePicture != null)
+                            {
+                                <img class="rounded-circle shadow-1-strong me-3"
+                                src="@("data:image/jpeg;base64," + Convert.ToBase64String(currentUserProfilePicture))" alt="avatar" width="40"
+                                height="40" />
+                            }
+                            else
+                            {
+                                <img class="rounded-circle shadow-1-strong me-3"
+                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+                                     height="40" />
+                            }                          
                             <div data-mdb-input-init class="form-outline w-100">
                                 <textarea class="form-control" id="Content" name="Content" rows="5"
                                           style="background: #fff; flex-shrink:unset"></textarea>
@@ -571,7 +585,7 @@ else
                     $('#Content').val('');
                     var newCommentHtml = '<div class="card-body">' +
                         '<div class="d-flex flex-start align-items-center">' +
-                        '<img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60" height="60" />' +
+                        '<img class="rounded-circle shadow-1-strong me-3" src="@("data:image/jpeg;base64," + Convert.ToBase64String(currentUserProfilePicture))" alt="avatar" width="60" height="60" />' +
                         '<div>' +
                         '<h6 class="fw-bold text-primary mb-1">' + response.userName + '</h6>' +
                         '<p class="text-muted small mb-0">' +
@@ -672,10 +686,10 @@ else
         });
 
         // Функция за обработка на клик върху звезда и изпращане на вота
-        stars.on('click', function () {
-            var index = $(this).index() + 1; // Индексът на избраната звезда + 1
-            sendVote('@Model.Id', index); // Изпращаме гласа
-        });
+        // stars.on('click', function () {
+        //     var index = $(this).index() + 1; // Индексът на избраната звезда + 1
+        //    sendVote('@Model.Id', index);  // Изпращаме гласа
+        // });
 
         // Инициално задаване на звездите според текущата оценка
         updateStars(currentRating);
