@@ -360,13 +360,14 @@ else
                         <button type="submit" class="btn btn-danger">Delete Tour</button>
                     </form>
                     <a asp-controller="AppImage" asp-action="EditTourAlbum" asp-route-tourId="@Model.Id" class="btn btn-warning">Edit tour album</a>
-                    <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.Id" class="btn btn-success d-inline">Tour bookings</a>
+                   @*  <a asp-controller="TouristTour" asp-action="TourBookings" asp-route-tourId="@Model.Id" class="btn btn-success d-inline">Tour bookings</a> *@
+                    <button id="showUplFormBtn" class="btn btn-primary">Add pictures to your tour</button>
                 </div>
             </div>
         </div>
 
         <div class="custom-row">
-            <button id="showUplFormBtn" class="btn btn-primary btn-sm bg-opacity-25 border-1" style="border-radius:0.5em">Add pictures to your tour</button>
+          @*   <button id="showUplFormBtn" class="btn btn-primary btn-sm bg-opacity-25 border-1" style="border-radius:0.5em">Add pictures to your tour</button> *@
             <div id="hideElement" style="display:none;">
                 <div class="col-lg-12" style="padding-top:1em;">
                     <h4>Add a new image to your tour:</h4>
@@ -385,6 +386,11 @@ else
 </section>
 
 <section class="votes-section">
+    <div row="d-flex" style="border:2px solid black;">
+        <div class="col mb-3">
+            <h4 style="padding-left:10em;">Customer reviews</h4>
+        </div>
+    </div>
     <div class="custom-row" style="text-align:center; padding-top:2em;">
         <div class="col">
             <p id="ratingDisplay" style="text-decoration-style:solid;">@Model.TourRatign.ToString("f2") / 5.00</p>
@@ -403,80 +409,77 @@ else
 </section>
 
 
-<section class="comments-section" style="background-color:#BEE4DE;">
+<section class="comments-section" style="background-color:#f8f9fa; padding: 20px 0;">
+    <div row="d-flex">
+        <div class="col mb-5 text-center">
+            <h5 class="card-title">Comments</h5>
+        </div>
+    </div>
     <div class="container">
-        <div class="row d-flex justify-content-center right-align-comments">
-            <div class="card" style="background-color:#BEE4DE; border:none;">
-                <div class="comments-container">
-                    @for (int i = 0; i < Model.Comments.Count; i++)
-                    {
-                        <div class="card-body" style="display: @(i < 3 ? "block" : "none"); padding-top:1em; padding-bottom:1em; border:2px solid black;">
-                            <div class="d-flex flex-start align-items-center">
-                                @if (Model.Comments[i].AppUserProfilePicture != null)
+        <div class="row d-flex justify-content-start">
+            <div class="col mb-10">
+                <button id="showFormBtn" class="btn btn mb-3" style="background-color:#FFD558">Add new comment</button>
+                <form id="commentForm" style="display:none;">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start mb-3">
+                                @if (currentUserProfilePicture != null)
                                 {
                                     <img class="rounded-circle shadow-1-strong me-3"
-                                         src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.Comments[i].AppUserProfilePicture) )" 
-                                    height="60" />
+                                         src="@("data:image/jpeg;base64," + Convert.ToBase64String(currentUserProfilePicture))" alt="avatar" width="40"
+                                         height="40" />
                                 }
                                 else
                                 {
                                     <img class="rounded-circle shadow-1-strong me-3"
-                                         src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
-                                         height="60" />
+                                         src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40" height="40" />
                                 }
-                               
-                                <div>
-                                    <h6 class="fw-bold text-primary mb-1">
-                                        @Model.Comments[i].AppUserName
-                                    </h6>
-                                    <p class="text-muted small mb-0">
-                                        Shared publicly - Jan 2020
-                                    </p>
-                                </div>
+                                <textarea class="form-control" id="Content" name="Content" rows="3" placeholder="Напишете вашия коментар..."></textarea>
                             </div>
-                            <p class="mt-3 mb-4 pb-2">
-                                @Model.Comments[i].Content;
-                            </p>
-                        </div>
-                    }
-                    @if (Model.Comments.Count > 5)
-                    {
-                        @*сменям на 4/27/2024 големината на бутона*@
-                        <button id="readMoreBtn" class="btn-sm btn-primary ">See more comment</button>
-                    }
-                </div>
-                @*сменям на 4/27/2024 големината на бутона*@
-                <button id="showFormBtn" class="btn btn-primary btn-sm">Add comment</button>
-                <form id="commentForm" style="display:none; padding-top:1em;">
-                    <div class="card-footer py-3 border-2 justify-content-start" style="background-color: #f8f9fa;">
-                        <div class="d-flex flex-start w-100">
-                            @if (currentUserProfilePicture != null)
-                            {
-                                <img class="rounded-circle shadow-1-strong me-3"
-                                src="@("data:image/jpeg;base64," + Convert.ToBase64String(currentUserProfilePicture))" alt="avatar" width="40"
-                                height="40" />
-                            }
-                            else
-                            {
-                                <img class="rounded-circle shadow-1-strong me-3"
-                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
-                                     height="40" />
-                            }                          
-                            <div data-mdb-input-init class="form-outline w-100">
-                                <textarea class="form-control" id="Content" name="Content" rows="5"
-                                          style="background: #fff; flex-shrink:unset"></textarea>
-                            </div>
-                        </div>
-                        <input type="hidden" id="TourId" name="TourId" value="@Model.Id">
-                        <div class="float-end mt-2 pt-1">
-                            <button type="button" for="Content"
-                                    id="postCommentBtn"
-                                    data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-sm">
-                                Post your comment
-                            </button>
+                            <input type="hidden" id="TourId" name="TourId" value="@Model.Id">
+                            <button type="button" id="postCommentBtn" class="btn btn-primary float-end">Post your comment</button>
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-end">
+            <div class="col-md-10">
+                <div class="card mb-4 border-0" style="background-color:#f8f9fa;">
+                    <div class="card-body">                      
+                        <div class="comments-container">
+                            @for (int i = 0; i < Model.Comments.Count; i++)
+                            {
+                                <div class="comment-item card mb-2" style="display: @(i < 3 ? "block" : "none");">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            @if (Model.Comments[i].AppUserProfilePicture != null)
+                                            {
+                                                <img class="rounded-circle shadow-1-strong me-3"
+                                                     src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.Comments[i].AppUserProfilePicture) )"
+                                                     height="50" width="50" alt="avatar" />
+                                            }
+                                            else
+                                            {
+                                                <img class="rounded-circle shadow-1-strong me-3"
+                                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="50" height="50" />
+                                            }
+                                            <div>
+                                                <h6 class="fw-bold mb-0">@Model.Comments[i].AppUserName</h6>
+                                                <p class="text-muted small mb-0">Posted on : mm-dd-yyyy</p>
+                                            </div>
+                                        </div>
+                                        <p class="comment-text mb-0">@Model.Comments[i].Content</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        @if (Model.Comments.Count > 5)
+                        {
+                            <button id="readMoreBtn" class="btn btn-link">See more comments</button>
+                        }
+                    </div>
+                </div>               
             </div>
         </div>
     </div>
@@ -489,6 +492,7 @@ else
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
 
 
 <script>
@@ -550,16 +554,11 @@ else
 <script>
     $(document).ready(function () {
         $('#showFormBtn').click(function () {
-            var form = $('#commentForm');
-            if (form.css('display') === 'none') {
-                form.show();
-            } else {
-                form.hide();
-            }
+            $('#commentForm').slideToggle();
         });
 
         $('#readMoreBtn').click(function () {
-            var hiddenComments = $('.card-body:hidden');
+            var hiddenComments = $('.comment-item:hidden');
             hiddenComments.slice(0, 3).slideDown();
             if (hiddenComments.length <= 3) {
                 $(this).hide();
@@ -571,7 +570,7 @@ else
             var tourId = $('#TourId').val();
 
             if (content === "") {
-                alert('Please enter a message.');
+                alert('Моля, въведете съобщение.');
                 return false;
             }
 
@@ -581,27 +580,25 @@ else
                 contentType: 'application/json',
                 data: JSON.stringify({ Content: content, TourId: tourId }),
                 success: function (response) {
-                    alert('Comment posted successfully');
+                    alert('Коментарът е публикуван успешно');
                     $('#Content').val('');
-                    var newCommentHtml = '<div class="card-body">' +
-                        '<div class="d-flex flex-start align-items-center">' +
-                        '<img class="rounded-circle shadow-1-strong me-3" src="@("data:image/jpeg;base64," + Convert.ToBase64String(currentUserProfilePicture))" alt="avatar" width="60" height="60" />' +
-                        '<div>' +
-                        '<h6 class="fw-bold text-primary mb-1">' + response.userName + '</h6>' +
-                        '<p class="text-muted small mb-0">' +
-                        'Shared publicly - just now' +
-                        '</p>' +
-                        '</div>' +
-                        '</div>' +
-                        '<p class="mt-3 mb-4 pb-2">' +
-                        content +
-                        '</p>' +
-                        '</div>';
+                    var newCommentHtml = `
+                    <div class="comment-item card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img class="rounded-circle shadow-1-strong me-3" src="@("data:image/jpeg;base64," + Convert.ToBase64String(currentUserProfilePicture))" alt="avatar" width="50" height="50" />
+                                <div>
+                                    <h6 class="fw-bold mb-0">${response.userName}</h6>
+                                    <p class="text-muted small mb-0">Публикувано - преди малко</p>
+                                </div>
+                            </div>
+                            <p class="comment-text mb-0">${content}</p>
+                        </div>
+                    </div>`;
                     $('.comments-container').prepend(newCommentHtml);
-
                 },
                 error: function () {
-                    alert('Error posting comment');
+                    alert('Грешка при публикуването на коментара');
                 }
             });
         });
