@@ -24,7 +24,8 @@
         .sidebar-header {
             padding: 20px;
             text-align: center;
-            background-color: #1abc9c;
+            color:black;
+            background-color: #f6d365;
         }
 
         .sidebar-nav {
@@ -38,19 +39,38 @@
         }
 
         .sidebar-nav ul li {
-          padding: 15px 20px;
+         /* padding: 15px 20px; original style*/
+          padding-top: 20px;
+          text-align:center;
         }
 
          .sidebar-nav ul li a {
+             position:relative;
              color: white;
              text-decoration: none;
              display: block;
+             z-index:1;
           }
+          .sidebar-nav ul li a::before
+          {
+              content:'';
+              position:absolute;
+              top:0;
+              left:0;
+              width:0;
+              height:100%;
+              background: #f6d365;
+              transition: width 0.35s ease;
+              z-index:-1;
+          }
+          .sidebar-nav ul li a:hover::before{
+                width:100%;
+          }
+          /* .sidebar-nav ul li a:hover {
+             background-color: #f6d365;
+             transition: 0.4s;
 
-          .sidebar-nav ul li a:hover {
-             background-color: #1abc9c;
-             transition: 0.3s;
-          }
+          } */
 
         .main-content {
             flex-grow: 1;
@@ -82,10 +102,10 @@
         <nav class="sidebar-nav">
             <ul>
                 <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Users</a></li>
+                <li><a href="/Admin/AppUser/AllUsers">All Users</a></li>
                 <li><a href="/Admin/TouristTour/Mine">Mine</a></li>             
                 <li><a href="#">Reports</a></li>
-                <li><a href="#">Logout</a></li>
+
             </ul>
         </nav>
     </aside>

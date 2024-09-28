@@ -66,16 +66,16 @@
 <body>
     <partial name="_NotificationPartial" />
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow " style="background-color:#21A49F">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow " style="background:linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(logoData))" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation" style="position:absolute;">
-                    <span class="navbar-toggler-icon" style="position:absolute; color:black;"></span>
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="background:linear-gradient(to right bottom, rgba(246, 211, 101, 1))">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area=""   asp-controller="Home" asp-action="Index">Home</a>
@@ -86,16 +86,16 @@
                         @if (!isGuide)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="GuideUser" asp-action="BecomeGuide">Become a supplier</a>
+                                <a class="nav-link text-white text-nowrap" asp-area="" asp-controller="GuideUser" asp-action="BecomeGuide">Become a supplier</a>
                             </li>
                         }
                         @if (isGuide)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="TouristTour" asp-action="Create">Add tours</a>
+                                <a class="nav-link text-white text-nowrap" asp-area="" asp-controller="TouristTour" asp-action="Create">Add tours</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Booking" asp-action="AllBookings">Tours with booking</a>
+                                <a class="nav-link text-white text-nowrap" asp-area="" asp-controller="Booking" asp-action="AllBookings">Tours with booking</a>
                             </li>
                         }
                     </ul>
@@ -111,7 +111,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" style="background-color:#21A49F">
+    <footer class="border-top footer text-muted" style="background:linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))">
         <div class="container">
             &copy; 2024 - TouristTourGuideWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

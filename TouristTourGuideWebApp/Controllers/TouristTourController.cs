@@ -12,6 +12,7 @@ using TouristTourGuide.Common;
 
 namespace TouristTourGuideWebApp.Controllers
 {
+    [Authorize]
     public class TouristTourController : Controller
     {
         private readonly ITourService _tourService;
@@ -38,8 +39,7 @@ namespace TouristTourGuideWebApp.Controllers
             this._bookingService = bookingService;
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public async Task<IActionResult> DeletePicture(string uniqueName)
         {
             var metadataImage = await _imageServie.AppImageInfo(uniqueName);
@@ -90,6 +90,7 @@ namespace TouristTourGuideWebApp.Controllers
 
             return RedirectToAction("All", "TouristTour");
         }
+        
         public async Task<IActionResult> All([FromQuery] AllToursQueryViewModel queryModel)
         {
             AllToursFilteredAndPagedServiceModel serviceModel = await _tourService.AllAsync(queryModel);
@@ -105,7 +106,6 @@ namespace TouristTourGuideWebApp.Controllers
 
 
         [HttpGet]
-        [Authorize]
         public IActionResult Create()
         {
             string userId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
@@ -159,7 +159,7 @@ namespace TouristTourGuideWebApp.Controllers
             editViewModel.LocationCity = await _locationService.GetTourCity(Id);
             editViewModel.Categories = _categoryService.GetAllCategories();
             editViewModel.Locations = _locationService.GetAllLocations();
-
+            
 
             return View(editViewModel);
         }
@@ -180,7 +180,6 @@ namespace TouristTourGuideWebApp.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Details(string id)
         {
             if (!_tourService.IsTourExist(id))
@@ -271,19 +270,32 @@ namespace TouristTourGuideWebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> MyTours() 
+        public async Task<IActionResult> MyTours(string guideUserId) 
         {
-            string thisUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);           
-            string guideUserId = _guideUserService.GuidUserId(thisUser);
-            if (guideUserId ==null) 
-            {
-                this.TempData[WarningMassage] = "You must be tour guide";
-                return RedirectToAction("Index", "Home");
-            }
+        
+            
             AllMyToursVIewModel model = new AllMyToursVIewModel()
             {
                 MyTours = await _tourService.GetAllToursByGuideId(guideUserId)
             };
+
+            //get image for each tour
+            //-----------------------
+            foreach (var tour in model.MyTours)
+            {
+               string uniqueNameFirstOrDefault = await _imageServie.TourImageUniqueName(tour.Id);
+               
+                if (uniqueNameFirstOrDefault !=null || !(String.IsNullOrEmpty(uniqueNameFirstOrDefault))) 
+                {
+                    tour.TourImage = new AppImagesViewModel();
+                    tour.TourImage.UniqueFileName = uniqueNameFirstOrDefault;
+                    tour.TourImage.TouristTourId = tour.Id;
+                    tour.TourImage.FileName = uniqueNameFirstOrDefault;
+                    tour.TourImage.FileData = _imageServie.GetImageBytesMongoDb(uniqueNameFirstOrDefault);
+                   
+                }
+            }
+
             return View(model);
         }
 

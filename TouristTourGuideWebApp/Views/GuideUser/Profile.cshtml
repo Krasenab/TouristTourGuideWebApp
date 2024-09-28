@@ -10,164 +10,124 @@
 }
 <head>
     <style>
-        .containerss{
-            background-color: linear-gradient(to top right, #DDBF68, #FFF2DC);
-
+        .gradient-custom {
+            /* fallback for old browsers */
+            background: #f6d365;
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
         }
-        .card-body {
-           
-           /*  background-color: #DDBF68; */
-          /*   background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1)); */
+
+        /* Скриване на новата картинка по подразбиране */
+        .slide-in-card {
+            position: absolute;
+            right: -100%;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .show-card {
+            right: 0;
         }
     </style>
 </head>
 
-<section class="profile-section">
-      
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="card mb-4">
-                <div class="card-body text-center">
-                    @if (Model.ImageFileData!=null)
-                    {
-                        <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.ImageFileData))" alt=""
-                        class="rounded-circle img-fluid" style="width: 150px;">
-                    }
-                    else
-                    {
-                        <img src="" alt="avatar"
-                             class="rounded-circle img-fluid" style="width: 150px;">
-                    }
+<section class="" style="background-color: #f4f5f7;">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-4 gradient-custom text-center text-white">
+                        @if (Model.ImageFileData != null)
+                        {
+                            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.ImageFileData))"
+                                 alt="" class="img-fluid my-5" style="width: 80px;" />
+                        }
+                        else
+                        {
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                 alt="" class="img-fluid my-5" style="width: 80px;" />
+                        }
 
-                    <h5 class="my-3">@Model.Name</h5>
-                    <p class="text-muted mb-1">@Model.Email</p>
-                    <p class="text-muted mb-4">@Model.PhoneNumber</p>
-                    <div class="d-flex justify-content-center mb-2">
-                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Follow</button>
-                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Message</button>
+                        <h5>@Model.Name</h5>
+                        <p>Tourist</p>
+                        <i class="far fa-edit mb-5"></i>
                     </div>
-                </div>
-            </div>
-            <div class="card mb-4 mb-lg-0">
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush rounded-3">
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <i class="fas fa-globe fa-lg text-warning"></i>
-                            <p class="mb-0">Find</p>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                            <p class="mb-0">add prop</p>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                            <p class="mb-0">add prop</p>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-                            <p class="mb-0">add prop</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-8">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">First/full name</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">@Model.Name</p>
-                        </div>
-                    </div>
-                    <hr>
-                    @* <div class="row">
-                    <div class="col-sm-3">
-                    <p class="mb-0">Email</p>
-                    </div>
-                    <div class="col-sm-9">
-                    <p class="text-muted mb-0">example@example.com</p>
-                    </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                    <div class="col-sm-3">
-                    <p class="mb-0">Phone</p>
-                    </div>
-                    <div class="col-sm-9">
-                    <p class="text-muted mb-0">(097) 234-5678</p>
-                    </div>
-                    </div> *@
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Mobile</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">@Model.PhoneNumber</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Registered firm address</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">@Model.RegisteredAddress</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <p>@Model.AboutTheActivityProvider</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-4">
-                <input type="hidden" class="form-control" asp-for="@Model.Id" />
-
-                <a asp-controller="Booking" asp-action="AcceptedBookings" asp-route-guideUserId="@Model.Id">
-                    Accepted Bookings Work Sheet
-                </a>
-            </div>
-            <div class="row mb-4 mb-lg-0">
-                <button id="showUplFormBtn" class="btn btn-primary btn-sm bg-opacity-25 border-1" style="border-radius:0.5em">Add pictures to your tour</button>
-                <div id="hideElement" style="display:none; padding-bottom:1em;">
-                    <div class="col-lg-12 small" style="padding-top:1em;">
-                        <h4>Add profile image</h4>
-                        <form method="post" enctype="multipart/form-data" asp-action="AddPicture" asp-controller="GuideUser">
-                            <input type="hidden" name="userAppId" value="@Model.ApplicationUserId" />
-                            <div class="custom-form-group" style="padding-top:1em;">
-                                <input type="file" name="pictureFile" required class="form-control" />
-                                <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+                    <div class="col-md-8">
+                        <div class="card-body p-4">
+                            <h6>Information</h6>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1">
+                                <div class="col-6 mb-3">
+                                    <h6>Email</h6>
+                                    <p class="text-muted">@Model.Email</p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <h6>Phone</h6>
+                                    <p class="text-muted">@Model.Name</p>
+                                </div>
                             </div>
-                        </form>
+                            <h6>Projects</h6>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1">
+                                <div class="col-6 mb-3">
+                                    <h6>Recent</h6>
+                                    <p class="text-muted">Lorem ipsum</p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <h6>Most Viewed</h6>
+                                    <p class="text-muted">Dolor sit amet</p>
+                                </div>
+                            </div>
+                            <div class="row mb-3 mb-sm-0">
+                                <button id="showUplFormBtn" class="btn btn-primary btn-sm bg-opacity-25 border-1" style="border-radius:0.5em">Add pictures to your tour</button>
+                                <div id="hideElement" style="display:none; padding-bottom:1em;">
+                                    <div class="col-sm-10 small" style="padding-top:1em; padding-bottom:1em">
+                                        <h4>Add profile image</h4>
+                                        <form method="post" enctype="multipart/form-data" asp-action="AddAppUserProfilePicture" asp-controller="AppImage">
+                                            <input type="hidden" name="appUserId" value="@Model.Id" />
+                                            <div class="custom-form-group" style="padding-top:1em; padding-bottom:1em;">
+                                                <input type="file" name="appUserPicture" required class="form-control" />
+                                                <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Новата картинка с анимация -->
+                            <div class="slide-in-card card bg-light text-dark p-3" id="animatedCard" style="margin-bottom:1em;">
+                                <h4>All provider tours</h4>
+                                <p>Click on button to see all provider tours</p>
+                                <a asp-action="MyTours" asp-controller="TouristTour" asp-route-guideUserId="@Model.Id">Click me</a>
+                            </div>
+                            <div class="d-flex justify-content-start " style="margin-top:2em;">
+                                <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                            </div>
+                            <div style="padding-top:5em;">
+                                <p> this is my page</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
 <script>
     $('#showUplFormBtn').click(function () {
-        var form = $('#hideElement');
-        if (form.css('display') === 'none') {
-            form.show();
-        }
-        else {
-            form.hide();
-        }
-
+        $('#hideElement').slideToggle();
     });
 
-       
-
+    // Анимация за появата на картинката при зареждане на страницата
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#animatedCard').addClass('show-card');
+        }, 700); // Задаваме закъснение от 0.5 секунди
+    });
 </script>

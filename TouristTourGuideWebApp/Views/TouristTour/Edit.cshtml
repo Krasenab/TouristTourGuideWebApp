@@ -1,134 +1,315 @@
 ﻿@model EditViewModel
 
 <head>
-    <link rel="stylesheet" href="~/css/formsStyle.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        #regForm {
+            background-color: #ffffff;
+            margin: 1em auto;
+            padding: 1em;
+            width: 70%;
+            min-width: 300px;
+            border-radius: 8px;
+            /*  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); */
+        }
+
+        .form-group {
+            margin-bottom: 1.5em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            font-weight: 600;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+            input:focus,
+            textarea:focus {
+                outline: none;
+                border-color: #FFD558;
+            }
+
+            input.invalid {
+                border-color: #ff7373;
+            }
+
+        .tab {
+            display: none;
+        }
+
+        #prevBtn, #nextBtn {
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            background: #FFD558;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            #prevBtn:hover, #nextBtn:hover {
+                background: linear-gradient(90deg, #FFD558, #FFC107);
+            }
+
+
+        .step {
+            height: 30px;
+            width: 30px;
+            margin: 0 10px;
+            background-color: #ccc;
+            border: none;
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.5;
+            line-height: 30px;
+            text-align: center;
+            font-size: 16px;
+            color: #fff;
+        }
+
+            .step.active {
+                opacity: 1;
+                background-color: #007BFF;
+            }
+
+            .step.finish {
+                background-color: #28a745;
+            }
+
+    </style>
+
 </head>
 
-<div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <div class="form-container">
-
-            <div class="form-header">
-                <h3>Edit a Tour</h3>
-            </div>
-
-            <form asp-controller="TouristTour" asp-action="Edit"  method="post"   class="p-4">
-                <input type="hidden" asp-for="@Model.TourId" />
-                <div class="form-group">
-                    <label asp-for="TourName"></label>
-                    <input asp-for="TourName" class="form-control" placeholder="Tour name">
-                    <span asp-validation-for="TourName" class="small text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Duaration"></label>
-                    <input asp-for="Duaration" class="form-control"
-                           placeholder="Duaration of the trip">
-                    <span asp-validation-for="Duaration" class="small text-danger"></span>
-                </div>
-
-                <div class="input-group sm-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                    </div>
-                    <span asp-validation-for="PricePerPerson"></span>
-                    <input asp-for="PricePerPerson" class="form-control-sm" aria-label="Amount (to the nearest dollar)">
-                    <div class="input-group-append">
-                        <span class="input-group-text">.00</span>
-                    </div>
-                </div>
-
-                <div class="form-group sm-3">
-                    <label asp-for="NotSuitableFor"></label>
-                    <span asp-validation-for="NotSuitableFor" class="input-group-text"></span>
-                    <textarea class="form-control" asp-for="NotSuitableFor" rows="3"></textarea>
-                </div>
-
-
-                <div class="form-group">
-                    <label asp-for="MeetingPoint"></label>
-                    <input asp-for="MeetingPoint" class="form-control"
-                           placeholder="Description for place where you met the tourists...">
-                    <span asp-validation-for="MeetingPoint" class="small text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="MeetingPointMapUrl"></label>
-                    <input asp-for="MeetingPointMapUrl" class="form-control"
-                           placeholder="add google map link..">
-                    <span asp-validation-for="MeetingPointMapUrl" class="small text-danger"></span>
-                </div>
-                <div class="form-group sm-3">
-                    <label asp-for="WhatToBring"></label>
-                    <textarea asp-for="WhatToBring" class="form-control" rows="3" placeholder="what your clients must to bring"></textarea>
-                    <span asp-validation-for="WhatToBring" class="small text-danger"></span>
-                </div>
-
-                <div class="form-group sm-3">
-                    <label asp-for="KnowBeforeYouGo"></label>
-                    <textarea asp-for="KnowBeforeYouGo" class="form-control" rows="3" placeholder="Full description for tour... "></textarea>
-                    <span asp-validation-for="KnowBeforeYouGo" class="small text-danger"></span>
-                </div>
-
-
-                <div class="form-group my-2 my-lg-0">
-                    <label asp-for="LocationCity"></label>
-                    <input asp-for="LocationCity" class="form-control  mr-sm-2"
-                           placeholder="City location">
-                    <span asp-validation-for="LocationCity" class="small text-danger"></span>
-                </div>
-
-
-                <div class="form-group">
-                    <label asp-for="LocationId"></label>
-                    <select asp-for="LocationId" class="form-control">
-                        @foreach (var location in Model.Locations)
-                        {
-                            <option value="@location.Id">@location.Country</option>
-                        }
-                    </select>
-                    <span asp-validation-for="LocationId" class="small text-danger"></span>
-                </div>
-
-
-                <div class="form-group">
-                    <label asp-for="CategoryId"></label>
-                    <select asp-for="CategoryId" class="form-control">
-                        @foreach (var category in Model.Categories)
-                        {
-                            <option value="@category.Id">@category.Name</option>
-                        }
-                    </select>
-                    <span asp-validation-for="CategoryId" class="small text-danger"></span>
-                </div>
-
-
-                <div class="form-group mb-4">
-                    <label asp-for="FullDescription">FullDescription</label>
-                    <textarea asp-for="FullDescription" class="form-control" rows="5" placeholder="Full description for tour... "></textarea>
-                    <span asp-validation-for="FullDescription" class="small text-danger"></span>
-                </div>
-
-
-                <div class="text-center">
-                    <input class="btn btn-primary mt-3 w-50" type="submit"  value="Edit Tour" />
-                </div>
-            </form>
-        </div>
-    </div>
+<div class="text-center mb-5">
+    <h1>Create tour</h1>
 </div>
 
-<script>
-    const inputs = document.querySelectorAll('.form-control');
-    for (const input of inputs) {
-        input.addEventListener('focus', function () {
-            this.closest('.form-group').querySelector('label').style.fontWeight = 'bold';
-            this.closest('.form-group').querySelector('label').style.color = '#007bff';
-        });
+<form id="regForm" asp-controller="TouristTour" asp-action="Edit"  method="post">
+   
+    <input type="hidden" name="TourId" value="@Model.TourId">
+    <div class="tab">
+        <div class="row mb-1 text-center">
+            <h7>Required tour information</h7>
+        </div>
 
-        input.addEventListener('blur', function () {
-            this.closest('.form-group').querySelector('label').style.fontWeight = 'normal';
-            this.closest('.form-group').querySelector('label').style.color = 'black';
+
+        <div class="form-group mb-3">
+            <label asp-for="TourName"><span class="step"><i class="fas fa-signature"></i></span>Tour Name</label>
+            <input asp-for="TourName" class="form-control" placeholder="John Doe guide" data-required="true">
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Duaration"><span class="step"><i class="fa-regular fa-hourglass-half"></i></span>Duration of trip</label>
+            <input asp-for="Duaration" class="form-control" placeholder="Best Tour Trip Eood" data-required="true">
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="PricePerPerson"><span class="step"><i class="fas fa-tag"></i></span>Price per person</label>
+            <input asp-for="PricePerPerson" class="form-control" placeholder="" type="number" data-required="true">
+
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="StartEndHouers"> <span class="step"><i class="fas fa-clock"></i></span>Start or/and End houers of tour.</label>
+            <input asp-for="StartEndHouers" class="form-control" placeholder="start: 4:35AM or 16:20PM end: 13:30PM etc" data-required="true">
+
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LocationId" placeholder="Location Country Name"><span class="step"><i class="fa-solid fa-location-dot"></i></span>Country</label>
+            <select asp-for="LocationId" class="form-control">
+                @foreach (var location in Model.Locations)
+                {
+                    <option value="@location.Id">@location.Country</option>
+                }
+            </select>
+            <span asp-validation-for="LocationId" class="small text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="LocationCity"><span class="step"><i class="fa-solid fa-city"></i></span>City</label>
+            <input asp-for="LocationCity" class="form-control" placeholder="" data-required="true">
+
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="LocationState">State</label>
+            <input asp-for="LocationState" class="form-control" placeholder="" data-required="false">
+
+        </div>
+
+    </div>
+
+    <div class="tab">
+        <div class="form-group">
+            <label asp-for="CategoryId"><span class="step"><i class="fa-solid fa-filter"></i></span>Category</label>
+            <select asp-for="CategoryId" class="form-control">
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+            <span asp-validation-for="CategoryId" class="small text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="MeetingPoint"><span class="step"><i class="fa-solid fa-handshake"></i></span>Meeting Point of your tour</label>
+            <input asp-for="MeetingPoint" class="form-control" placeholder="" id="vatNumber">
+
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="MeetingPointMapUrl"><span class="step"><i class="fa-regular fa-map"></i></span>Add google map url</label>
+            <input asp-for="MeetingPointMapUrl" class="form-control" placeholder="">
+
+        </div>
+    </div>
+
+    <div class="tab">
+        <div class="form-group mb-3">
+            <label asp-for="Includes"><span class="step"><i class="fa-solid fa-info"></i></span>Includes</label>
+            <input asp-for="Includes" class="form-control" placeholder="" type="text">
+
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="NotSuitableFor"><span class="step"><i class="fa-solid fa-rectangle-xmark"></i></span>This tour is not suitbal for</label>
+            <input asp-for="NotSuitableFor" class="form-control" placeholder="Registration address">
+
+        </div>
+        <div class="form-group mb-4">
+            <label asp-for="KnowBeforeYouGo"><span class="step"><i class="fa-solid fa-lightbulb"></i></span>What need to know your clients befor go</label>
+            <input asp-for="KnowBeforeYouGo" class="form-control" row="3" placeholder="" type="text">
+
+        </div>
+        <div class="form-group mb-4">
+            <label asp-for="WhatToBring"><span class="step"><i class="fa-solid fa-sun"></i></span>What to bring your clients</label>
+            <input asp-for="WhatToBring" class="form-control" rows="3" placeholder="" type="text">
+
+        </div>
+
+    </div>
+    <div class="tab">
+
+        <div class="form-group mb-4">
+            <label asp-for="FullDescription"><span class="step"><i class="fa-solid fa-file-lines"></i></span>Full descritprtion for your tour</label>
+            <textarea asp-for="FullDescription" class="form-control" rows="5" placeholder="About The Activity Provider" data-required="true"></textarea>
+
+        </div>
+    </div>
+
+
+
+    <div style="overflow:auto;">
+        <div style="float:right;">
+            <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+            <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    var currentTab = 0;
+    showTab(currentTab);
+
+    function showTab(n) {
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "Submit";
+        } else {
+            document.getElementById("nextBtn").innerHTML = "Next";
+        }
+        fixStepIndicator(n);
+        addInputListeners();
+    }
+
+    function nextPrev(n) {
+        var x = document.getElementsByClassName("tab");
+        if (n == 1 && !validateForm()) return false;
+        x[currentTab].style.display = "none";
+        currentTab = currentTab + n;
+        if (currentTab >= x.length) {
+            document.getElementById("regForm").submit();
+            return false;
+        }
+        showTab(currentTab);
+    }
+
+    function validateForm() {
+        var x, y, i, valid = true;
+
+        x = document.getElementsByClassName("tab");
+        y = x[currentTab].getElementsByTagName("input");
+        var z = x[currentTab].getElementsByTagName("textarea");
+
+        for (i = 0; i < y.length; i++) {
+            if (y[i].value === "" && y[i].getAttribute("data-required") === "true") {
+                y[i].className += " invalid";
+                valid = false;
+            }
+        }
+
+        for (i = 0; i < z.length; i++) {
+            if (z[i].value === "" && z[i].getAttribute("data-required") === "true") {
+                z[i].className += " invalid";
+                valid = false;
+            }
+        }
+
+        if (valid) {
+            document.getElementsByClassName("step")[currentTab].className += " finish";
+        }
+        return valid;
+    }
+
+    function fixStepIndicator(n) {
+        var i, x = document.getElementsByClassName("step");
+        for (i = 0; i < x.length; i++) {
+            x[i].className = x[i].className.replace(" active", "");
+        }
+        x[n].className += " active";
+    }
+
+    function addInputListeners() {
+        var inputs = document.querySelectorAll("input, textarea, select");
+        inputs.forEach(function (input) {
+            input.addEventListener("input", function () {
+                var stepIcon = this.previousElementSibling.querySelector(".step");
+                if (this.value.trim() !== "") {
+                    stepIcon.classList.add("finish");
+                } else {
+                    stepIcon.classList.remove("finish");
+
+                }
+            });
         });
     }
+
+    // Call the listener initialization on page load
+    window.onload = function () {
+        addInputListeners();
+    };
 </script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

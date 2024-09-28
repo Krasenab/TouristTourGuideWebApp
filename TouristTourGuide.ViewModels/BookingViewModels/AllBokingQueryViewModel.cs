@@ -13,6 +13,7 @@
         public string SerchByClosedDate { get; set; }
         public int CurrentPage { get; set; } = 1;
         public int TourWithBookingPearPage { get; set; } = 5;
+        public int AllBookedTour { get; set; }
         public string? GuideUserId { get; set; }
         public List<AllBookingViewModel> AllToursWithBooking { get; set; }
 

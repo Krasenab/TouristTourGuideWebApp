@@ -14,7 +14,7 @@ namespace TouristTourGuideWebApp.Controllers
         private IVoteService _voteService;
         public VoteController(IVoteService voteService)
         {
-                _voteService = voteService;
+              _voteService = voteService;
         }
         [HttpPost]
         public async Task<ActionResult<VoteResponseViewModel>> AddVote(VoteInputViewModel voteInputViewModel) 
@@ -28,10 +28,12 @@ namespace TouristTourGuideWebApp.Controllers
             double newRatingValue = await _voteService.CalculateRatingAsync(tourId);
 
             VoteResponseViewModel responseValue = new VoteResponseViewModel()
-            {
+            {       
                 RatingResultAfretVote = newRatingValue,
                 VotesCount = votesCount
+               
             };
+          
             return responseValue;
         }
     }

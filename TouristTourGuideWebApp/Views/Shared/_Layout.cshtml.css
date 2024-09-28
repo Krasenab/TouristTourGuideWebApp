@@ -7,8 +7,6 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-
-
 a {
   color: #0077cc;
 }
@@ -36,7 +34,7 @@ a {
         left: 0; /* Позициониране в левия край на елемента */
         width: 0; /* Начална ширина е 0 */
         height: 3px; /* Височината на бордъра */
-        background: #FFD550; /* Цвета на бордъра */
+        background: #FFFFFF; /* Цвета на бордъра */
         transition: width 0.35s ease; /* Анимация на ширината */
     }
 

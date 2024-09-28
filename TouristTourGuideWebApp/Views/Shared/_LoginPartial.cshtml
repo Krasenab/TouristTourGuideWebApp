@@ -12,7 +12,7 @@
 <head>
     <style>
         .nav-item {
-            position: relative; /* Ако вече не е зададено */
+            position: relative; 
             z-index: 1;
         }
 
@@ -23,7 +23,7 @@
                 left: 0; /* Позициониране в левия край на елемента */
                 width: 0; /* Начална ширина е 0 */
                 height: 3px; /* Височината на бордъра */
-                background: #FFD550; /* Цвета на бордъра */
+                background: #FFFFFF; /* Цвета на бордъра */
                 transition: width 0.35s ease; /* Анимация на ширината */
             }
 
@@ -39,13 +39,13 @@
         @if (isGuide)
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-action="Profile" asp-controller="GuideUser" title="Manage">My Profile</a>
+                <a class="nav-link text-white text-nowrap" asp-area="" asp-action="Profile" asp-controller="GuideUser" title="Manage">My Profile</a>
             </li>
         }
         else
         {
             <li class="nav-item">
-                <a class="nav-link text-white" asp-controller="AppUser" asp-action="AppUserProfile" title="Manage">Hello @User.Identity?.Name!</a>
+                <a class="nav-link text-white text-nowrap" asp-controller="AppUser" asp-action="AppUserProfile" title="Manage">Hello @User.Identity?.Name!</a>
             </li>
         }
 

@@ -20,6 +20,7 @@ namespace TouristTourGuide.Services
 
         public async Task<AllToursFilteredAndPagedServiceModel> AllAsync(AllToursQueryViewModel viewModel)
         {
+          
             IQueryable<TouristTour> toursQuery =  this._dbContext.TouristsTours.AsQueryable();
           
             if (!string.IsNullOrWhiteSpace(viewModel.Category))
@@ -45,8 +46,8 @@ namespace TouristTourGuide.Services
                 TourSorting.PriceDescending => toursQuery.OrderByDescending(x => x.PricePerPerson)
             };
 
-            
-
+            var total = _dbContext.TouristsTours.Count();
+            viewModel.TourTotal = total;
             List<AllViewModel> allTour = await toursQuery.Skip((viewModel.CurrentPage - 1) * viewModel.TourPerPage)
               .Take(viewModel.TourPerPage)
               .Select( t => new AllViewModel()
@@ -112,7 +113,7 @@ namespace TouristTourGuide.Services
 
         public void EditTour(EditViewModel editViewModel)
         {
-            TouristTour ?tour = _dbContext.TouristsTours.Where(x => x.Id.ToString() == editViewModel.TourId)
+            TouristTour? tour = _dbContext.TouristsTours.Where(x => x.Id.ToString() == editViewModel.TourId)
                 .FirstOrDefault();
             tour.TourName = editViewModel.TourName;
             tour.Duaration = editViewModel.Duaration;
@@ -124,7 +125,8 @@ namespace TouristTourGuide.Services
             tour.CategoryId = editViewModel.CategoryId;
             tour.WhatToBring = editViewModel.WhatToBring;
             tour.KnowBeforeYouGo = editViewModel.KnowBeforeYouGo;
-            
+            tour.StartEndHouers = editViewModel.StartEndHouers;
+            tour.NotSuitableFor = editViewModel.NotSuitableFor;
 
             _dbContext.SaveChanges();
         }
@@ -165,7 +167,7 @@ namespace TouristTourGuide.Services
 
             EditViewModel viewModel = new EditViewModel()
             {
-                TourId = getTour.Id.ToString(),
+                TourId = tourId,
                 TourName = getTour.TourName,
                 Duaration = getTour.Duaration,
                 PricePerPerson = getTour.PricePerPerson,
@@ -214,6 +216,19 @@ namespace TouristTourGuide.Services
         {
             return await _dbContext.TouristsTours.AnyAsync(x => x.GuideUserId.ToString() == guideId
              && x.Id.ToString() == tourId);
+        }
+
+        public async Task<List<MineViewModel>> MineToursByGuideId(string guideId)
+        {
+            List<MineViewModel>? mines = await _dbContext.TouristsTours.Where(id => id.GuideUserId.ToString() == guideId)
+                 .Select(x => new MineViewModel
+                 {
+                     AppUserId = x.ToString(),
+                     TourId = x.Id.ToString(),
+                     TourName = x.TourName
+                 }).ToListAsync();
+
+            return mines;
         }
 
         public async Task<DetailsViewModel> TourById(string tourId)

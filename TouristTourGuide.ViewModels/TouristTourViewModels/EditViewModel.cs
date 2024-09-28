@@ -54,11 +54,12 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         [MinLength(LocationPlaceMinLength)]
         [Display(Name = "Location city")]
         public string LocationCity { get; set; }
-
-            
+        public string Includes { get; set; }
+        public string StartEndHouers { get; set; }
+        public string? LocationState { get; set; }
         public int CategoryId { get; set; }
-        public List<CategoryFormViewModel> ?Categories { get; set; } = new List<CategoryFormViewModel>();
+        public List<CategoryFormViewModel>? Categories { get; set; } = new List<CategoryFormViewModel>();
         public int? LocationId { get; set; }        
-        public List<LocationFormViewModel> ?Locations { get; set; } = new List<LocationFormViewModel>();
+        public List<LocationFormViewModel>? Locations { get; set; } = new List<LocationFormViewModel>();
     }
 }

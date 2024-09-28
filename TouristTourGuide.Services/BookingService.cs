@@ -45,7 +45,7 @@ namespace TouristTourGuide.Services
                     PhoneNumber = x.PhoneNumber,
                     Email = x.Email,
                     CountOfPeople = x.CountOfPeople,
-                    BookingDate = x.BookedDate.ToString(),
+                    BookingDate = x.BookedDate.ToString("yyyy/MM/dd"),
                     // и това забравих да добавя преди 4/25/2024 тоест не го добвих на 4/23/2024
                     isAccepted = x.isAccepted,
                     AppUserId = x.ApplicationUser.FirstName + x.ApplicationUser.LastName

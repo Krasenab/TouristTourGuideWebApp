@@ -149,15 +149,9 @@ namespace TouristTourGuide.Services
 
         public async Task<string> TourImageUniqueName(string tourId)
         {
-            string fileName = await _dbContext.AppImages.Where(x => x.TouristTourId == Guid.Parse(tourId))
+            string? fileName = await _dbContext.AppImages.Where(x => x.TouristTourId == Guid.Parse(tourId))
                 .Select(x => x.UniqueFileName)
                 .FirstOrDefaultAsync();
-
-            if (String.IsNullOrEmpty(fileName))
-            {
-                throw new ArgumentNullException("The uniqueFile is null or not exist");
-            }
-
             return fileName;
         }
 

@@ -1,22 +1,70 @@
 ﻿@model TourWithBookingsViewModel
 <head>
+    <style>
+        .btn-success {
+            background:linear-gradient(45deg, #f6d365 0%, #fda085 50%, #ff9a9e 100%);
+            border-radius: 3px;
+            border: none;
+            color: white;
+            position: relative;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
 
+            .btn-success:hover {
+                background: linear-gradient(45deg, #ff9a9e 0%, #fda085 50%, #f6d365 100%);
+                box-shadow: 0px 8px 15px rgba(0,0,0,0.1);
+                transform: translateY(-3px);
+            }
+
+            .btn-success::after {
+                content: "";
+                position: relative;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+                transform: rotate(45deg);
+                transition: all 0.4s ease;
+                pointer-events: none;
+            }
+
+            .btn-success:hover::after {
+                left: 100%;
+                top: 100%;
+            }
+
+        .date-closed {
+            background-color: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            border: 1px;
+            border-radius: 2px;
+        }
+
+    </style>
 </head>
 
 <div class="container mt-5">
     <div class="row">
         <div class="col">
-            <h1 class="display-4 text-center">Tour Bookings</h1>
+            <h1 class="text-center">Tour Bookings</h1>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-2 mb-2">
+        <div class="col">
+            <h5>Bookings for @Model.TourName</h5>
+        </div>
+    </div>
+
+    <div class="row mt-2 mb-2">
         <div class="col">
             <input type="hidden" id="modelId" value="@Model.Id">
             <input type="date" id="newClosedDate">
             <button id="addClosedDate" type="button" class="btn-success">Close some date</button>
         </div>
-
     </div>
+
+
     <div class="row mt-4">
         <div class="col">
             <div class="table-responsive">
@@ -27,6 +75,7 @@
                             <th scope="col">Phone Number</th>
                             <th scope="col">Email</th>
                             <th scope="col">Count of People</th>
+                            <th scope="col">Booking date</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -46,6 +95,7 @@
                                     <td>@item.PhoneNumber</td>
                                     <td>@item.Email</td>
                                     <td>@item.CountOfPeople</td>
+                                    <td>@item.BookingDate</td>
                                     <td>
                                         @*4/25/2024 маханал съм жълтият бутон и сложих 2 нови *@
 

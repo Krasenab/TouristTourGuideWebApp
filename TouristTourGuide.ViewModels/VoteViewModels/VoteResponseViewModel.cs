@@ -9,8 +9,8 @@ namespace TouristTourGuide.ViewModels.VoteViewModels
     public class VoteResponseViewModel
     {
         public double RatingResultAfretVote { get; set; }
-
         public int VotesCount { get; set; }
+
 
     }
 }

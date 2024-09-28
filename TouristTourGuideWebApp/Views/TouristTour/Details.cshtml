@@ -35,7 +35,12 @@
             background-color: #E0F3EF;
             /*  background: linear-gradient(to left right, #E0F3EF, #FFFFFF); */
         }
-
+        .p{
+            color:#198754;
+        }
+        .h5,.h4{
+            color:#198754;
+        }
         .span {
             color: #FFD558;
         }
@@ -386,9 +391,9 @@ else
 </section>
 
 <section class="votes-section">
-    <div row="d-flex" style="border:2px solid black;">
-        <div class="col mb-3">
-            <h4 style="padding-left:10em;">Customer reviews</h4>
+    <div row="d-flex">
+        <div class="col-7 text-center">
+            <h4>Customer reviews</h4>
         </div>
     </div>
     <div class="custom-row" style="text-align:center; padding-top:2em;">
@@ -610,7 +615,7 @@ else
 <script>
     // Глобална променлива за текущия рейтинг
     var currentRating;
-
+    
     // Глобална функция за актуализиране на звездите
     function updateStars(rating) {
         console.log('Updating stars with rating:', rating);
@@ -645,7 +650,7 @@ else
             success: function (response) {
                 console.log(response);
                 var newRatingValue = response.ratingResultAfretVote;
-                var newVoteCount = response.VotesCount;
+                var newVoteCount = response.votesCount;
                 $('#ratingDisplay').text(newRatingValue.toFixed(2) + ' / ' + '5.00');
                 $('#voteBasedOn').text('Rating is based on ' + newVoteCount + ' users votes');
 

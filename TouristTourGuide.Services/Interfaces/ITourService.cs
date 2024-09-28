@@ -18,7 +18,7 @@ namespace TouristTourGuide.Services.Interfaces
         Task<List<string>> GetAllGuideUserToursId(string guideUserId);
         Task<string> GetTourOwnerIdByTourId(string tourId);
         Task<List<AllViewModel>> GetAllToursByGuideId(string guideId);
-        
+        Task<List<MineViewModel>> MineToursByGuideId(string guideId);
         
     }
 }

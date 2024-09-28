@@ -53,7 +53,7 @@ namespace TouristTourGuideWebApp.Controllers
                 await _bookingService.GetAll(allBokingQueryModel);
 
             allBokingQueryModel.AllToursWithBooking = serviceModel.AllBokings;
-             
+            allBokingQueryModel.AllBookedTour = serviceModel.TotalBookingsCount; 
             return View(allBokingQueryModel);
         }
 
@@ -70,13 +70,6 @@ namespace TouristTourGuideWebApp.Controllers
 
             });
 
-        }
-        [HttpGet]
-        public async Task<IActionResult> AcceptedBookings(string guideUserId)
-        {
-            var acceptedTourBookings = await _bookingService.GetAcceptedTourBookings(guideUserId);
-
-            return View(acceptedTourBookings);
         }
 
         [HttpGet]

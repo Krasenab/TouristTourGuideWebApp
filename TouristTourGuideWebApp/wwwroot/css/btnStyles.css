@@ -1,0 +1,60 @@
+﻿/* Стил за бутон при нормално състояние */
+.btn-search {
+    background-color: #FFD558;
+    border: none;
+    color: #333;
+    padding: 10px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+    /* Glow ефект при hover */
+    .btn-search:hover {
+        background-color: #FFC107;
+        color: white;
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(255, 193, 7, 0.6), 0 0 30px rgba(255, 193, 7, 0.6), 0 0 40px rgba(255, 193, 7, 0.6);
+    }
+
+    /* Ефект при натискане (разпръскване на светлина) */
+    .btn-search:active::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300%;
+        height: 300%;
+        background: rgba(255, 255, 255, 0.5);
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s ease-out;
+        border-radius: 50%;
+        opacity: 0;
+    }
+
+    .btn-search:active::before {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    /* Анимиране на вълна от светлина */
+    .btn-search::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 300%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: left 0.5s ease;
+    }
+
+    .btn-search:hover::after {
+        left: 100%;
+    }
+
+

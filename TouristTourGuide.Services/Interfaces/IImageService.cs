@@ -21,8 +21,7 @@ namespace TouristTourGuide.Services.Interfaces
         void DeleteManyTourImageFileMongoDb(List<string> fileUniqNames);
         void DeleteTourImagesSql(string tourId);
         void AddProfilePicture(IFormFile profilePicture, string applicationUserId);
-        Task<string> GetImageUniqueName(string uniqueName);
-        //add afet 24
+        Task<string> GetImageUniqueName(string uniqueName);        
         bool IsAppImageExist(string applicationUserId);
         Task<string> GetAppUserImageFileUniqueNameSQL(string appUserId);
         Task DelateImageByUniqName(string name);       
