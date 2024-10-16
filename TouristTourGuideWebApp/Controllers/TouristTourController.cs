@@ -8,6 +8,9 @@ using TouristTourGuide.ViewModels.TouristTourViewModels;
 using static TouristTourGuide.Infrastrucutre.ClaimPrincipalExtensions;
 using static TouristTourGuide.Common.NotificationMessage;
 using TouristTourGuide.Common;
+using Microsoft.Identity.Client;
+using TouristTourGuide.Data.Models.Sql.Models;
+using TouristTourGuide.ViewModels.AppUserTourViewModels;
 
 
 namespace TouristTourGuideWebApp.Controllers
@@ -23,11 +26,13 @@ namespace TouristTourGuideWebApp.Controllers
         private readonly IVoteService _voteService;
         private readonly ICommentsService _commentsService;
         private readonly IBookingService _bookingService;
+        private readonly IAppUserTourService _appUserTourService;
 
         public TouristTourController(ITourService tourService, ILocationService locationService
             , ICategoryService categoryService, IGuideUserService guideUserService, IImageService imageServie,
             IVoteService voteService, ICommentsService commentsService,
-            IBookingService bookingService)
+            IBookingService bookingService,
+            IAppUserTourService appUserTourService)
         {
             this._tourService = tourService;
             this._locationService = locationService;
@@ -37,6 +42,7 @@ namespace TouristTourGuideWebApp.Controllers
             this._voteService = voteService;
             this._commentsService = commentsService;
             this._bookingService = bookingService;
+            this._appUserTourService = appUserTourService;
         }
 
         [HttpPost]        
@@ -170,7 +176,7 @@ namespace TouristTourGuideWebApp.Controllers
 
             if (!_locationService.isCountryCityExist(editViewModel.LocationId, editViewModel.LocationCity))
             {
-                int locationId = editViewModel.LocationId ?? 0; // if editViewModel.LocationId is null set 0 this is bcouse prop in my view model is type int?
+                int locationId = editViewModel.LocationId ?? 0; // if editViewModel.LocationId is null set 0 this is because prop in my view model is type int?
 
                 _locationService.CreateCityCountry(locationId, editViewModel.LocationCity);
             }
@@ -250,7 +256,7 @@ namespace TouristTourGuideWebApp.Controllers
                 TourName = name,
                 TourBookings = getBookings
             };
-
+           
 
             return View(viewModel);
         }
@@ -272,8 +278,13 @@ namespace TouristTourGuideWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> MyTours(string guideUserId) 
         {
-        
-            
+            string appUserId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+
+            if (!_guideUserService.isUserGuide(appUserId))
+            {
+                TempData[WarningMassage] = "You must be tourist guide!";
+                return RedirectToAction("All", "TouristTour");
+            }
             AllMyToursVIewModel model = new AllMyToursVIewModel()
             {
                 MyTours = await _tourService.GetAllToursByGuideId(guideUserId)
@@ -299,5 +310,33 @@ namespace TouristTourGuideWebApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public  async Task<IActionResult> UserTourWishList(string appUserId) 
+        {
+            List<UserTourWishLIstViewModel> model = await _appUserTourService.GetAllAppUserWishToursAsync(appUserId);
+            return View(model);
+        }
+      
+        public async Task<IActionResult> AddToWishList(string tourId)
+        {
+           
+            string appUserId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+            if (!await _appUserTourService.IsAddedInList(appUserId,tourId))
+            {
+                TempData[WarningMassage] = "Tour already exist in your wish list";
+                return RedirectToAction("UserTourWishList", "TouristTour" , new { appUserId });
+            }
+            _appUserTourService.AddToWishList(tourId,appUserId);
+
+            TempData[SuccessMassage] = "Successfully added in wish list";
+            return RedirectToAction("UserTourWishList","TouristTour" , new { appUserId });
+        }
+        public async Task<IActionResult> RemoveFromWishList(string Id) 
+        {
+              string appUserId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+              await _appUserTourService.RemoveFromWish(Id, appUserId);
+            TempData[SuccessMassage] = "Successfully removed from wish list";
+            return RedirectToAction("UserTourWishList", "TouristTour", new { appUserId });
+        }
     }
 }

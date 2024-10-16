@@ -12,5 +12,8 @@ namespace TouristTourGuide.Services.Interfaces
         Task<string> GetFullNameById(string userId);
         Task<ProfileViewModel> GetAppUserPrfileInfo(string userId);
         Task<List<ProfileViewModel>> GetAllUserAsync();
+
+       
+      
     }
 }

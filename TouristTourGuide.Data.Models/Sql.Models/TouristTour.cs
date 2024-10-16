@@ -12,6 +12,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
             this.TouristTourDates = new List<TouristTourDates>();
             this.Comments = new List<Comments>();
             this.Votes = new List<Vote>();
+            this.AppUsersTours = new List<AppUsersTours>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -55,6 +56,8 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         [ForeignKey(nameof(CategoryId))]
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+
+        public virtual List<AppUsersTours> AppUsersTours { get; set; }
 
         public virtual List<AppImages> TourImages { get; set; }
         public virtual List<TouristTourDates> TouristTourDates { get; set; }

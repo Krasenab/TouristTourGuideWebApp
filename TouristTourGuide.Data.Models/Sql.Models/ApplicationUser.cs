@@ -9,9 +9,9 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         {
             this.UserToursBookings = new List<TouristTourBooking>();
             this.AppImages = new List<AppImages>();
+            this.AppUsersTours = new List<AppUsersTours>();
         }
-      
-
+        
         [MaxLength(FirstNameMaxLength)]
         public string? FirstName { get; set; }
         
@@ -21,6 +21,7 @@ namespace TouristTourGuide.Data.Models.Sql.Models
         public string? InstagramUrl { get; set; }
         public string? TwitterUrl { get; set; }
         public string? AbaoutMe { get; set; }
+        public List<AppUsersTours> AppUsersTours { get; set; }
         public List<TouristTourBooking> UserToursBookings { get; set; }
         public List<AppImages> AppImages {  get; set; } 
     }

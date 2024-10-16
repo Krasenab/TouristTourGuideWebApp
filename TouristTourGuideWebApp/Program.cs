@@ -71,9 +71,10 @@ namespace TouristTourGuideWebApp
 
             app.UseRouting();
             app.UseAuthorization();
-          /// app.SeedAdmin("admin@admin.com");
+            app.EnebleOnlineUsersCheck();
+           // app.SeedAdmin("admin@admin.com");
 
-    
+
             app.UseEndpoints(conf =>
             {
                 conf.MapControllerRoute(

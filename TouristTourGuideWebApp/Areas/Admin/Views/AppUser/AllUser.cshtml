@@ -1,4 +1,5 @@
 ﻿@using TouristTourGuideWebApp.Areas.Admin.ViewModel.AppUserViewModels
+@using TouristTourGuide.Infrastrucutre;
 @model AllUserViewModel
 
 @{
@@ -13,6 +14,7 @@
             <th><label>Full Name</label></th>
             <th><label>Phone Number</label></th>
             <th><label>User is tourist guide</label></th>
+            <th><label>User is online</label></th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +26,17 @@
                 <td><label>@guide.PhoneNumber</label></td>
                 <td>
                     @if (guide.PhoneNumber != null)
+                    {
+                        <label>&#10004</label>
+                    }
+                    else
+                    {
+                        <label class="text-center">&#10060</label>
+                    }
+                </td>
+                <td>
+
+                    @if (OnlineUsersMiddleware.CheckIfUserIsOnline(guide.AppUserId))
                     {
                         <label>&#10004</label>
                     }

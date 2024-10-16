@@ -65,6 +65,10 @@ namespace TouristTourGuide.Infrastrucutre
 
             return app;
         }
+        public static IApplicationBuilder EnebleOnlineUsersCheck(this IApplicationBuilder app) 
+        {
+            return app.UseMiddleware<OnlineUsersMiddleware>();
+        }
 
     }
   

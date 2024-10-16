@@ -26,6 +26,7 @@ namespace TouristTourGuide.Data
         public DbSet<Vote> Votes { get; set; }
         public DbSet<Comments> Comments { get; set; }
 
+        public DbSet<AppUsersTours> AppUsersTours { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

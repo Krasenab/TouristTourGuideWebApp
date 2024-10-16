@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TouristTourGuide.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class resetAgain : Migration
+    public partial class resetDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,6 +34,10 @@ namespace TouristTourGuide.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    FaceBookUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InstagramUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TwitterUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AbaoutMe = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -246,7 +250,7 @@ namespace TouristTourGuide.Data.Migrations
                     WhatToBring = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Highlights = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     KnowBeforeYouGo = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 7, 7, 9, 43, 32, 47, DateTimeKind.Utc).AddTicks(371)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 30, 18, 8, 17, 714, DateTimeKind.Utc).AddTicks(5585)),
                     LocationId = table.Column<int>(type: "int", nullable: true),
                     GuideUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -301,12 +305,36 @@ namespace TouristTourGuide.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppUsersTours",
+                columns: table => new
+                {
+                    TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUsersTours", x => new { x.TouristTourId, x.ApplicationUserId });
+                    table.ForeignKey(
+                        name: "FK_AppUsersTours_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AppUsersTours_TouristsTours_TouristTourId",
+                        column: x => x.TouristTourId,
+                        principalTable: "TouristsTours",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 7, 7, 9, 43, 32, 45, DateTimeKind.Utc).AddTicks(1443)),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 9, 30, 18, 8, 17, 712, DateTimeKind.Utc).AddTicks(8958)),
                     TouristTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -686,6 +714,11 @@ namespace TouristTourGuide.Data.Migrations
                 column: "TouristTourId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppUsersTours_ApplicationUserId",
+                table: "AppUsersTours",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -785,6 +818,9 @@ namespace TouristTourGuide.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AppImages");
+
+            migrationBuilder.DropTable(
+                name: "AppUsersTours");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");

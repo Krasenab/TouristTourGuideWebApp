@@ -21,6 +21,16 @@
         .show-card {
             right: 0;
         }
+
+        .side-bar{
+            height:100vh;
+        }
+        @@media(max-width:750px)
+        {
+            .side-bar{
+                height:50vh;
+            }
+        }
     </style>
 </head>
 
@@ -29,23 +39,23 @@
         <div class="col">
             <div class="card">
                 <div class="row">
-                    <div class="col-md-4 gradient-custom text-center text-white">
+                    <div class="col-md-3 gradient-custom text-center text-white side-bar">
                         @if (Model.ImageByte != null)
                         {
                             <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.ImageByte))"
-                                 alt="" class="img-fluid my-5" style="width: 80px;" />
+                                 alt="" class="img-fluid my-5" style="width: 90px;" />
                         }
                         else
                         {
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                 alt="" class="img-fluid my-5" style="width: 80px;" />
+                                 alt="" class="img-fluid my-5" style="width: 90px;" />
                         }
 
-                        <h5>@Model.Name</h5>
+                        <h4>@Model.Name</h4>
                         <p>Tourist</p>
                         <i class="far fa-edit mb-5"></i>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <div class="card-body p-4">
                             <h6>Information</h6>
                             <hr class="mt-0 mb-4">

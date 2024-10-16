@@ -18,6 +18,8 @@ namespace TouristTourGuide.Services
             this._touristTourGuideDbContext = touristTourGuideDbContext;     
         }
 
+       
+
         public async Task<List<ProfileViewModel>> GetAllUserAsync()
         {
             var getAll = await _touristTourGuideDbContext.ApplicationUsers
@@ -42,7 +44,7 @@ namespace TouristTourGuide.Services
 
         public async Task<ProfileViewModel> GetAppUserPrfileInfo(string userId)
         {
-            ProfileViewModel p = await _touristTourGuideDbContext.Users.Where(x=>x.Id.ToString()==userId)
+            ProfileViewModel? p = await _touristTourGuideDbContext.Users.Where(x=>x.Id.ToString()==userId)
                 .Select(x=> new ProfileViewModel() 
                 {
                     AppUserId = x.Id.ToString(),

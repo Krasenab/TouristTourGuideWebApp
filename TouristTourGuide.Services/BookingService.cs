@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TouristTourGuide.Data;
 using TouristTourGuide.Data.Models.Sql.Models;
 using TouristTourGuide.Services.Interfaces;
@@ -143,6 +144,11 @@ namespace TouristTourGuide.Services
                 throw new NullReferenceException("Empty bookings");
             }
             b.isAccepted = false;
+        }
+
+        public Task UserBookingStatus(string appUser)
+        {
+            throw new NotImplementedException();
         }
     }
 }
