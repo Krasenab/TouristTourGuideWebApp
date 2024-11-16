@@ -6,12 +6,19 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" integrity="sha512-kb1CHTNhoLzinkElTgWn246D6pX22xj8jFNKsDmVwIQo+px7n1yjJUZraVuR/ou6Kmgea4vZXZeUDbqKtXkEMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/indexfeatures.css">
+    <link rel="stylesheet" href="~/css/oursservices.css">
+    <link rel="stylesheet" href="~/css/destinationsection.css " />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch/css@3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    
     <!--ui kit-->
     @*     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"> *@
 
     <style>
+       
         body {
             overflow-x: hidden;
         }
@@ -21,9 +28,7 @@
             background-color: #F0FAF9;
         }
 
-        .p, h1, h2, h3 {
-            color: #194A4F;
-        }
+   
 
         .services {
             display: grid;
@@ -35,10 +40,10 @@
         }
 
 
-           /* Стилове за основния карусел */
-        #carouselExampleDark .carousel, 
-        #carouselExampleDark .carousel-inner, 
-        #carouselExampleDark .carousel-item, 
+        /* Стилове за основния карусел */
+        #carouselExampleDark .carousel,
+        #carouselExampleDark .carousel-inner,
+        #carouselExampleDark .carousel-item,
         #carouselExampleDark .carousel-item img {
             width: 100%;
             max-width: 100%;
@@ -48,12 +53,118 @@
             position: relative;
             background-color: #E0F3EF;
             max-height: 1000px;
+            height: 80vh;
+            /*  min-height: 500px; */
         }
 
-        #carouselExampleDark .carousel-item img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
+            #carouselExampleDark .carousel-item::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+                z-index: 1;
+            }
+
+            #carouselExampleDark .carousel-item img {
+                border-radius: 10px;
+                box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                transition: transform 1.5s ease;
+            }
+
+            #carouselExampleDark .carousel-item.active img {
+                transform: scale(1.1); /* Леко увеличение за паралакс ефект */
+            }
+
+        #carouselExampleDark .carousel-caption {
+            position: absolute;
+            bottom: 20%;
+            left: 10%;
+            z-index: 2;
+            color: white;
+            text-align: left;
+            max-width: 45%;
+            opacity: 0; /* Скриваме текста за фейд-ин анимацията */
+            transform: translateY(30px); /* Начална позиция за плавен преход */
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+           /*  #carouselExampleDark .carousel-caption::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+               
+                background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
+                z-index: -1;
+            } */
+
+        #carouselExampleDark .carousel-item.active .carousel-caption {
+            opacity: 1; /* Показваме текста при активен слайд */
+            transform: translateY(0); /* Връщаме текста на нормална позиция */
+        }
+
+            #carouselExampleDark .carousel-caption h3 {
+                font-size: 2.5rem;
+                font-weight: 500;
+                text-transform: uppercase;
+                text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+            }
+
+            #carouselExampleDark .carousel-caption p {
+                font-size: 1.5rem;
+                color: #EFEFEF;
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+                margin-top: 1rem;
+            }
+
+        .carousel-caption .cta-link {
+            font-size: 1.2rem;
+            color: #FFFFFF;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+            .carousel-caption .cta-link:hover {
+                color: #FFD700;
+            }
+
+        @@keyframes fadeInText {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animations for captions in the main carousel */
+        #carouselExampleDark .carousel-caption .animate__animated {
+            visibility: hidden;
+        }
+
+        #carouselExampleDark .carousel-item.active .carousel-caption .animate__animated {
+            visibility: visible;
+        }
+
+        #carouselExampleDark .carousel-control-prev-icon,
+        #carouselExampleDark .carousel-control-next-icon {
+            display: none;
+            width: 3rem;
+            height: 3rem;
+            background-size: 100%, 100%;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 50%;
         }
 
         @@media (max-width:900px) {
@@ -64,22 +175,22 @@
             }
         }
 
-        .carousel {
+        #testimonialCarousel .carousel {
             margin-bottom: 4rem;
             padding-left: 0;
             padding-right: 0;
         }
 
-        .carousel-caption {
+        #testimonialCarousel .carousel-caption {
             bottom: 3rem;
             z-index: 10;
         }
 
-        .carousel-item {
+        #testimonialCarousel .carousel-item {
             height: 36rem;
         }
 
-        
+
 
         .marketing .col-lg-4 {
             margin-bottom: 1.5rem;
@@ -91,64 +202,11 @@
                 margin-left: .75rem;
             }
 
-        /*тест стилове*/
+       
 
-        .indexfeatures {
-            padding-top: 5em;
-            padding-bottom: 5em;
-        }
-
-        .features {
-            justify-content: center;
-            gap: 3em;
-        }
-
-        .feature {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            background-color: #E0F3EF;
-            overflow: hidden;
-            border-radius: 10px; /* По-заоблени краища за модерен вид */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-            max-width: 400px; /* Максимална ширина на картичките */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            padding: 3em;
-        }
-
-            .feature:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-                color: #F0FAF9;
-            }
-
-
-
-            .feature::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background-color: #FFD558;
-                border-radius: 10px;
-                transition: left 0.5s ease;
-                z-index: 0;
-            }
-
-            .feature:hover::before {
-                left: 0;
-            }
-
-            .feature * {
-                position: relative;
-                z-index: 1;
-            }
-
-        .testimonials{
-            padding-left:0;
-            padding-right:0;
+        .testimonials {
+            padding-left: 0;
+            padding-right: 0;
         }
 
         .testimonial-card {
@@ -163,25 +221,25 @@
             .testimonial-card:hover {
                 transform: translateY(-10px);
                 box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-                border-radius:15px;
+                border-radius: 15px;
             }
 
             .testimonial-card img {
                 border: 5px solid #FFA726;
             }
 
-        .carousel-control-prev-icon,
+        #testimonialCarousel .carousel-control-prev-icon,
         .carousel-control-next-icon {
             width: 3rem;
             height: 3rem;
             background-size: 100%, 100%;
         }
 
-        .carousel-control-prev-icon {
+        #testimonialCarousel .carousel-control-prev-icon {
             background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23FFF" viewBox="0 0 16 16"><path d="M11.354 1.646a.5.5 0 0 1 0 .708L6.707 7l4.647 4.646a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708 0z"/></svg>');
         }
 
-        .carousel-control-next-icon {
+        #testimonialCarousel .carousel-control-next-icon {
             background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23FFF" viewBox="0 0 16 16"><path d="M4.646 1.646a.5.5 0 0 1 .708 0l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L9.293 7.5 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>');
         }
 
@@ -216,6 +274,78 @@
         }
 
 
+        
+        /*under hero section*/
+
+
+        .depth-section {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+           /*  background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1)); */
+
+           background: #fff;
+        }
+
+        .content-container {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-align: left;
+            max-width: 50%;
+        }
+
+        .content-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .content-description {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .learn-more-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1rem;
+            text-decoration: none;
+            background-color: #ff6347;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+            .learn-more-button:hover {
+                background-color: #e04f3e;
+            }
+
+        .lottie-container {
+            position: relative;
+            z-index: 2;
+            max-width: 40%;
+        }
+
+        #lottieCompassAnimation {
+            /* width: 100%;
+            height: 100%; */
+
+            width: 70%;
+            height: 70%;
+        }
+
+
+
+
+       
+
+
+ 
+
     </style>
 </head>
 
@@ -228,15 +358,17 @@
         <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="10000">
+        <div class="carousel-item active" data-bs-interval="5000">
+
             <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.PageImages[0].FileData))" class="d-block w-100" alt="">
             <div class="carousel-caption d-none d-md-block">
-                <h5>First slide label</h5>
-                <p>Some representative placeholder content for the first slide.</p>
+                <h3>Trips you don't forget</h3>
+                <p>Explore the Vatican Museums like never before</p>
+                <a href="#" class="cta-link">Learn more ></a>
             </div>
         </div>
-        <div class="carousel-item" data-bs-interval="2000">
-            @if (Model.PageImages.Count > 1)
+        <div class="carousel-item" data-bs-interval="5000">
+            @if (Model.PageImages.Count >= 1)
             {
                 <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.PageImages[1].FileData))" class="d-block w-100" style="height:auto" alt="">
             }
@@ -245,24 +377,24 @@
                 <img src="#" class="d-block w-100" alt="">
             }
             <div class="carousel-caption d-none d-md-block">
-                <h5>Second slide label</h5>
-                <p>Some representative placeholder content for the second slide.</p>
+                <h3>Trips you don't forget</h3>
+                <p>Explore the Vatican Museums like never before</p>
+                <a href="#" class="cta-link">Learn more ></a>
             </div>
         </div>
-        <div class="carousel-item">
+        <div class="carousel-item" data-bs-interval="5000">
             @if (Model.PageImages.Count >= 2)
             {
-                <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.PageImages[2].FileData))" class="d-block w-100" style="object-fit:cover; height: 32rem;" alt="">
+                <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.PageImages[5].FileData))" class="d-block w-100" alt="">
             }
             else
             {
                 <img src="#" class="d-block w-100" alt="">
             }
-
-
             <div class="carousel-caption d-none d-md-block">
-                <h5>Third slide label</h5>
-                <p>Some representative placeholder content for the third slide.</p>
+                <h3>Trips you don't forget</h3>
+                <p>Explore the Vatican Museums like never before</p>
+                <a href="#" class="cta-link">Learn more ></a>
             </div>
         </div>
     </div>
@@ -277,166 +409,166 @@
 </div>
 
 
-
-<section class="indexfeatures">
-    <div class="text-center">
-        <h2 class="pb-2">Ours services</h2>
+<div class="depth-section">
+    <div class="content-container">
+        <h2 class="content-title">Добре дошли в нашия свят на приключения</h2>
+        <p class="content-description">Открийте невероятни възможности за пътуване и приключения, водени от любопитство и дух на откриватели. Нека компасът ви отведе до нови хоризонти.</p>
+        <a href="#" class="learn-more-button">Научете повече</a>
     </div>
-    @*    <div class="container py-2" style="border:2px solid yellow; width:100%; display:flex;"  id="featured-3"> *@
-
-
-    <div class="row  py-3 features" style="border:2px solid yellow">
-        <div class="feature col">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="background-color:#FFD558!important;">
-                <span><i class="fa-solid fa-people-group fa-lg"></i></span>
-            </div>
-            <h3 class="fs-2 ">Featured title</h3>
-            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            <a href="#" class="icon-link">
-                Call to action
-            </a>
-        </div>
-        <div class="feature col">
-
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="background-color:#FFD558!important;">
-                @*  <span><i class="fa fa-solid fa-comment fa-lg"></i></span> *@
-                <span><i class="fa-solid fa-location-dot fa-lg"></i></span>
-            </div>
-            <h3 class="fs-2 text-body-emphasis">Featured title</h3>
-            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            <a href="#" class="icon-link">
-                Call to action
-
-            </a>
-        </div>
-        <div class="feature col">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="background-color:#FFD558!important">
-                <span><i class="fa-solid fa-heart fa-lg"></i></span>
-            </div>
-            <h3 class="fs-2 text-body-emphasis">Featured title</h3>
-            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            <a href="#" class="icon-link">
-                Call to action
-
-            </a>
-        </div>
+    <div class="lottie-container">
+        <div id="lottieCompassAnimation"></div>
     </div>
-    @* </div> *@
+</div>
 
+
+
+
+
+
+<section class="tourist-section">
+    <div class="left-column">
+        <h2>Natural Wonders</h2>
+        <p>Explore the most breathtaking natural wonders. Majestic mountains, lush fields, and crystal-clear lakes await you.</p>
+        <a href="#" class="cta-button">Learn More</a>
+    </div>
+    <div class="right-column-top">
+        <h2>Cultural Heritage</h2>
+        <p>Discover rich cultural heritage - museums, galleries, and ancient towns that immerse you in history.</p>
+        <a href="#" class="cta-button">Learn More</a>
+    </div>
+    <div class="right-column-bottom">
+        <h2>Adventure Tourism</h2>
+        <p>Experience unforgettable adventures - rafting, mountain hiking, and many other adrenaline-filled activities.</p>
+        <a href="#" class="cta-button">Learn More</a>
+    </div>
 </section>
 
+<section class="our-services">
 
-<section style="margin-left:2em; margin-right:2em;">
-
-    <h2 class="pb-2 border-bottom" style="text-align:center">Find</h2>
-
-    <div class="row featurettes">
-        <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">First featurette heading. <span class="text-body-secondary">It’ll blow your mind.</span></h2>
-            <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
-        </div>
-        <div class="col-md-5" style="display:flex; flex-direction:row-reverse">
-
-            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.PageImages[3].FileData))"
-                 width="500" height="500" alt="Featurette image" style="object-fit: cover; display: block;">
-        </div>
-    </div>
-
-    <div class="row featurette">
-        <div class="col-md-7 order-md-2" style="padding-left:1em;">
-            <h2 class="featurette-heading fw-normal lh-1">Oh yeah, it’s that good. <span class="text-body-secondary">See for yourself.</span></h2>
-            <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
-        </div>
-        <div class="col-md-5 order-md-1">
-            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.PageImages[4].FileData))" alt="Featurette image" width="500" height="500" style="object-fit:cover;">
-
-        </div>
+    <div class="service-card">
+        <div class="service-icon">🗺️</div>
+        <h3 class="service-title">Guided City Tours</h3>
+        <p class="service-description">Join exciting city tours with local guides who will show you hidden gems and famous landmarks.</p>
     </div>
 
 
+    <div class="service-card">
+        <div class="service-icon">👨‍💼</div>
+        <h3 class="service-title">Find Your Guide</h3>
+        <p class="service-description">Browse profiles of professional guides, read reviews, and choose the best fit for your adventure.</p>
+    </div>
+
+
+    <div class="service-card">
+        <div class="service-icon">🚶</div>
+        <h3 class="service-title">Custom Walking Tours</h3>
+        <p class="service-description">Personalize your tour experience with custom walking tours based on your interests and schedule.</p>
+    </div>
+
+
+    <div class="service-card">
+        <div class="service-icon">🌄</div>
+        <h3 class="service-title">Nature Excursions</h3>
+        <p class="service-description">Escape the city and enjoy breathtaking nature excursions with experienced outdoor guides.</p>
+    </div>
+
+    <div class="service-card">
+        <div class="service-icon">📈</div>
+        <h3 class="service-title">Grow Your Business</h3>
+        <p class="service-description">Guides can register to reach more tourists and promote their tours to a wider audience.</p>
+    </div>
 </section>
 
 
 
-
-    <!-- Секция с препоръки -->
-    <section class="testimonials py-5" style="background-color: #F0FAF9;">
-        <div class="container-fluid">
-            <h2 class="text-center mb-6" style="color: #194A4F;">Какво казват нашите клиенти</h2>
-            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <!-- Първи слайд -->
-                    <div class="carousel-item active">
-                        <div class="row justify-content-center">
-                            <div class="col-md-8">
-                                <div class="testimonial-card text-center p-4">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp" class="rounded-circle mb-4" alt="Client Photo" width="100" height="100">
-                                    <h5 class="mb-1" style="color: #194A4F;">Анна Петрова</h5>
-                                    <p class="mb-3" style="color: #FFA726;">Tourist</p>
-                                    <p style="color: #343A40;">
-                                        <i class="fas fa-quote-left pe-2" style="color: #FFA726;"></i>
-                                        Уникално изживяване! Екипът беше изключително професионален и внимателен към всички наши нужди.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Втори слайд -->
-                    <div class="carousel-item">
-                        <div class="row justify-content-center">
-                            <div class="col-md-8">
-                                <div class="testimonial-card text-center p-4">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(2).webp" class="rounded-circle mb-4" alt="Client Photo" width="100" height="100">
-                                    <h5 class="mb-1" style="color: #194A4F;">Иван Иванов</h5>
-                                    <p class="mb-3" style="color: #FFA726;">Tourist</p>
-                                    <p style="color: #343A40;">
-                                        <i class="fas fa-quote-left pe-2" style="color: #FFA726;"></i>
-                                        Препоръчвам горещо! Услугите им надминаха очакванията ми и направиха пътуването незабравимо.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Трети слайд -->
-                    <div class="carousel-item">
-                        <div class="row justify-content-center">
-                            <div class="col-md-8">
-                                <div class="testimonial-card text-center p-4">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(3).webp" class="rounded-circle mb-4" alt="Client Photo" width="100" height="100">
-                                    <h5 class="mb-1" style="color: #194A4F;">Мария Димитрова</h5>
-                                    <p class="mb-3" style="color: #FFA726;">Guide</p>
-                                    <p style="color: #343A40;">
-                                        <i class="fas fa-quote-left pe-2" style="color: #FFA726;"></i>
-                                        Изключително доволна съм от организацията и вниманието към детайлите. С удоволствие бих се възползвала отново.
-                                    </p>
-                                </div>
+<!-- Секция с препоръки -->
+<section class="testimonials py-5" style="background-color: #F0FAF9;">
+    <div class="container-fluid">
+        <h2 class="text-center mb-6">What Our Clients Say</h2>
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <!-- Първи слайд -->
+                <div class="carousel-item active">
+                    <div class="row justify-content-center" style="padding-top:1em;">
+                        <div class="col-md-10">
+                            <div class="testimonial-card text-center p-4">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp" class="rounded-circle mb-4" alt="Client Photo" width="100" height="100">
+                                <h5 class="mb-1" style="color: #194A4F;">Anna Petrova</h5>
+                                <p class="mb-3" style="color: #FFA726;">Tourist</p>
+                                <p style="color: #343A40;">
+                                    <i class="fas fa-quote-left pe-2" style="color: #FFA726;"></i>
+                                    Unique experience! The team was extremely professional and attentive to all our needs.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Контроли за карусела -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #194A4F;"></span>
-                    <span class="visually-hidden">Предишен</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #194A4F;"></span>
-                    <span class="visually-hidden">Следващ</span>
-                </button>
+                <!-- Втори слайд -->
+                <div class="carousel-item">
+                    <div class="row justify-content-center" style="padding-top:1em;">
+                        <div class="col-md-10">
+                            <div class="testimonial-card text-center p-4">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(2).webp" class="rounded-circle mb-4" alt="Client Photo" width="100" height="100">
+                                <h5 class="mb-1" style="color: #194A4F;">Ivan Ivanov</h5>
+                                <p class="mb-3" style="color: #FFA726;">Tourist</p>
+                                <p style="color: #343A40;">
+                                    <i class="fas fa-quote-left pe-2" style="color: #FFA726;"></i>
+                                    I highly recommend! Their services exceeded my expectations and made the trip unforgettable.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Трети слайд -->
+                <div class="carousel-item">
+                    <div class="row justify-content-center" style="padding-top:1em;">
+                        <div class="col-md-10">
+                            <div class="testimonial-card text-center p-4">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(3).webp" class="rounded-circle mb-4" alt="Client Photo" width="100" height="100">
+                                <h5 class="mb-1" style="color: #194A4F;">Maria Dimitrova</h5>
+                                <p class="mb-3" style="color: #FFA726;">Guide</p>
+                                <p style="color: #343A40;">
+                                    <i class="fas fa-quote-left pe-2" style="color: #FFA726;"></i>
+                                    I am extremely satisfied with the organization and attention to detail. I would gladly use their services again.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- Контроли за карусела -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #194A4F;"></span>
+                <span class="visually-hidden"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #194A4F;"></span>
+                <span class="visually-hidden"></span>
+            </button>
         </div>
-    </section>
+    </div>
+</section>
 
 
 
 
-<!-- jQuery -->
+@* <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap Bundle JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <!-- MDBootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+ *@
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
 
+<script>
+    AOS.init({
+        duration: 1000, // Продължителност на анимацията в милисекунди
+        easing: 'ease-in-out', // Стил на анимацията
+        once: true, // Анимация само веднъж
+    });
+</script>
 <script>
     // Initialize the carousel
     document.addEventListener('DOMContentLoaded', function () {
@@ -445,5 +577,95 @@
             interval: 10000,
             ride: 'carousel'
         });
+    });
+</script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const canvas = document.getElementById("depthCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        const particles = [];
+
+        function initParticles(numParticles) {
+            for (let i = 0; i < numParticles; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2 + 1,
+                    color: "rgba(0, 123, 255, 0.8)",
+                    velocityX: (Math.random() - 0.5) * 0.5,
+                    velocityY: (Math.random() - 0.5) * 0.5,
+                });
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                // Draw particle
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+
+                // Move particle
+                p.x += p.velocityX;
+                p.y += p.velocityY;
+
+                // Re-position particle if out of bounds
+                if (p.x > canvas.width) p.x = 0;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.y > canvas.height) p.y = 0;
+                if (p.y < 0) p.y = canvas.height;
+
+                // Draw lines for depth effect
+                particles.forEach(otherP => {
+                    let dx = p.x - otherP.x;
+                    let dy = p.y - otherP.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(otherP.x, otherP.y);
+                        ctx.strokeStyle = "rgba(0, 123, 255, 0.2)";
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Initialize and animate particles
+        initParticles(100);
+        animateParticles();
+
+        // Resize canvas on window resize
+        window.addEventListener("resize", () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            particles.length = 0;
+            initParticles(100);
+        });
+    });
+
+
+</script>
+<script>
+    // Lottie Compass Animation Script
+    const lottieCompassContainer = document.getElementById('lottieCompassAnimation');
+    lottie.loadAnimation({
+        container: lottieCompassContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'https://lottie.host/7415d075-998b-4852-bcb9-54074d477867/uNY3wbtnVl.json' // Примерен файл с анимация на компас, свързана с туризъм
     });
 </script>

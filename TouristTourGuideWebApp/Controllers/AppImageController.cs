@@ -54,7 +54,7 @@ namespace TouristTourGuideWebApp.Controllers
             string uniqueFileNameForProfilePicture = await _imageSerive.GetAppUserImageFileUniqueNameSQL(appUserId);
             _imageSerive.AddImageFileToMongoDb(appUserPicture, uniqueFileNameForProfilePicture);
 
-            return RedirectToAction("AppUserProfile", "AppUserControler");
+            return RedirectToAction("AppUserProfile", "AppUserController",new {appUserId });
         }
 
     }

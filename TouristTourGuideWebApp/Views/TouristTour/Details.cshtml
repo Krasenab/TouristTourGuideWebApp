@@ -32,10 +32,10 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
     <style>
         .containers {
-            background-color: #E0F3EF;
+          /*   background-color: #E0F3EF; */
             /*  background: linear-gradient(to left right, #E0F3EF, #FFFFFF); */
         }
-        .p{
+        /* .p{
             color:#198754;
         }
         .h5,.h4{
@@ -43,7 +43,7 @@
         }
         .span {
             color: #FFD558;
-        }
+        } */
 
         .text-truncate {
             overflow: hidden;
@@ -196,14 +196,14 @@ else
 
 <section class="information-section-top p-4 bg-white rounded shadow-sm mb-4">
     <div class="text-center mb-4">
-        <h5 class="text-primary">General information</h5>
+        <h5 class="text">General information</h5>
     </div>
     <div class="row text-center mb-3">
         <div class="col-md-4">
             <div class="card border-0">
                 <div class="card-body">
                     <span class="material-symbols-outlined text-dark">payments</span>
-                    <p class="mt-2">@Model.PricePerPerson</p>
+                    <p class="mt-2">@Model.PricePerPerson - per person</p>
                 </div>
             </div>
         </div>
@@ -211,7 +211,7 @@ else
             <div class="card border-0">
                 <div class="card-body">
                     <span class="material-symbols-outlined text-dark">av_timer</span>
-                    <p class="mt-2">@Model.Duaration</p>
+                    <p class="mt-2">@Model.Duaration </p>
                 </div>
             </div>
         </div>
@@ -263,7 +263,7 @@ else
 
 <section class="information-section p-4 bg-white rounded shadow-sm mb-4">
     <div class="mb-4">
-        <h5 class="text-primary">Experience</h5>
+        <h5 class="text">Experience</h5>
         <div class="row">
             <div class="col-md-2">
                 <p><strong>Highlights</strong></p>
@@ -300,7 +300,7 @@ else
                 <ul class="list-unstyled">
                     @foreach (var include in (Model.Includes ?? string.Empty).Split(new[] { '\n', ',', ';' }, StringSplitOptions.RemoveEmptyEntries))
                     {
-                        <li class="text-success">✓ @include</li>
+                        <li class="text">@include</li>
                     }
                 </ul>
             </div>

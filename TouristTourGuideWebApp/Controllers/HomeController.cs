@@ -26,7 +26,7 @@ namespace TouristTourGuideWebApp.Controllers
             }
             var pageImages = _imageService.GetIndexPageImageMongoDb();
             PageImageViewModel pageImageViewModel = new PageImageViewModel();
-            pageImageViewModel.PageImages = pageImages.Where(x => x.CustomUniqeFileName == "Ahnali people" || x.CustomUniqeFileName == "streetIndexView" || x.CustomUniqeFileName == "beatefulPlace" || String.IsNullOrEmpty(x.CustomUniqeFileName) || x.CustomUniqeFileName == "findpicture" || x.CustomUniqeFileName =="secondFind").ToList();
+            pageImageViewModel.PageImages = pageImages.Where(x => x.CustomUniqeFileName == "Ahnali people" || x.CustomUniqeFileName == "streetIndexView" || x.CustomUniqeFileName == "beatefulPlace" || String.IsNullOrEmpty(x.CustomUniqeFileName) || x.CustomUniqeFileName == "findpicture" || x.CustomUniqeFileName =="secondFind" || x.CustomUniqeFileName=="muss").ToList();
             return View(pageImageViewModel);
         }      
         public IActionResult Privacy()

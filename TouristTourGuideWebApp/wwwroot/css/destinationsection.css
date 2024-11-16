@@ -1,0 +1,155 @@
+﻿.tourist-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 70px auto;
+    padding: 40px;
+    /*background-color: #f9fafc;*/
+
+    border-radius: 20px;
+    /*  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);  да се отлечава контейнера в който са колоните в контейнера*/
+    overflow: hidden;
+}
+
+.left-column, .right-column-top, .right-column-bottom {
+    position: relative;
+   /* color: #fff;*/
+    padding: 40px;
+    border-radius: 20px;
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.left-column {
+    background: url('https://thumbs.dreamstime.com/b/campers-adventure-hiking-101669109.jpg') center/cover;
+    /* grid-row: span 2;
+         Установете височина на лявата картичка вид разпределение  */
+    grid-column: 1 / 2;
+    grid-row: 1 / 3; /* Заема и двата реда правейки лявата колона по-висока */
+
+    padding: 40px;
+    color: #fff;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.right-column-top {
+    background: url('https://images.stockcake.com/public/4/9/9/4992f02b-2ffe-48b4-9c81-9177f65cb087_large/tour-guide-pointing-stockcake.jpg') center/cover;
+    grid-column: 2 / 3;
+    grid-row: 1 / 2; /* Позиционира се в горната част на дясната колона */
+
+    padding: 40px;
+    color: #fff;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.right-column-bottom {
+    background: url('https://www.muchbetteradventures.com/_next/image/?url=https%3A%2F%2Fimages.ctfassets.net%2Fm5us57n7qfgl%2F6HemqTWt0t4FGOf3eh1KoT%2Fb6525d8f41d5d3103455fb97c9b98c06%2FPackrafting_lesson__Montenegro__Tara_River_Host.jpg&w=2048&q=50') center/cover;
+    color: #fff;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3; /* Позиционира се в долната част на дясната колона */
+}
+
+
+
+    .left-column:hover, .right-column-top:hover, .right-column-bottom:hover {
+        transform: scale(1.03);
+    }
+
+    .left-column::before, .right-column-top::before, .right-column-bottom::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+       /* background: rgba(0, 0, 0, 0.5);*/
+        transition: backdrop-filter 0.3s ease;
+        border-radius: 20px;
+    }
+
+    .left-column:hover::before, .right-column-top:hover::before, .right-column-bottom:hover::before {
+        backdrop-filter: blur(6px);
+    }
+
+h2 {
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    font-weight: 700;
+    z-index: 1;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+p {
+    font-size: 1.1em;
+    line-height: 1.7;
+    z-index: 1;
+    position: relative;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cta-button {
+    background-color: #ff6b4a;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    /*max-width: auto;*/
+    max-width:150px;
+    border-radius: 30px;
+    font-weight: 300;
+    font-size: 1em;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    position: relative;
+}
+
+    .cta-button:hover {
+        background-color: #ff3a21;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+    }
+
+    .cta-button::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 30px;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .cta-button:hover::after {
+        opacity: 1;
+    }
+
+
+/* Адаптивно оформление за по-малки екрани */
+@media (max-width: 768px) {
+    .tourist-section {
+        grid-template-columns: 1fr; /* Превключва в едноколонно оформление */
+        grid-template-rows: auto;
+    }
+
+    .left-column,
+    .right-column-top,
+    .right-column-bottom {
+        grid-column: auto; /* Всяка колона заема цялата ширина на екрана */
+        grid-row: auto;
+        height: auto; /* Снимките могат да заемат автоматично височината си */
+        padding: 20px;
+    }
+}
