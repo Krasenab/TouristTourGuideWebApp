@@ -19,7 +19,7 @@ namespace TouristTourGuide.ViewModels.TouristTourViewModels
         [Display(Name = "Sort tour by")]
         public TourSorting TourSorting { get; set; }
         public int CurrentPage { get; set; } = 1;
-        public int TourPerPage { get; set; } = 3;
+        public int TourPerPage { get; set; } = 6; // = 3;
         public int TourTotal { get; set; }
         public List<string> Categories { get; set; }
         public List<AllViewModel> Tours { get; set; }       

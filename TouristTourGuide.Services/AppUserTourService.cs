@@ -19,8 +19,9 @@ namespace TouristTourGuide.Services
                 _db = db;
         }
 
-        public  void AddToWishList(string tourId, string appUserId)
+        public void AddToWishList(string tourId, string appUserId)
         {
+            
            
             AppUsersTours ap = new AppUsersTours()
             {
@@ -55,7 +56,7 @@ namespace TouristTourGuide.Services
 
         public async Task<bool> IsAddedInList(string appUserId, string tourId)
         {
-            bool isExist = await _db.AppUsersTours.Where(x=>x.TouristTourId.ToString() == tourId && x.ApplicationUserId.ToString()==tourId).AnyAsync();
+            bool isExist = await _db.AppUsersTours.Where(x=>x.TouristTourId.ToString() == tourId && x.ApplicationUserId.ToString()==appUserId).AnyAsync();
             if(!isExist) 
             {
                 return isExist;

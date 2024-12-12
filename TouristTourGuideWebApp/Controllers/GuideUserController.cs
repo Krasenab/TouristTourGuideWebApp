@@ -24,8 +24,8 @@ namespace TouristTourGuideWebApp.Controllers
         public IActionResult BecomeGuide()
         {
             string getAppUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
-
-            if (_guideUserService.isUserGuide(getAppUser))
+            bool isGuide = _guideUserService.isUserGuide(getAppUser);
+            if (isGuide)
             {
                 //TODO add toast 
                 return RedirectToAction("Index", "Home");
@@ -41,6 +41,7 @@ namespace TouristTourGuideWebApp.Controllers
         public async Task<IActionResult> BecomeGuide(BecomeGuideUserViewModel viewModel)
         {
             string getUser = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
+            string u = getUser;
             await _guideUserService.CreateGuide(viewModel, getUser);
 
             return RedirectToAction("Index", "Home");

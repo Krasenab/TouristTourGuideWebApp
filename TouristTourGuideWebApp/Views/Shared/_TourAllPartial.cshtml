@@ -9,91 +9,96 @@
     bool isCurrentUserOwner = false;
 
     bool userIsGuide = ugs.isUserGuide(this.User.GetCurrentUserId());
-    // bool isUserAdmin = ClaimPrincipalExtensions.IsAdmin(this.User);    
+    // bool isUserAdmin = ClaimPrincipalExtensions.IsAdmin(this.User);
     if (userIsGuide)
     {
         string guideId = ugs.GuidUserId(this.User.GetCurrentUserId());
 
-        isCurrentUserOwner = await tourService.IsTourOwner(guideId, Model.Id);        
+        isCurrentUserOwner = await tourService.IsTourOwner(guideId, Model.Id);
     }
 
 }
 <head>
     <style>
-
-        .card{
-            position:relative;
-            overflow:hidden;
-            border-radius:15px;
-            box-shadow:0px 4px 8px rgba(0, 0, 0, 0.1);
+       
+        .card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.5s ease, box-shadow 0.3s ease;
-            width:300px;
+            width: 300px;
+
         }
-        .card img{
-            width:100%;
-           max-height:200px;
-            transition:transform 0.5s ease;
-        }
-        .card:hover img{
-            transform:scale(1.1);
-        }
-        .card-body{
+
+            .card img {
+                width: 100%;
+                max-height: 200px;
+                transition: transform 0.5s ease;
+            }
+
+            .card:hover img {
+                transform: scale(1.1);
+            }
+
+        .card-body {
             background: linear-gradient(110deg, #f8f9fa 0%,#e9ecef 100%);
-            padding:16px;
-            text-align:center;
+            padding: 16px;
+            text-align: center;
         }
-        .card-body h4{
-            margin-bottom:15px;
-            font-size:1.5rem;
-            color: #343a40;
-        }
+
+            .card-body h4 {
+                margin-bottom: 15px;
+                font-size: 1.5rem;
+                color: #343a40;
+            }
     </style>
 </head>
 
 
-    <div class="col-md-3" style="display:flex">
-        <div class="card mb-3">
-            @if ((@Model.TourImage != null))
+<div class="col-md-3" style="display:flex; z-index:2;">
+    <div class="card mb-3">
+        @if ((@Model.TourImage != null))
+        {
+            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(imageService.GetImageBytesMongoDb(Model.TourImage.UniqueFileName)))"
+                 alt="" class="img-fluid">
+        }
+        else
+        {
+            <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(imageService.GetImageBytesMongoDb("noimage")))">
+        }
+        <div class="card-body text-center">
+            <h4>@Model.Title</h4>
+
+            <h6>Location: <b>@Model.Location</b></h6>
+            <h6>
+                Price Per Person:
+                <b>@String.Format("{0:f2}", Model.PricePerPerson) BGN</b>
+            </h6>
+
+            <br />
+            <a asp-area="" asp-controller="TouristTour" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-success">Details</a>
+            @if (!userIsGuide)
             {
-                <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(imageService.GetImageBytesMongoDb(Model.TourImage.UniqueFileName)))"
-                     alt="" class="img-fluid">
+                <a asp-area="" asp-controller="TouristTour" asp-action="AddToWishList" asp-route-tourId="@Model.Id">Add to wish list</a>
             }
-            else
+
+
+            @if (userIsGuide)
             {
-                <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(imageService.GetImageBytesMongoDb("noimage")))">
+                @if (isCurrentUserOwner || this.User.IsAdmin())
+                {
+                    <a asp-area="" asp-controller="TouristTour" asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-warning">Edit</a>
+
+                    <a asp-area="" asp-controller="TouristTour" asp-action="Delete" asp-routeid="@Model.Id"
+                       class="btn btn-danger">Delete</a>
+                }
+
+
             }
-            <div class="card-body text-center">
-                <h4>@Model.Title</h4>
-
-                <h6>Location: <b>@Model.Location</b></h6>
-                <h6>
-                    Price Per Person:
-                    <b>@String.Format("{0:f2}", Model.PricePerPerson) BGN</b>
-                </h6>
-
-                <br />
-                <a asp-area="" asp-controller="TouristTour" asp-action="Details" asp-route-id="@Model.Id"
-                   class="btn btn-success">Details</a>
-                 @if (!userIsGuide)
-                {
-                    <a asp-area="" asp-controller="TouristTour" asp-action="AddToWishList" asp-route-tourId="@Model.Id">Add to wish list</a>            
-                }
-          
-
-                @if (userIsGuide)
-                {
-                    @if (isCurrentUserOwner || this.User.IsAdmin())
-                    {
-                        <a asp-area="" asp-controller="TouristTour" asp-action="Edit" asp-route-id="@Model.Id"
-                           class="btn btn-warning">Edit</a>
-
-                        <a asp-area="" asp-controller="TouristTour" asp-action="Delete" asp-routeid="@Model.Id"
-                           class="btn btn-danger">Delete</a>
-                    }
-                    
-
-                }
-            </div>
         </div>
     </div>
+</div>
 

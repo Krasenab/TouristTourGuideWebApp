@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 @{
-    string currentUserId = userManager.GetUserId(this.User);
+    string? currentUserId = userManager.GetUserId(this.User);
     bool isGuide = guideService.isUserGuide(currentUserId);
     byte[] logoData = imageService.GetImageBytesMongoDb("Logo");
 }
@@ -65,7 +65,7 @@
 <body>
     <partial name="_NotificationPartial" />
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow" style="background:linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow" style="background:#E0F3EF">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     @*Лого снимката на нав бара.(трябва да го сменя логото)*@
@@ -75,27 +75,27 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between" id="navbarSupportedContent" style="justify-content:center; border:2px solid pink; background:linear-gradient(to right bottom, rgba(246, 211, 101, 1))">
-                    <ul class="navbar-nav flex-grow-1" style="border:2px solid yellow;justify-content:center">
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between" id="navbarSupportedContent" style="justify-content:center; ">
+                    <ul class="navbar-nav flex-grow-1" style="justify-content:center">
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="TouristTour" asp-action="All">Explore</a>
+                            <a class="nav-link text-black" asp-area="" asp-controller="TouristTour" asp-action="All">Explore</a>
                         </li>
                         @if (!isGuide)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white text-nowrap" asp-area="" asp-controller="GuideUser" asp-action="BecomeGuide">Become a supplier</a>
+                                <a class="nav-link text-black text-nowrap" asp-area="" asp-controller="GuideUser" asp-action="BecomeGuide">Become a supplier</a>
                             </li>
                         }
                         @if (isGuide)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white text-nowrap" asp-area="" asp-controller="TouristTour" asp-action="Create">Add tours</a>
+                                <a class="nav-link text-black text-nowrap" asp-area="" asp-controller="TouristTour" asp-action="Create">Add tours</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white text-nowrap" asp-area="" asp-controller="Booking" asp-action="AllBookings">Tours with booking</a>
+                                <a class="nav-link text-black text-nowrap" asp-area="" asp-controller="Booking" asp-action="AllBookings">Tours with booking</a>
                             </li>
                         }
                     </ul>
@@ -111,8 +111,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" style="background:linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))">
-        <div class="container">
+    <footer class="border-top footer text-muted" style="background:#E0F3EF">
+        <div class="container text-black">
             &copy; 2024 - TouristTourGuideWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

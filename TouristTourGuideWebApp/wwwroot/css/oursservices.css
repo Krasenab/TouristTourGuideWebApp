@@ -1,4 +1,4 @@
-﻿.our-services {
+﻿/*.our-services {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -19,10 +19,10 @@
     position: relative;
     overflow: hidden;
     color: #333;
-}
+}*/
 
     /* Анимиран фон при ховър */
-    .service-card::before {
+    /*.service-card::before {
         content: "";
         position: absolute;
         top: 0;
@@ -37,10 +37,10 @@
 
     .service-card:hover::before {
         left: 0;
-    }
+    }*/
 
     /* Ефект при ховър */
-    .service-card:hover {
+    /*.service-card:hover {
         transform: rotate(1deg) scale(1.05);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         color: white;
@@ -105,10 +105,10 @@
     position: relative;
     overflow: hidden;
     color: #333;
-}
+}*/
 
     /* Анимиран фон при ховър */
-    .service-card::before {
+    /*.service-card::before {
         content: "";
         position: absolute;
         top: 0;
@@ -123,10 +123,10 @@
 
     .service-card:hover::before {
         left: 0;
-    }
+    }*/
 
     /* Ефект при ховър */
-    .service-card:hover {
+    /*.service-card:hover {
         transform: rotate(1deg) scale(1.05);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         color: white;
@@ -169,4 +169,93 @@
 
 .service-card:hover .service-description {
     color: #f0f0f0;
+}*/
+
+/* Основен стил за секцията */
+.our-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 50px;
+    background-color: #E0F3EF; /* Светъл фон зад картичките */
+  
+}
+
+.service-card {
+    background-color: white;
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    color: #333;
+}
+
+    /* Анимиран фон при ховър */
+    .service-card::before {
+        content: "";
+        position: absolute; /* За да покрива картата */
+        top: 0;
+        left: -100%; /* Започва извън картата */
+        width: 300%; /* Достатъчно голям, за да създаде ефект */
+        height: 100%;
+        background: linear-gradient(120deg, #FFA65B, #FFD2A5, #FFA65B); /* Градиент с мек оранжев цвят */
+        transition: 0.5s; /* Плавен преход */
+        z-index: 0; /* Поставя фона зад съдържанието */
+        transform: skewX(-15deg); /* Лек наклон за динамичен ефект */
+    }
+
+    .service-card:hover::before {
+        left: 0; /* Фонът преминава върху картата при ховър */
+    }
+
+    /* Ефект при ховър */
+    .service-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        color: white;
+    }
+
+/* Стилизация на текстовете и иконите */
+.service-icon,
+.service-title,
+.service-description {
+    position: relative;
+    z-index: 1;
+}
+
+.service-icon {
+    font-size: 40px;
+    color: #FFA65B;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+    color: white;
+}
+
+.service-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.service-card:hover .service-title {
+    color: white;
+}
+
+.service-description {
+    font-size: 1rem;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.service-card:hover .service-description {
+    color: #fefefe;
 }

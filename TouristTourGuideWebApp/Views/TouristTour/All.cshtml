@@ -10,11 +10,84 @@
 }
 <head>
     <link rel="stylesheet" href="~/css//btnStyles.css"/>
+    <style>
+        .partialRow{
+            position:relative;                  
+            overflow: hidden;
+            color: #333;
+            display:flex;
+        }
+
+        .partialRow::before{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 400" fill="none" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M0 200 C300 100 600 300 900 200 S1440 100 1440 200" stroke="%23ccc" stroke-width="2" fill="none"/><circle cx="900" cy="200" r="6" fill="%23FF6347"/><circle cx="1200" cy="150" r="6" fill="%23FF6347"/><circle cx="500" cy="300" r="6" fill="%23FF6347"/></svg>') no-repeat center/cover;
+                z-index: 1;
+                opacity: 0.8;
+
+        }
+
+        .partialRow::after{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.2); /* Прозрачен слой за по мек вид */
+                z-index: 1;
+
+        
+        }
+
+        .title-section {
+            height: 200px;
+            background-size: cover;
+            background-repeat: no-repeat;
+          /*   background-attachment: fixed; */
+            display: flex;
+             justify-content: center;
+            align-items: center;
+           /*  padding: 0 20px;  *//* Оставя място от двете страни */
+            position: relative;
+        }
+
+            .title-section h2 {
+                font-size: 2rem;
+                color: #000;
+                 margin: 0; 
+            }
+
+        .lottie-container {
+            width: 450px; /* Увеличава ширината на анимацията */
+            height: 450px; /* Увеличава височината на анимацията */
+            position: absolute;
+            right: 15em; /* Поставя анимацията вдясно 20px */
+            
+            top: 50%; /* Центрира анимацията вертикално */
+            transform: translateY(-30%); /* Центрира на базата на височината */
+            z-index:-1;
+            
+        }
+        @@media(max-width:1068px)
+        {
+            .lottie-container {
+                right:20px;
+            }
+        }
+    </style>
   
 </head>
 
-<section class="title-section parallax" style="background-image: url('@base64img'); height:200px; background-size:cover; background-repeat:no-repeat; background-attachment:fixed;">
-    <h2 class="text-center text-white" >@ViewBag.Title</h2>
+<section class="title-section parallax">
+    <h2 class="text-center text-black" >@ViewBag.Title</h2>
+    <div class="lottie-container">
+        <div id="globusAnimation"></div>
+    </div>
 </section>
 
 <form method="get" style="margin:2em">
@@ -65,7 +138,7 @@
      var maxPage = (int)Math.Ceiling((double)Model.TourTotal / Model.TourPerPage);
 }
 
-<div class="row mb-5">
+<div class="row mb-5" style="margin-bottom:1em;">
     <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
         <a class="btn btn @(Model.CurrentPage == 1 ? "disabled" :
             string.Empty)"
@@ -97,7 +170,7 @@
     <h2 class="text-center">No tours found by the given criteria!</h2>
 }
 
-<div class="row">
+<div class="row partialRow" style="margin: auto 1em;">
 
     @foreach (var tour in Model.Tours)
     {
@@ -105,3 +178,19 @@
     }
 
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.1/lottie.min.js"></script>
+<script>
+    // Проверка дали Lottie е зареден
+    document.addEventListener("DOMContentLoaded", function () {
+        const lottieGlobus = document.getElementById('globusAnimation'); // Взимаме контейнера
+        lottie.loadAnimation({
+            container: lottieGlobus, // Контейнер за анимацията
+            renderer: 'svg', // Рендер тип SVG
+            loop: false, // Цикличност
+            autoplay: true, // Автоматично стартиране
+            path: 'https://lottie.host/7a73911d-51fc-4df8-8024-531b9f73e9b6/lCboKmlKky.json' // Линк към JSON анимация
+        });
+    });
+</script>
+

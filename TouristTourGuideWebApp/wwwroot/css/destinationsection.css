@@ -97,12 +97,13 @@ p {
 }
 
 .cta-button {
-    background-color: #ff6b4a;
+    /* background-color: #ff6b4a;*/
+    background-color: #FFA726;
     color: #fff;
     text-decoration: none;
     padding: 10px 20px;
     /*max-width: auto;*/
-    max-width:150px;
+    max-width: 150px;
     border-radius: 30px;
     font-weight: 300;
     font-size: 1em;
@@ -114,7 +115,7 @@ p {
 }
 
     .cta-button:hover {
-        background-color: #ff3a21;
+        background-color: #ff6b4a; /* #ff3a21;*/
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         transform: scale(1.05);
     }

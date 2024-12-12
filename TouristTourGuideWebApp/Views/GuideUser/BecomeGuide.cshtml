@@ -2,249 +2,332 @@
 @model BecomeGuideUserViewModel
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Guide</title>
+    <!-- Google Fonts -->
+    @* <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> *@
+    <!-- Bootstrap 5 -->
+    @* <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> *@
     <style>
-        * {
-            box-sizing: border-box;
+        .section-guide {
+          
+          /*   background: #f5f5f5; */
             margin: 0;
-            padding: 0;
+            padding: 0 0 50px;
+            background: #E0F3EF;
         }
 
-        #regForm {
-            background-color: #ffffff;
-            margin: 1em auto;
-            padding: 1em;
-            width: 70%;
-            min-width: 300px;
-            border-radius: 8px;
-            /*  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); */
+        /* Header Section */
+        .headerss {
+            position: relative;
+            height: 70vh;
+           /*  background: linear-gradient(to bottom, #fff9e6, #f8c471); import old color */
+            background: #f5f5f5 ;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #333;
+            overflow: hidden;
         }
 
-        .form-group {
-            margin-bottom: 1.5em;
+            .headerss h1 {
+                font-size: 3rem;
+                font-weight: 300;/* 400 */
+                color: black;/* #f39c12; */ /* Оранжев цвят за заглавието */
+                margin-bottom: 0.5rem;
+                margin-top:1em;
+                z-index: 2;
+                position: relative;
+     
+                
+            }
+
+            .headerss p {
+                font-size: 1.2rem;
+                font-weight: 250; /* 300 */
+                color: black;/* #333; */
+                margin-top: 0.5rem;
+                z-index: 2;
+                position: relative;
+            }
+
+            .headerss svg {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: auto;
+                z-index: 1;
+                
+            }
+
+        /* Form Section */
+        .form-container {
+            margin: 100px auto 50px; /* Допълнителен отстъп от хедъра */
+            max-width: 700px;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.5em;
-            font-weight: 600;
-        }
+            .form-container h2 {
+                font-size: 1.8rem;
+                font-weight: 400;
+                color: #e67e22;
+                text-align: center;
+                margin-bottom: 1.5rem;
+            }
 
-        input,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        .form-group label {
             font-size: 1rem;
+            font-weight: 400;
+            color: #333;
         }
 
-            input:focus,
-            textarea:focus {
-                outline: none;
-                border-color: #007BFF;
-            }
-
-            input.invalid {
-                border-color: #ff7373;
-            }
-
-        .tab {
-            display: none;
+        .form-group i {
+            margin-right: 10px;
+            color: #e67e22;
         }
 
+        .form-control {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+
+            .form-control:focus {
+                border-color: #e67e22;
+                box-shadow: 0 0 8px rgba(230, 126, 34, 0.5);
+            }
+
+        /* Buttons */
         #prevBtn, #nextBtn {
-            color: #fff;
-            padding: 10px 20px;
+            padding: 10px 15px;
+            font-size: 1rem;
             border: none;
-            border-radius: 12px;
-            background: linear-gradient(90deg, #007BFF, #0056b3);
-            font-size: 0.9rem;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-            #prevBtn:hover, #nextBtn:hover {
-                background: linear-gradient(90deg, #0056b3, #007BFF);
+        #prevBtn {
+           /*  background: #d35400; */
+            background: #FFA726;
+            color: white;
+        }
+
+            #prevBtn:hover {
+                background: #FFA726; /* #e67e22; */
+                transform: scale(1.05);
             }
 
+        #nextBtn {
+          /*   background: #e67e22; */
+            background: #FFA726;
+            color: white;
+        }
+
+            #nextBtn:hover {
+                background: #e67e22; /* #d35400; */
+                transform: scale(1.05);
+            }
+
+        /* Steps */
+        .step-indicator {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
 
         .step {
-            height: 30px;
-            width: 30px;
-            margin: 0 10px;
-            background-color: #ccc;
-            border: none;
+            width: 25px;
+            height: 25px;
+            background: #ddd;
             border-radius: 50%;
             display: inline-block;
-            opacity: 0.5;
-            line-height: 30px;
+            margin: 0 5px;
+            line-height: 25px;
             text-align: center;
-            font-size: 16px;
-            color: #fff;
+            color: white;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
         }
 
             .step.active {
-                opacity: 1;
-                background-color: #007BFF;
+                background: #e67e22;
             }
 
             .step.finish {
-                background-color: #28a745;
+                background: #d35400;
             }
-
     </style>
-
 </head>
 
-<div class="text-center mb-5">
-    <h1>Become guide</h1>
-</div>
-
-<form id="regForm" asp-controller="GuideUser" asp-action="BecomeGuide" method="post">
+<section class="section-guide">
 
 
-    <div class="tab">
-        <div class="form-group mb-3">
-            <label asp-for="Name">Guide name</label>
-            <input asp-for="Name" class="form-control" placeholder="John Doe guide" data-required="true">
-            <span asp-validation-for="Name" class="small text-danger"></span>
-        </div>
 
-        <div class="form-group mb-3">
-            <label asp-for="LegalFirmName">Firm or Company name</label>
-            <input asp-for="LegalFirmName" class="form-control" placeholder="Best Tour Trip Eood" data-required="true">
-            <span asp-validation-for="LegalFirmName" class="small text-danger"></span>
-        </div>
-
-        <div class="form-group mb-3">
-            <label asp-for="PhoneNumber">Phone number</label>
-            <input asp-for="PhoneNumber" class="form-control" placeholder="" data-required="true">
-            <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
-        </div>
-
+    <!-- Header Section -->
+    <div class="headerss">
+        <h1><i class="fas fa-map-signs" style="color:#FFA726;"></i> Become a Guide</h1> @* color of fas fas *@
+        <p>Apply to share your expertise and lead unforgettable tours.</p>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#E0F3EF" fill-opacity="1" d="M0,224L48,192C96,160,192,96,288,90.7C384,85,480,139,576,144C672,149,768,107,864,80C960,53,1056,43,1152,69.3C1248,96,1344,160,1392,192L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
     </div>
 
-    <div class="tab">
-        <div class="form-group mb-3">
-            <label asp-for="ValueAddedTaxIdentificationNumber">Value added tax identification number </label>
-            <input asp-for="ValueAddedTaxIdentificationNumber" class="form-control" placeholder="Value added tax identification number" id="vatNumber">
-            <span asp-validation-for="ValueAddedTaxIdentificationNumber" class="small text-danger"></span>
-        </div>
-        <div class="form-group mb-3">
-            <label asp-for="CompanyRegistrationNumber">Company Registration Number</label>
-            <input asp-for="CompanyRegistrationNumber" class="form-control" placeholder="Company Registration Number" data-required="true" id="companyRegNumber">
-            <span asp-validation-for="CompanyRegistrationNumber" class="small text-danger"></span>
-        </div>
+    <!-- Form Section -->
+    <div class="form-container" id="formSection">
+        <h2>Complete the Form</h2>
+        <form id="regForm" asp-action="BecomeGuide" asp-controller="GuideUser" method="post">
+            <!-- Tabs -->
+            <div class="tab">
+                <div class="form-group mb-3">
+                    <label asp-for="Name"><i class="fas fa-user"></i> Guide Name</label>
+                    <input asp-for="Name" type="text" id="guideName" class="form-control" placeholder="John Doe guide" data-required="true">
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="LegalFirmName"><i class="fas fa-building"></i> Firm or Company Name</label>
+                    <input asp-for="LegalFirmName" type="text" id="firmName" class="form-control" placeholder="Best Tour Trip Ltd." data-required="true">
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="PhoneNumber"><i class="fas fa-phone"></i> Phone Number</label>
+                    <input asp-for="PhoneNumber" type="text" id="phoneNumber" class="form-control" placeholder="+123456789" data-required="true">
+                </div>
+            </div>
+
+            <div class="tab">
+                <div class="form-group mb-3">
+                    <label asp-for="Email" for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input asp-for="Email" type="email" id="email" class="form-control" placeholder="company@email.com">
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="RegisteredAddress"><i class="fas fa-map-marker-alt"></i> Registered Address</label>
+                    <input asp-for="RegisteredAddress" type="text" id="address" class="form-control" placeholder="Registration address">
+                </div>
+            </div>
+            <div class="tab">
+                <div class="form-group mb-3">
+                    <label asp-for="ValueAddedTaxIdentificationNumber" ><i class="fas fa-envelope"></i>VAT</label>
+                    <input asp-for="ValueAddedTaxIdentificationNumber" type="text" id="VAT" class="form-control" placeholder="You VAT number here" data-required="false" >
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="CompanyRegistrationNumber"><i class="fas fa-map-marker-alt"></i> Comapny Registration Number</label>
+                    <input asp-for="CompanyRegistrationNumber" type="text" id="address" class="form-control" placeholder="Your compnay number">
+                </div>
+            </div>
+
+            <div class="tab">
+                <div class="form-group mb-3">
+                    <label asp-for="AboutTheActivityProvider"><i class="fas fa-info-circle"></i> About the Activity Provider</label>
+                    <textarea asp-for="AboutTheActivityProvider" id="about" class="form-control" rows="4" placeholder="Describe your activities"></textarea>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="d-flex justify-content-between mt-4">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+            </div>
+
+            <!-- Steps -->
+            <div class="step-indicator mt-4">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+
+            </div>
+        </form>
     </div>
 
-    <div class="tab">
-        <div class="form-group mb-3">
-            <label asp-for="Email">Email</label>
-            <input asp-for="Email" class="form-control" placeholder="company@email.com" data-required="true">
-            <span asp-validation-for="Email" class="small text-danger"></span>
-        </div>
-        <div class="form-group mb-3">
-            <label asp-for="RegisteredAddress">Frim registered address</label>
-            <input asp-for="RegisteredAddress" class="form-control" placeholder="Registration address" data-required="true">
-            <span asp-validation-for="RegisteredAddress" class="small text-danger"></span>
-        </div>
 
-    </div>
-    <div class="tab">
+</section>
 
-        <div class="form-group mb-4">
-            <label asp-for="AboutTheActivityProvider">About the activity provider</label>
-            <textarea asp-for="AboutTheActivityProvider" class="form-control" rows="5" placeholder="About The Activity Provider" data-required="true"></textarea>
-            <span asp-validation-for="AboutTheActivityProvider" class="small text-danger"></span>
-        </div>
-    </div>
-
-
-
-    <div style="overflow:auto;">
-        <div style="float:right;">
-            <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-            <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-        </div>
-    </div>
-
-    <div style="text-align:center;margin-top:2em;">
-        <span class="step"><i class="fas fa-user"></i></span>
-        <span class="step"><i class="fas fa-briefcase"></i></span>
-        <span class="step"><i class="fas fa-envelope"></i></span>
-        <span class="step"><i class="fas fa-briefcase"></i></span>
-    </div>
-
-</form>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    var currentTab = 0;
+    // Scroll to Form
+    function scrollToForm() {
+        document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Form Functionality
+    let currentTab = 0;
     showTab(currentTab);
 
     function showTab(n) {
-        var x = document.getElementsByClassName("tab");
-        x[n].style.display = "block";
-        if (n == 0) {
-            document.getElementById("prevBtn").style.display = "none";
-        } else {
-            document.getElementById("prevBtn").style.display = "inline";
-        }
-        if (n == (x.length - 1)) {
-            document.getElementById("nextBtn").innerHTML = "Submit";
-        } else {
-            document.getElementById("nextBtn").innerHTML = "Next";
-        }
-        fixStepIndicator(n)
+        const tabs = document.querySelectorAll('.tab');
+       
+        tabs.forEach((tab, index) => tab.style.display = index === n ? 'block' : 'none');
+
+        document.getElementById('prevBtn').style.display = n === 0 ? 'none' : 'inline';
+        document.getElementById('nextBtn').innerHTML = n === (tabs.length - 1) ? 'Submit'  : 'Next';
+      
+
+        updateStepIndicator(n);
     }
 
     function nextPrev(n) {
-        var x = document.getElementsByClassName("tab");
-        if (n == 1 && !validateForm()) return false;
-        x[currentTab].style.display = "none";
-        currentTab = currentTab + n;
-        if (currentTab >= x.length) {
-            document.getElementById("regForm").submit();
-            return false;
+        const tabs = document.querySelectorAll('.tab');
+        
+       // const nextBtn = doucument.getElementById('nextBtn')
+        if (n === 1 && !validateForm()) return;
+
+        tabs[currentTab].style.display = 'none';
+        currentTab += n;
+
+        if (currentTab >= tabs.length) {
+            
+            if (nextBtn.innerHTML === "Submit") {
+                nextBtn.outerHTML = `<button type="submit" asp-action="BecomeGuide" asp-controller="GuideUser">Submit</button>`;
+            }
+            alert("Form submitted successfully!");
+            return;
         }
+
         showTab(currentTab);
     }
 
     function validateForm() {
-        var x, y, i, valid = true;
+        const fields = document.querySelectorAll('.tab')[currentTab].querySelectorAll('input, textarea');
+        let valid = true;
+      
+        fields.forEach(field => {
+            const isVAT = field.id === "VAT";
 
-        x = document.getElementsByClassName("tab");
-        y = x[currentTab].getElementsByTagName("input");
-        var z = x[currentTab].getElementsByTagName("textarea");
 
-        for (i = 0; i < y.length; i++) {
-            if (y[i].getAttribute("data-required") === "true" && y[i].value === "") {
-                y[i].className += " invalid";
+            if (!field.value.trim()  && !isVAT) {
+                field.classList.add('is-invalid');
                 valid = false;
+               
+            } else {
+                field.classList.remove('is-invalid');
             }
-        }
-
-        for (i = 0; i < z.length; i++) {
-            if (z[i].getAttribute("data-required") === "true" && z[i].value === "") {
-                z[i].className += " invalid";
-                valid = false;
-            }
-        }
+        });
 
         if (valid) {
-            document.getElementsByClassName("step")[currentTab].className += " finish";
+            document.querySelectorAll('.step')[currentTab].classList.add('finish');
         }
+
         return valid;
     }
 
-    function fixStepIndicator(n) {
-        var i, x = document.getElementsByClassName("step");
-        for (i = 0; i < x.length; i++) {
-            x[i].className = x[i].className.replace(" active", "");
-        }
-        x[n].className += " active";
+    function updateStepIndicator(n) {
+        const steps = document.querySelectorAll('.step');
+        steps.forEach((step, index) => {
+            step.classList.remove('active');
+            if (index <= n) step.classList.add('active');
+        });
     }
 </script>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

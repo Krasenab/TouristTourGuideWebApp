@@ -321,7 +321,7 @@ namespace TouristTourGuideWebApp.Controllers
         {
            
             string appUserId = ClaimPrincipalExtensions.GetCurrentUserId(this.User);
-            if (!await _appUserTourService.IsAddedInList(appUserId,tourId))
+            if (await _appUserTourService.IsAddedInList(appUserId,tourId))
             {
                 TempData[WarningMassage] = "Tour already exist in your wish list";
                 return RedirectToAction("UserTourWishList", "TouristTour" , new { appUserId });
