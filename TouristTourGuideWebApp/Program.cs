@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using TouristTourGuide.Data;
@@ -39,6 +40,8 @@ namespace TouristTourGuideWebApp
             builder.Services.AddApplicationServices(typeof(IImageService));
             builder.Services.AddApplicationServices(typeof(ICommentsService));
 
+            //builder.Services.AddControllersWithViews().AddMvcOptions(options =>  options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>());
+            
             builder.Services.ConfigureApplicationCookie(cfg => 
             {
                 cfg.LoginPath = "/AppUser/LogIn";
@@ -49,7 +52,7 @@ namespace TouristTourGuideWebApp
             var mongoClient = new MongoClient(mongoConnectionString);
             
             builder.Services.AddSingleton<IMongoDatabase>(mongoClient.GetDatabase("TouristTourGuideWebApp"));
-        
+            //end MongoDb
 
             builder.Services.AddControllersWithViews();
             
