@@ -11,10 +11,10 @@ namespace TouristTourGuide.Data
     {
         public TouristTourGuideDbContext(DbContextOptions<TouristTourGuideDbContext> options) : base(options)
         {
-            if(!this.Database.IsRelational()) 
-            {
-                this.Database.EnsureCreated();
-            }
+            //if(!this.Database.IsRelational()) 
+            //{
+            //    this.Database.EnsureCreated();
+            //}
         }
 
         public DbSet<TouristTour> TouristsTours { get; set; }

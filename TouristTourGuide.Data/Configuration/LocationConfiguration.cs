@@ -13,7 +13,9 @@ namespace TouristTourGuide.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Location> builder)
         {
-            builder.HasData(ImportLocationCountries());
+            // РАЗКОМЕНТИРАЙ СЛЕД ТЕСТВАНЕ СЪС NUNIT TESTS :
+
+          //  builder.HasData(ImportLocationCountries());
 
         }
              
