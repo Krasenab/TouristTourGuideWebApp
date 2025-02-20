@@ -185,6 +185,7 @@ namespace TouristTourGuide.Services
 
         public Task<string> GetTourOwnerIdByTourId(string tourId)
         {
+
             return _dbContext.TouristsTours.Where(x => x.Id.ToString() == tourId)
                 .Select(gU => gU.GuideUserId.ToString()).FirstOrDefaultAsync();
         }

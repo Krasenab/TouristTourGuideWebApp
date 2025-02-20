@@ -134,7 +134,7 @@ namespace TouristTourGuide.Services
                 TotalBookingsCount = totalBokings
             };
         }
-
+        // not use
         public async Task RefuseBooking(string bookingId)
         {
             var b = await _db.TouristTourBookings.Where(x => x.Id.ToString() == bookingId)
@@ -145,7 +145,7 @@ namespace TouristTourGuide.Services
             }
             b.isAccepted = false;
         }
-
+        // not 
         public Task UserBookingStatus(string appUser)
         {
             throw new NotImplementedException();

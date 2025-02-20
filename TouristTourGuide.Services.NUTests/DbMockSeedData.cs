@@ -18,11 +18,16 @@ namespace TouristTourGuide.Services.NUTests
         private static ApplicationUser GuideUsers;
         private static ApplicationUser AppUser;
         private static ApplicationUser AppUser1;
-        private static GuideUser gUser;
-  
-
-     
         
+        private static GuideUser gUser;
+        private static Category category;       
+        private static Location location;
+        private static TouristTour tour;
+        private static TouristTour tour1;
+        private static Category category1;
+        private static Category category2;
+
+
         public static void SeedDatabase(TouristTourGuideDbContext ttgDbContext) 
         {
            
@@ -86,13 +91,84 @@ namespace TouristTourGuide.Services.NUTests
                 PhoneNumber = "0998081234"
                
             };
+            
+
+            // Category data
+            category = new Category()
+            {
+                Name = "Unit Test"
+            };
+            category1 = new Category()
+            {
+                Name = "Unit test category 1"
+            };
+            category2 = new Category()
+            {
+                Name = "Unit test category 2"
+            };
+
+            location = new Location()
+            {
+                Country = "BuggLandia"
+            };
+            
+            ttgDbContext.Categories.Add(category);
+            ttgDbContext.Categories.Add(category1);
+            ttgDbContext.Categories.Add(category2);
+            ttgDbContext.Locations.Add(location);
             ttgDbContext.ApplicationUsers.Add(GuideUsers);
             ttgDbContext.ApplicationUsers.Add(AppUser);
             ttgDbContext.ApplicationUsers.Add(AppUser1);
-            ttgDbContext.GuideUsers.Add(gUser); 
-            ttgDbContext.SaveChanges();
-            
-            
+            ttgDbContext.GuideUsers.Add(gUser);
+
+            // Tour data 
+
+            tour = new TouristTour()
+            {
+                TourName = "NUnit Tour Full",
+                Duaration = "100000000 days",
+                StartEndHouers = "24:00 to 00:00",
+                NotSuitableFor = "NULL",
+                CategoryId = category.Id,
+                FullDescription = "Unit tests tour is a great tour ever",
+                Location = location,
+                MeetingPoint = "NULL",
+                PricePerPerson = 400000,
+                GuideUser = gUser
+
+            };
+            tour1 = new TouristTour()
+            {
+                TourName = "Fake Tour 1",
+                Duaration = "100 days",
+                StartEndHouers = "19:00 to 00:00",
+                NotSuitableFor = "NULL",
+                CategoryId = category1.Id,
+                Category = category1,
+                FullDescription = "Unit tests tour is a great tour ever",
+                Location = location,
+                MeetingPoint = "NULL",
+                PricePerPerson = 500000,
+                GuideUser = gUser
+            };
+            ttgDbContext.TouristsTours.Add(tour);
+            ttgDbContext.TouristsTours.Add(tour1);
+
+            TouristTourBooking tourBooking = new TouristTourBooking()
+            { 
+                ApplicationUser = AppUser1,
+                TouristTour = tour1,
+                Email = "person@gmaill.com",
+                PhoneNumber = "00011122",
+                TouristTourId = tour1.Id,
+                CountOfPeople = 1,
+                BookedDate = DateTime.Now,
+                
+            };
+            ttgDbContext.TouristTourBookings.Add(tourBooking);
+
+            ttgDbContext.SaveChanges();           
         }
+      
     }
 }
