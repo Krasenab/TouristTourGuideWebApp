@@ -78,9 +78,9 @@ namespace TouristTourGuideWebApp.Controllers
             }
 
             string id = userAppId;
-             _imageService.AddProfilePicture(pictureFile, userAppId);
+            _imageService.AddProfilePicture(pictureFile, userAppId);
             string name = await _imageService.GetImageUniqueName(userAppId);
-           await _imageService.AddImageFileToMongoDb(pictureFile, name);
+            await _imageService.AddImageFileToMongoDb(pictureFile, name);
             string guideUserId = _guideUserService.GuidUserId(userAppId);
             
             return RedirectToAction("Profile", "GuideUser", new { guideUserId = guideUserId });

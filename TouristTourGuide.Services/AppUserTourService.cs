@@ -42,10 +42,14 @@ namespace TouristTourGuide.Services
                     TourId  =b.TouristTourId.ToString(),
                     AppUserId = b.ApplicationUserId.ToString(),
                     Description = b.TouristTour.FullDescription,
-                    Location = "Country:" + b.TouristTour.Location.Country + " " + "City:" + b.TouristTour.Location.City
+                    Location = "Country:" + b.TouristTour.Location.Country + " " + "City:" + b.TouristTour.Location.City,
+                    
                     
 
                 }).ToListAsync();
+
+            
+
 
             if (wishList.Count==0)
             {
@@ -71,5 +75,7 @@ namespace TouristTourGuide.Services
             _db.AppUsersTours.Remove(apT);
             await _db.SaveChangesAsync();
         }
+
+
     }
 }

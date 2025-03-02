@@ -1,33 +1,153 @@
 ﻿@model List<UserTourWishLIstViewModel>;
 
+<head>
+    <style>
+        .containers {
+            border: 2px solid black;
+        }
+
+        .inside-container {
+            border: 2px solid purple;
+            display: flex;
+            justify-content: center;
+            gap: 2em;
+            flex-wrap: wrap;
+            padding-top: 1em;
+            padding-bottom : 1em;
+        }
+
+        .card {
+            padding: 15px;
+            border-radius: 7px;
+            width: 450px; /* Фиксирана ширина */
+            /* height: 200px;  Фиксирана височина */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            background: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            perspective: 1000px; /* Задава дълбочина на 3D ефекта */
+        }
+
+        .card-body {
+            max-width: 450px;
+            max-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            background: linear-gradient(135deg, #f3f3f3, #ffffff);
+            border-radius: 10px;
+        }
+
+        .card:hover {
+            transform: rotateY(8deg) rotateX(5deg) scale(1.05); /* Лек 3D наклон */
+            box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.3); /* По-дълбока сянка за реалистичен ефект */
+        }
+        /* Анимиран блясък върху картичките */
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 250%;
+            height: 250%;
+            background: linear-gradient(120deg, rgba(14, 144, 255, 0.2), rgba(255, 255, 255, 0));
+            transform: rotate(-30deg);
+            transition: all 0.5s ease;
+        }
+
+        /* Блясъкът минава през картата при hover */
+        .card:hover::before {
+            top: 100%;
+            left: 100%;
+        }
+
+        buttons{
+            gap:2px;
+        }
+
+        
+        .btn-links-one{
+            margin-top: auto;
+            padding: 5px 10px;
+            background: white;
+            color: #f4a261;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #f4a261;
+            display: inline-block;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        .btn-links-one:hover {
+            background: white;
+            transform: scale(1.1);
+                color: #f4a261;
+        }
+
+        /* Стилен бутон */
+        .btn-links {
+            margin-top: auto;
+            padding: 5px 10px;
+            /*background: linear-gradient(90deg, #f4a261, #e76f51);  Оранжево към коралово */
+            background: white;
+            color: #f67167;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #f67167;
+            display: inline-block;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+            .btn-links:hover {
+                background: white;
+                transform: scale(1.1);
+                color: #f67167;
+          }
+    </style>
+</head>
+
 
 
 <div class="row mb-5 text-center pt-3">
     <h1>Your wish list</h1>
 </div>
 
-@if (Model.Count != 0)
-{
-    for (int i = 0; i < Model.Count; i++)
+<div class="inside-container">
+
+    @if (Model.Count != 0)
     {
-        <div class="col-md-3 flex-column">
+        for (int i = 0; i < Model.Count; i++)
+        {
             <div class="card mb-3">
                 <div class="card-body text-center">
                     <h4>@Model[i].TourName</h4>
                     <h5>@Model[i].Location</h5>
                     <p>@Model[i].Description</p>
                 </div>
-                <a asp-action="RemoveFromWishList" asp-controller="TouristTour" asp-route-Id="@Model[i].TourId">Remove</a>
+                <div class="buttons">
+                    <a class="btn-links" asp-action="RemoveFromWishList" asp-controller="TouristTour" asp-route-Id="@Model[i].TourId">Remove</a>
+                    <a class="btn-links-one" asp-action="Details" asp-controller="TouristTour" asp-route-Id="@Model[i].TourId">Details</a>
+                </div>
+                
             </div>
-        </div>
+        }
     }
-}
-else
-{
-    <div class="cont">
+    else
+    {
+        <div class="cont">
 
-        <h5 class="text-center">Wish list is empty</h5>
+            <h5 class="text-center">Wish list is empty</h5>
 
-    </div>
+        </div>
 
-}
+    }
+</div>
+

@@ -14,14 +14,11 @@ using static TouristTourGuide.Infrastrucutre.AppFileExtension;
 
 namespace TouristTourGuide.Services
 {
-
     public class ImageService : IImageService
     {
         private readonly IMongoCollection<AppImageFile> _appImageFileCollectionMDB;
         private readonly TouristTourGuideDbContext _dbContext;
         private readonly IMongoClient mongoClient = new MongoClient();
-
-
 
         public ImageService(TouristTourGuideDbContext dbContext)
         {
@@ -31,7 +28,6 @@ namespace TouristTourGuide.Services
         }
         public List<ImagesViewModel> GetIndexPageImageMongoDb()
         {
-
             var projection = Builders<AppImageFile>.Projection.Expression(ab => new ImagesViewModel
             {
                 CustomUniqeFileName = ab.UniqueFileName,
@@ -63,12 +59,9 @@ namespace TouristTourGuide.Services
         }
         public async Task<string> AddTourImage(string tourId, IFormFile imageFile, string userId)
         {
+            
             string generateFileNewFileName = GenerateUnicFileName(imageFile.FileName);
-            if (generateFileNewFileName==null || string.IsNullOrEmpty(generateFileNewFileName)) 
-            {
-                throw new NullReferenceException("Not a valid file extension");
-            }
-
+            
             AppImages img = new AppImages()
             {
                 UniqueFileName = generateFileNewFileName,
@@ -77,6 +70,7 @@ namespace TouristTourGuide.Services
             };
             await _dbContext.AppImages.AddAsync(img);
             await _dbContext.SaveChangesAsync();
+
             return img.UniqueFileName;
         }
 
@@ -107,10 +101,9 @@ namespace TouristTourGuide.Services
             return names;
         }
 
-        public byte[] GetImageBytesMongoDb(string uqnicName)
-        {
-           
-            var fileObject = _appImageFileCollectionMDB.Find(x => x.UniqueFileName == uqnicName)
+        public byte[] GetImageBytesMongoDb(string uniqueName)
+        {           
+            var fileObject = _appImageFileCollectionMDB.Find(x => x.UniqueFileName == uniqueName)
                 .Project(x => new AppImagesViewModel()
                 {
                     FileData = x.FileData
@@ -119,7 +112,6 @@ namespace TouristTourGuide.Services
             {
                 return [];
             }
-
             return fileObject.FileData;
         }
 
@@ -212,7 +204,6 @@ namespace TouristTourGuide.Services
             {
                 throw new ArgumentNullException("name is not null");
             }
-
             return appImages;
         }
 
@@ -259,19 +250,5 @@ namespace TouristTourGuide.Services
         {            
             _appImageFileCollectionMDB.FindOneAndDelete(x => x.UniqueFileName == uniqueName);
         }
-
-
-
-
-
-        //public AppImagesViewModel GetOneImageMongoDb(string uniqueName)
-        //{
-        //    return _appImageFileCollectionMDB.Find(x => x.UniqueFileName == uniqueName)
-        //        .Project(x => new AppImagesViewModel()
-        //        {
-        //            FileData = x.FileData,
-        //            UniqueFileName = x.UniqueFileName
-        //        }).First();
-        //}
     }
 }

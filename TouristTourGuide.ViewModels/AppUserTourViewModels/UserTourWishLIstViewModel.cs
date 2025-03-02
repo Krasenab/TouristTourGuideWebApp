@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using TouristTourGuide.Data.Models.MongoDb.Models;
+using TouristTourGuide.Data.Models.Sql.Models;
 
 namespace TouristTourGuide.ViewModels.AppUserTourViewModels
 {
@@ -16,6 +18,7 @@ namespace TouristTourGuide.ViewModels.AppUserTourViewModels
         public string? Location { get; set; }
         public string TourId { get; set; }
         public string AppUserId { get; set; }
+        public  byte[] Img { get; set; }
 
     }
 }

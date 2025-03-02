@@ -212,7 +212,6 @@ namespace TouristTourGuideWebApp.Controllers
             }
             detailsViewModel.VoteCount = await _voteService.CountVoteByTourIdAsync(id);
 
-
             return View(detailsViewModel);
         }
 
@@ -314,6 +313,11 @@ namespace TouristTourGuideWebApp.Controllers
         public  async Task<IActionResult> UserTourWishList(string appUserId) 
         {
             List<UserTourWishLIstViewModel> model = await _appUserTourService.GetAllAppUserWishToursAsync(appUserId);
+            foreach (UserTourWishLIstViewModel tour in model) 
+            {                
+                string tourImageUnicName = await _imageServie.TourImageUniqueName(tour.TourId);
+                tour.Img = _imageServie.GetImageBytesMongoDb(tourImageUnicName);
+            }
             return View(model);
         }
       
