@@ -75,7 +75,7 @@ namespace TouristTourGuide.Services
         {
             // само тази промяна направих от предложените и проработи , а именно добавянето на Distinct
             int voteCount = await _dbContext.Votes.Where(x=>x.TouristTourId.ToString()==tourId)
-                .Select(x=>x.VoteValue).Distinct().CountAsync();
+                .Select(x=>x.ApplicationUserId).Distinct().CountAsync();
 
             return voteCount;
         }
@@ -96,6 +96,7 @@ namespace TouristTourGuide.Services
 
             return currentValue;
         }
+        
        
     }
 }

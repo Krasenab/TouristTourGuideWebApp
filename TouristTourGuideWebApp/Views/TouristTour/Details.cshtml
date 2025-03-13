@@ -31,19 +31,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
     <style>
-        .containers {
-            /*   background-color: #E0F3EF; */
-            /*  background: linear-gradient(to left right, #E0F3EF, #FFFFFF); */
-        }
-        /* .p{
-                            color:#198754;
-                        }
-                        .h5,.h4{
-                            color:#198754;
-                        }
-                        .span {
-                            color: #FFD558;
-                        } */
 
         .text-truncate {
             overflow: hidden;
@@ -72,6 +59,77 @@
             box-sizing: border-box;
         }
 
+        #forThisActivity {
+            border: 2px solid black;
+        }
+
+        .date-card > .card > .card-body {
+            border: 2px solid black;
+            /* background: linear-gradient(135deg, #DFF2EE 0%, #A4D5C2 100%); */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Лека сянка за дълбочина */
+            border-radius: 8px;
+        }
+
+            .date-card > .card > .card-body:hover {
+                box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* Засилена сянка */
+                transform: translateY(-5px); /* Леко повдигане нагоре */
+            }
+
+        .btn-booking {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 160px; /* Фиксирана ширина */
+            height: 50px; /* Фиксирана височина */
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            /* Позиционираме двата елемента абсолютно в центъра */
+            .btn-booking .btn-text,
+            .btn-booking .btn-icon {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+
+            /* При нормално състояние: текстът е видим, а иконата е скрита и извън бутона отляво */
+            .btn-booking .btn-text {
+                opacity: 1;
+            }
+
+            .btn-booking .btn-icon {
+                opacity: 0;
+                /* Изместваме иконата наляво (50px може да се настрои според желания ефект) */
+                transform: translate(calc(-50% - 50px), -50%);
+                font-size: 1.2rem;
+            }
+
+            /* При hover: текстът избледнява и се измества надясно, а иконата идва отляво до центъра */
+            .btn-booking:hover .btn-text {
+                opacity: 0;
+                transform: translate(calc(50% + 50px), -50%);
+            }
+
+            .btn-booking:hover .btn-icon {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+       
     </style>
 
 </head>
@@ -85,7 +143,7 @@
 @if (Model.AllTourApplicationImages != null && Model.AllTourApplicationImages.Count > 0)
 {
 
-    <div class="container overflow-hidden">
+    <div class="container">
         <div class="gallery">
             @for (int i = 0; i < Model.AllTourApplicationImages.Count; i++)
             {
@@ -129,7 +187,7 @@
                 {
                     <figure class="gallery__item gallery__item--4">
                         <a href="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
-                           data-lightbox="gallery" style=""
+                           data-lightbox="gallery"
                            data-title="@Model.TourName">
                             <img src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.AllTourApplicationImages[i].FileData))"
                                  alt="" class="img-fluid">
@@ -195,53 +253,20 @@ else
 
     }
 </section>
-@* <section class="date-card" style="padding-top:1em; padding-bottom:1em; justify-content:end;">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Availability Tour Dates</h5>
-                    <p class="card-text">You can see closed and free dates for this tourist tour</p>
-                    <input type="hidden" id="modelId" value="@Model.Id">
-                    <input type="date" id="checkDate">
-                    <button id="availability-btn" class="btn btn-primary">Check Availability</button>
-                    <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
-                    <div id="messageBox" class="mt-3"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="messageModalLabel">Message</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modalMessageBody">
-                    <!-- Message will be inserted here -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> *@
 
 
-<section class="information-section-top p-4 bg-white" style="justify-content:space-around;border:2px solid black; display:flex; flex-direction:row;  flex-wrap:wrap;">
 
+<section class="information-section-top p-4 bg-white" style="justify-content:space-around;border:2px solid black; display:flex; flex-direction:row;  flex-wrap:wrap; ">
 
-    <div class="row d-flex" style="flex-direction:column;width:450px; flex-wrap:wrap">
-        <div class="text-center mb-4">
-            <h5 class="text">For this activity</h5>
+    <div class="row d-flex" id="forThisActivity" style="flex-direction:column;width:350px; flex-wrap:wrap">
+        <div class="col-md-7 mt-3">
+            <h5 class="text fw-bold p-2">For this activity</h5>
         </div>
 
         <div class="col-md-6">
             <div class="card border-0">
                 <div class="card-body" style="width:250px">
-                    <h5 class="mt-2">
+                    <h5 class="mt-1">
                         <span class="material-symbols-outlined">attach_money</span> @Model.PricePerPerson per person
                     </h5>
                 </div>
@@ -251,7 +276,7 @@ else
         <div class="col-md-6">
             <div class="card border-0">
                 <div class="card-body" style="width:250px">
-                    <h5 class="mt-2"> <span class="material-symbols-outlined text-dark">public</span> @Model.LocationCountry</h5>
+                    <h5 class="mt-1"> <span class="material-symbols-outlined text-dark">public</span> @Model.LocationCountry</h5>
                 </div>
             </div>
         </div>
@@ -259,33 +284,42 @@ else
             <div class="card border-0">
                 <div class="card-body" style="width:250px;">
 
-                    <h5 class="mt-2"> <span class="material-symbols-outlined text-dark">av_timer</span>@Model.Duaration </h5>
+                    <h5 class="mt-1"> <span class="material-symbols-outlined text-dark">av_timer</span>@Model.Duaration </h5>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card border-0">
                 <div class="card-body" style="width:250px">
-                    <h5 class="mt-2"><span class="material-symbols-outlined">location_city </span>@Model.LocationCity</h5>
+                    <h5 class="mt-1"><span class="material-symbols-outlined">location_city </span>@Model.LocationCity</h5>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="date-card" style="border:2px solid yellow; width:500px;height:350px;">
-        <div class="card mt-2" style="padding-top:1em; border:2px solid black;">
-            <div class="card-body">
-                <h5 class="card-title">Availability Tour Dates</h5>
-                <p class="card-text">You can see closed and free dates for this tourist tour</p>
+    <div class="date-card" style="border:2px solid yellow; border-radius: 10px; background: #fff;">
+        <div class="card mt-2" id="date-card" style="padding-top:1em; border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 10px;">
+            <div class="card-body" style="padding: 1.5em;">
+                <h5 class="card-title" style="font-weight: 600;">BOOK NOW</h5>
+                <p class="card-text" style="font-size: 0.9em;">You also can see closed and free dates for this tourist tour</p>
                 <input type="hidden" id="modelId" value="@Model.Id">
-                <input type="date" id="checkDate">
-                <button id="availability-btn" class="btn btn-primary">Check Availability</button>
-                <div id="messageBox" class="mt-3"></div>
-            </div>
-            <div class="d-flex pb-2" style=" justify-content:end; padding-left:2em; padding-right:2em;">
-                <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Create booking</a>
+                <input type="date" id="checkDate" style="width: 50%; padding: 0.5em; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 1em;">
+                <button id="availability-btn" class="btn btn-primary" style="width: 50%; margin-bottom: 1em;">Check Availability</button>
+                
+                <div id="extraContent">
+                    <div id="messageBox" class="mt-1" style="width:50%;"></div>
+                </div>
+                
+                <div class="d-flex pb-2" style="justify-content: flex-end; padding:2em; margin-bottom:1em;">
+                    <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn-booking">
+                        <i class="fas fa-calendar-check btn-icon"></i>
+                        <span class="btn-text">Booking</span>
+                    </a>
+                    
+                </div>
+
             </div>
         </div>
+
         <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -400,7 +434,7 @@ else
 
 
 
-<section class="votes-section">
+<section class="votes-section" style="overflow:hidden;">
     <div row="d-flex">
         <div class="col-7 text-center">
             <h4>Customer reviews</h4>
@@ -529,7 +563,11 @@ else
                     //     $('#messageModal').modal('hide'); // Затваряне на модалния прозорец след 5 секунди
                     // }, 5000);
                     var successMessage = '<div class="alert alert-success" id="successMessage">' + response.message + '</div>';
-                    $("#messageBox").html(successMessage); // Показване на съобщението при успех
+                   
+                    $("#extraContent").stop(true, true).slideUp(200, function () {
+                        $("#extraContent").slideDown("slow");
+                        $("#messageBox").html(successMessage).fadeIn('slow'); // Показване на съобщението при успех
+                    });
                     setTimeout(function () {
                         $('#successMessage').fadeOut('slow', function () {
                             $(this).remove();
@@ -598,18 +636,18 @@ else
                     alert('Коментарът е публикуван успешно');
                     $('#Content').val('');
                     var newCommentHtml = `
-                            <div class="comment-item card mb-3">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <img class="rounded-circle shadow-1-strong me-3" src="@("data:image/jpeg;base64," + Convert.ToBase64String(currentUserProfilePicture))" alt="avatar" width="50" height="50" />
-                                        <div>
-                                            <h6 class="fw-bold mb-0">${response.userName}</h6>
-                                            <p class="text-muted small mb-0">Публикувано - преди малко</p>
-                                        </div>
-                                    </div>
-                                    <p class="comment-text mb-0">${content}</p>
-                                </div>
-                            </div>`;
+                                        <div class="comment-item card mb-3">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <img class="rounded-circle shadow-1-strong me-3" src="@("data:image/jpeg;base64," + Convert.ToBase64String(currentUserProfilePicture))" alt="avatar" width="50" height="50" />
+                                                    <div>
+                                                        <h6 class="fw-bold mb-0">${response.userName}</h6>
+                                                        <p class="text-muted small mb-0">Публикувано - преди малко</p>
+                                                    </div>
+                                                </div>
+                                                <p class="comment-text mb-0">${content}</p>
+                                            </div>
+                                        </div>`;
                     $('.comments-container').prepend(newCommentHtml);
                 },
                 error: function () {
